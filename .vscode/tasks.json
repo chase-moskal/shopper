@@ -1,14 +1,21 @@
 {
 	"version": "0.1.0",
-	"command": "npm",
 	"isShellCommand": true,
 	"showOutput": "always",
 	"suppressTaskName": true,
 	"tasks": [
 		{
-			"taskName": "install (production build)",
+			"taskName": "production build (npm install)",
+			"command": "npm",
 			"args": ["install", "--silent"],
 			"problemMatcher": ["$tsc"]
+		},
+		{
+			"taskName": "debug build (node build --debug)",
+			"isBuildCommand": true,
+			"command": "node",
+			"args": ["build", "--debug"],
+			"problemMatcher": ["$tsc"],
 		}
 	]
 }

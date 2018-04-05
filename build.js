@@ -49,11 +49,13 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 
 	await axx(`rm -rf dist && mkdir dist`)
 	await Promise.all([
-		axx(`${nb}tsc`, caxx()).result,
+		debug
+			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx()).result
+			: axx(`${nb}tsc`, caxx()).result,
 		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`).result
 	])
 
-	async function buildDebug() {
+	if (debug) { // debug build
 		await (axx(
 			`${nb}browserify ${scriptSource} --debug -p [ tsify ] -g uglifyify`,
 			waxx(scriptBundle)
@@ -61,7 +63,7 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		console.log("✔ done debug build")
 	}
 
-	async function buildProduction() {
+	else { // production build
 		await (axx(
 			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV production ] -g uglifyify`,
 			waxx(scriptBundle)
@@ -75,8 +77,6 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		).result)
 		console.log("✔ done production build")
 	}
-
-	debug ? buildDebug() : buildProduction()
 }
 
 build(buildOptions)
