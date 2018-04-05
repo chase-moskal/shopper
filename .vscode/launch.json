@@ -7,8 +7,14 @@
 		{
 			"type": "node",
 			"request": "launch",
+			"name": "debug tests",
+			"program": "${workspaceFolder}/node_modules/.bin/jest"
+		},
+		{
+			"type": "node",
+			"request": "launch",
 			"name": "debug build",
-			"program": "${workspaceFolder}/build.js"
+			"program": "${workspaceFolder}/build"
 		}
 	]
 }

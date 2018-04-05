@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.0",
+	"version": "0.0.0-dev.1",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -15,9 +15,10 @@
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"license": "ISC",
 	"scripts": {
-		"prepare": "node build",
+		"prepare": "node build && npm test -s",
+		"build-debug": "node build --debug",
 		"start": "http-server",
-		"test": "exit 0"
+		"test": "jest"
 	},
 	"files": [
 		"dist",
@@ -33,12 +34,14 @@
 		"axx": "0.1.1-dev.1"
 	},
 	"devDependencies": {
-		"commander": "2.15.1",
+		"@types/jest": "22.2.2",
 		"array.find": "1.0.7",
 		"browserify": "16.1.1",
+		"commander": "2.15.1",
 		"envify": "4.1.0",
 		"es6-promise": "4.2.4",
 		"http-server": "0.11.1",
+		"jest": "22.4.3",
 		"mkdirp": "0.5.1",
 		"mobx": "4.1.1",
 		"mobx-preact": "2.0.0",
