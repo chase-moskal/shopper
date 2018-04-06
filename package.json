@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.1",
+	"version": "0.0.0-dev.2",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -31,10 +31,11 @@
 		"preact": "8.*"
 	},
 	"dependencies": {
-		"axx": "0.1.1-dev.1"
+		"shopify-buy": "1.2.0"
 	},
 	"devDependencies": {
 		"@types/jest": "22.2.2",
+		"axx": "0.1.1-dev.1",
 		"array.find": "1.0.7",
 		"browserify": "16.1.1",
 		"commander": "2.15.1",

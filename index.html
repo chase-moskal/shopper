@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="shopperman shopperman-demo">
+<html class="shopperman-demo">
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -9,8 +9,33 @@
 </head>
 <body>
 
-	<h1>shopperman</h1>
+	<div class="slice">
+		<div class="shopperman"></div>
+		<div class="content">
+			<h1>shopperman</h1>
+			<p>frontend shopping cart tech for web devs</p>
+			<p>preact, mobx, typescript</p>
+			<p style="margin-top: 100em;">cheers</p>
+		</div>
+	</div>
 
 	<script src="dist/shopperman.global.bundle.js"></script>
+	<script>
+
+		// running mobx state management in strict mode (explicit actions)
+		mobx.configure({useStrict: true})
+
+		const cartSystemStore = new shopperman.CartSystemStore()
+
+		// render the preact component on the page
+		preact.render(
+			preact.h(
+				shopperman.CartSystem,
+				{store: cartSystemStore}
+			),
+			document.querySelector(".shopperman")
+		)
+
+	</script>
 </body>
 </html>

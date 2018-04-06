@@ -57,7 +57,7 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 
 	if (debug) { // debug build
 		await (axx(
-			`${nb}browserify ${scriptSource} --debug -p [ tsify ] -g uglifyify`,
+			`${nb}browserify ${scriptSource} --debug -p [ tsify ]`,
 			waxx(scriptBundle)
 		).result)
 		console.log("✔ done debug build")
@@ -66,12 +66,12 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 	else { // production build
 		await (axx(
 			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV production ] -g uglifyify`,
-			waxx(scriptBundle)
+			waxx(`${scriptBundle}.temp`)
 		).result)
 		await (axx(
 			`cat ${[
 				...polyfills,
-				scriptBundle
+				`${scriptBundle}.temp`
 			].join(" ")}`,
 			axx(`${nb}uglifyjs --compress --mangle`, waxx(scriptBundle))
 		).result)
