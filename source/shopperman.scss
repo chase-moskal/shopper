@@ -12,6 +12,7 @@
 	}
 
 	.cart-button {
+		z-index: 1;
 		position: absolute;
 		top: 2em;
 		left: 100%;
@@ -22,6 +23,7 @@
 		background: rgba(0,0,0, 0.2);
 		border-radius: 0 3px 3px 0;
 		cursor: pointer;
+		user-select: none;
 
 		.cart-button-text {
 			display: none;
@@ -42,12 +44,20 @@
 		}
 	}
 
+	$panelspacing: 1em;
+
 	.cart-list-items {
 		list-style: none;
+		padding: $panelspacing;
 	}
 
 	.cart-list-results {
 		list-style: none;
+		padding: $panelspacing;
+	}
+
+	.cart-checkout {
+		margin: $panelspacing;
 	}
 }
 
@@ -87,5 +97,18 @@ html.shopperman-demo {
 
 	.content {
 		padding: 1em;
+	}
+
+	.shopperman {
+		@media (max-width: 800px) {
+			.cart-button {
+				left: auto;
+				right: 0;
+				border-radius: 3px 0 0 3px;
+			}
+			.cart-panel {
+				padding-right: 3em;
+			}
+		}
 	}
 }
