@@ -20,29 +20,6 @@
 	</div>
 
 	<script src="dist/shopperman.global.bundle.js"></script>
-	<script>
-
-		// running mobx state management in strict mode (explicit actions)
-		mobx.configure({useStrict: true})
-
-		const cartStore = new shopperman.CartStore()
-		const cartSystemStore = new shopperman.CartSystemStore({cartStore})
-
-		// render the preact component on the page
-		preact.render(
-			preact.h(
-				shopperman.CartSystem,
-				{store: cartSystemStore}
-			),
-			document.querySelector(".shopperman")
-		)
-
-		cartStore.cartItems.push({
-			id: "AE2468",
-			price: 280,
-			title: "Blueberry Muffin"
-		})
-
-	</script>
+	<script>shopperman.demo()</script>
 </body>
 </html>
