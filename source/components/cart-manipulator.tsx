@@ -24,7 +24,7 @@ export default class CartManipulator extends Component<{store: CartManipulatorSt
 					{cartStore.cartItems.map(item => {
 						return (
 							<li>
-								<span><input type="number" value="0" min="1" max="5"/></span> <span>#{item.id}</span> <strong>{0}</strong>
+								<span><input type="number" value="1" min="1" max="5"/></span> <span>#{item.id}</span> <strong>{0}</strong>
 							</li>
 						)
 					})}

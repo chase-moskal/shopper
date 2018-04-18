@@ -1,11 +1,45 @@
 
-import {observable, action, autorun} from "mobx"
+import {observable, action, autorun, computed} from "mobx"
+
+export const enum Currency {
+	CAD,
+	USD
+}
+
+const CurrencyExchangeRates = {
+	[Currency.CAD]: 1.0,
+	[Currency.USD]: 0.79
+}
 
 /**
  * Shopping cart item
  */
 export interface CartItem {
 	id: string
+	price: number
+	title: string
+}
+
+export class CartItemStore {
+	@observable cartItem: CartItem
+	@observable currency: Currency
+
+	private centsToDollars(cents: number): string {
+		return (cents / 100).toFixed(2)
+	}
+
+	@computed get pricetag() {
+		const {cartItem, currency} = this
+		switch (currency) {
+			case Currency.CAD: return `\$${this.centsToDollars(cartItem.price)} CAD`
+			case Currency.USD: return `\$${this.centsToDollars(cartItem.price * CurrencyExchangeRates[Currency.USD])} USD`
+		}
+	}
+
+	constructor({cartItem, currency}: {cartItem: CartItem; currency: number}) {
+		this.cartItem = cartItem
+		this.currency = currency
+	}
 }
 
 /**
