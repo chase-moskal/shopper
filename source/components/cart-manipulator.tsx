@@ -18,6 +18,7 @@ export default class CartManipulator extends Component<{cart: Cart}, any> {
 				<ol className="cart-list-results">
 					<li>
 						<span>Subtotal:</span>
+						&nbsp;
 						<strong>{cart.subtotal}</strong>
 					</li>
 				</ol>

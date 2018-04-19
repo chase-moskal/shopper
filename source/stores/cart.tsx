@@ -27,7 +27,7 @@ export default class Cart {
 	}
 
 	@computed get subtotalCents(): number {
-		return this.items.reduce((subtotal, item) => subtotal + item.cents, 0)
+		return this.items.reduce((subtotal, item) => subtotal + item.totalCents, 0)
 	}
 
 	@computed get subtotal(): string {
