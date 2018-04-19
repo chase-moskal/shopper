@@ -8,8 +8,10 @@ export default class Cart {
 	@observable open: boolean = false
 	@observable currency: Currency = Currency.CAD
 
-	@action toggle() {
-		this.open = !this.open
+	@action toggle(open = null) {
+		this.open = open !== null
+			? open
+			: !this.open
 	}
 
 	@action clear() {

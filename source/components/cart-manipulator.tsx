@@ -4,6 +4,7 @@ import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
 import Cart from "../stores/cart"
+import CartItemDisplay from "./cart-item-display"
 
 @observer
 export default class CartManipulator extends Component<{cart: Cart}, any> {
@@ -12,19 +13,13 @@ export default class CartManipulator extends Component<{cart: Cart}, any> {
 		return (
 			<div className="cart-manipulator">
 				<ol className="cart-list-items">
-					{cart.items.map(item => {
-						return (
-							<li>
-								<span><input type="number" value="1" min="1" max="5"/></span>
-								<span>#{item.id}</span>
-								<span>"{item.title}"</span>
-								<strong>{item.price}</strong>
-							</li>
-						)
-					})}
+					{cart.items.map(item => <CartItemDisplay {...{item}}/>)}
 				</ol>
 				<ol className="cart-list-results">
-					<li><span>Subtotal:</span> <strong>{cart.subtotal}</strong></li>
+					<li>
+						<span>Subtotal:</span>
+						<strong>{cart.subtotal}</strong>
+					</li>
 				</ol>
 			</div>
 		)
