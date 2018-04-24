@@ -17,7 +17,6 @@ export default class CartItemDisplay extends Component<CartItemDisplayProps, any
 		const input = event.target as HTMLInputElement
 		const {item} = this.props
 		const value = parseInt(input.value)
-		console.log("VALUE", value)
 		item.setQuantity(value)
 	}
 
