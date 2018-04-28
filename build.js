@@ -52,7 +52,7 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		debug
 			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx()).result
 			: axx(`${nb}tsc`, caxx()).result,
-		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`).result
+		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}).result
 	])
 
 	if (debug) { // debug build

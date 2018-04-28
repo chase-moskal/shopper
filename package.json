@@ -16,6 +16,7 @@
 	"license": "ISC",
 	"scripts": {
 		"prepare": "node build && npm test -s",
+		"t": "tsc",
 		"build-debug": "node build --debug",
 		"start": "http-server",
 		"test": "jest"
@@ -35,8 +36,8 @@
 	},
 	"devDependencies": {
 		"@types/jest": "22.2.2",
-		"axx": "0.1.1-dev.1",
 		"array.find": "1.0.7",
+		"axx": "0.1.1-dev.1",
 		"browserify": "16.1.1",
 		"commander": "2.15.1",
 		"envify": "4.1.0",
