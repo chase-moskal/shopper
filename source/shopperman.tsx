@@ -1,12 +1,11 @@
 
 import {h} from "preact"
 
+import * as crnc from "crnc"
 import * as mobx from "mobx"
 import * as preact from "preact"
 import * as mobxPreact from "mobx-preact"
-
-import * as crnc from "./crnc"
-import * as commotion from "./commotion"
+import * as commotion from "crnc/dist/commotion"
 
 import {default as Cart} from "./stores/cart"
 import {default as CartItem} from "./stores/cart-item"

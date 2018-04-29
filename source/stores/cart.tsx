@@ -1,6 +1,6 @@
 
 import CartItem from "./cart-item"
-import {formatCurrency} from "../crnc"
+import {formatCurrency} from "crnc"
 import {observable, action, autorun, computed} from "mobx"
 
 export default class Cart {

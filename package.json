@@ -31,6 +31,7 @@
 		"preact": "8.*"
 	},
 	"dependencies": {
+		"crnc": "0.0.0-dev.0",
 		"shopify-buy": "1.4.0"
 	},
 	"devDependencies": {

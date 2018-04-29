@@ -1,5 +1,5 @@
 
-import {formatCurrency} from "../crnc"
+import {formatCurrency} from "crnc"
 import {observable, computed, action} from "mobx"
 
 export interface CartItemData {
