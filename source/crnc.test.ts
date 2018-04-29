@@ -1,16 +1,16 @@
 
 import {exchangeCurrency, formatCurrency} from "./crnc"
 
-describe("currency", () => {
+describe("crnc", () => {
 
-	describe("exchange function", () => {
+	describe("exchange currency - function", () => {
 		const rates = {
 			CAD: 3.0,
 			USD: 2.0,
 			GBP: 1.0
 		}
 
-		test("convert currency values", async() => {
+		it("converts values", async() => {
 			expect(exchangeCurrency({
 				value: 100,
 				input: "GBP",
@@ -31,7 +31,7 @@ describe("currency", () => {
 			})).toBe(40)
 		})
 
-		test("value is fine with same input and output currencies", async() => {
+		it("survives same input/output currencies", async() => {
 			expect(exchangeCurrency({
 				value: 123,
 				input: "CAD",
@@ -40,7 +40,7 @@ describe("currency", () => {
 			})).toBe(123)
 		})
 
-		test("throw errors for invalid currencies", async() => {
+		it("throws on invalid currency", async() => {
 			expect(() => exchangeCurrency({
 				value: 100,
 				input: "xyz",
@@ -62,16 +62,16 @@ describe("currency", () => {
 			expect(() => exchangeCurrency({
 				value: 100,
 				input: "GBP",
-				output: "zyx",
+				output: "xyz",
 				rates
 			})).toThrow()
 		})
 	})
 
-	describe("format price tag function", () => {
+	describe("format currency - function", () => {
 		const locale = "en-US"
 
-		test("formats price tags", async() => {
+		it("displays human-readable currency", async() => {
 			expect(formatCurrency({cents: 123, currency: "CAD", locale}))
 				.toBe("$1.23 CAD")
 			expect(formatCurrency({cents: 123, currency: "XBT", locale}))
@@ -80,7 +80,7 @@ describe("currency", () => {
 				.toBe("$1,234.56 CAD")
 		})
 
-		test("throws error for unknown formatter", async() => {
+		it("throws on unknown currency", async() => {
 			expect(() => formatCurrency({cents: 123, currency: "xyz", locale})).toThrow()
 		})
 	})

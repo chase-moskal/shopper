@@ -36,14 +36,16 @@ export interface ExchangeCurrencyValueParams {
  * - returns a numeric value
  */
 export function exchangeCurrency({value, input, output, rates}: ExchangeCurrencyValueParams): number {
-	const inputRate = rates[input]
-	const outputRate = rates[output]
 	const scrutinizeRate = (rate: number) => {
 		if (rate === undefined || rate === null || isNaN(rate))
 			throw new Error(`invalid rate "${rate}"`)
 	}
+
+	const inputRate = rates[input]
+	const outputRate = rates[output]
 	scrutinizeRate(inputRate)
 	scrutinizeRate(outputRate)
+
 	return value * (outputRate / inputRate)
 }
 

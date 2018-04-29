@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.3",
+	"version": "0.0.0-dev.4",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -16,10 +16,9 @@
 	"license": "ISC",
 	"scripts": {
 		"prepare": "node build && npm test -s",
-		"t": "tsc",
 		"build-debug": "node build --debug",
 		"start": "http-server",
-		"test": "jest"
+		"test": "jest --verbose"
 	},
 	"files": [
 		"dist",
@@ -32,30 +31,30 @@
 		"preact": "8.*"
 	},
 	"dependencies": {
-		"shopify-buy": "1.2.0"
+		"shopify-buy": "1.4.0"
 	},
 	"devDependencies": {
-		"@types/jest": "22.2.2",
+		"@types/jest": "22.2.3",
 		"array.find": "1.0.7",
 		"axx": "0.1.1-dev.1",
-		"browserify": "16.1.1",
+		"browserify": "16.2.0",
 		"commander": "2.15.1",
 		"envify": "4.1.0",
 		"es6-promise": "4.2.4",
 		"http-server": "0.11.1",
 		"jest": "22.4.3",
 		"mkdirp": "0.5.1",
-		"mobx": "4.1.1",
+		"mobx": "4.2.0",
 		"mobx-preact": "2.0.0",
-		"node-sass": "4.7.2",
+		"node-sass": "4.9.0",
 		"npm-run-all": "4.1.2",
 		"preact": "8.2.7",
 		"rimraf": "2.6.2",
 		"shelljs": "0.8.1",
-		"tsify": "3.0.4",
-		"typescript": "2.7.2",
+		"tsify": "4.0.0",
+		"typescript": "2.8.3",
 		"uglify-es": "3.3.9",
-		"uglifyify": "4.0.5",
+		"uglifyify": "5.0.0",
 		"whatwg-fetch": "2.0.4"
 	}
 }
