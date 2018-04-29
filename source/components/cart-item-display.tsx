@@ -3,7 +3,7 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import {formatPriceTag} from "../money"
+import {formatPriceTag} from "../crnc"
 import CartItem from "../stores/cart-item"
 
 export interface CartItemDisplayProps {
@@ -27,8 +27,8 @@ export default class CartItemDisplay extends Component<CartItemDisplayProps, any
 				<span>
 					<input type="number"
 						value={item.quantity.toString()}
-						min="1"
-						max="10"
+						min={item.quantityMin}
+						max={item.quantityMax}
 						onChange={this.handleQuantityInputChange}
 						onKeyUp={this.handleQuantityInputChange}
 						onMouseUp={this.handleQuantityInputChange}
@@ -38,7 +38,12 @@ export default class CartItemDisplay extends Component<CartItemDisplayProps, any
 				</span>
 				<span>#{item.id}</span>
 				<span>"{item.title}"</span>
-				<strong>{formatPriceTag(item.cents * item.quantity, item.currency)}</strong>
+				<strong>
+					{formatPriceTag({
+						cents: item.cents * item.quantity,
+						currency: item.currency
+					})}
+				</strong>
 			</li>
 		)
 	}

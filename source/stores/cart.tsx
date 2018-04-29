@@ -1,12 +1,12 @@
 
-import {observable, action, autorun, computed} from "mobx"
-import {Currency, formatPriceTag} from "../money"
 import CartItem from "./cart-item"
+import {formatPriceTag} from "../crnc"
+import {observable, action, autorun, computed} from "mobx"
 
 export default class Cart {
 	@observable items: CartItem[] = []
 	@observable open: boolean = false
-	@observable currency: Currency = Currency.CAD
+	@observable currency: string = "CAD"
 
 	@action toggle(open = null) {
 		this.open = open !== null
@@ -26,11 +26,25 @@ export default class Cart {
 		this.items.filter(item => item.id !== id)
 	}
 
+	@action setCurrency(currency: string) {
+		this.currency = currency
+	}
+
 	@computed get subtotalCents(): number {
 		return this.items.reduce((subtotal, item) => subtotal + item.totalCents, 0)
 	}
 
 	@computed get subtotal(): string {
-		return formatPriceTag(this.subtotalCents, this.currency)
+		const {subtotalCents: cents, currency} = this
+		return formatPriceTag({cents, currency})
+	}
+
+	constructor() {
+
+		// synchronize each item's currency to the cart's currency
+		autorun(() => {
+			const {currency, items} = this
+			for (const item of items) item.setCurrency(currency)
+		})
 	}
 }

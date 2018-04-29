@@ -1,31 +1,35 @@
 
+import {formatPriceTag} from "../crnc"
 import {observable, computed, action} from "mobx"
-import {Currency, formatPriceTag} from "../money"
 
 export interface CartItemData {
 	id: string
 	cents: number
-	currency: Currency
+	currency: string
 	title: string
 }
 
 export default class CartItem implements CartItemData {
 	@observable id: string
 	@observable cents: number
-	@observable currency: Currency
+	@observable currency: string
 	@observable title: string
 	@observable quantity: number = 1
+	@observable quantityMin: number = 1
+	@observable quantityMax: number = 5
 
 	@computed get totalCents() {
 		return this.cents * this.quantity
 	}
 
 	@computed get price() {
-		return formatPriceTag(this.cents, this.currency)
+		const {cents, currency} = this
+		return formatPriceTag({cents, currency})
 	}
 
 	@computed get totalPrice() {
-		return formatPriceTag(this.totalCents, this.currency)
+		const {cents, currency} = this
+		return formatPriceTag({cents, currency})
 	}
 
 	constructor(data: CartItemData) {
@@ -35,5 +39,10 @@ export default class CartItem implements CartItemData {
 	@action
 	setQuantity(quantity: number) {
 		this.quantity = quantity
+	}
+
+	@action
+	setCurrency(currency: string) {
+		this.currency = currency
 	}
 }
