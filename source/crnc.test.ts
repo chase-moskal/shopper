@@ -1,5 +1,5 @@
 
-import {exchange, formatPriceTag} from "./crnc"
+import {exchangeCurrency, formatCurrency} from "./crnc"
 
 describe("currency", () => {
 
@@ -11,19 +11,19 @@ describe("currency", () => {
 		}
 
 		test("convert currency values", async() => {
-			expect(exchange({
+			expect(exchangeCurrency({
 				value: 100,
 				input: "GBP",
 				output: "USD",
 				rates
 			})).toBe(200)
-			expect(exchange({
+			expect(exchangeCurrency({
 				value: 200,
 				input: "USD",
 				output: "GBP",
 				rates
 			})).toBe(100)
-			expect(exchange({
+			expect(exchangeCurrency({
 				value: 60,
 				input: "CAD",
 				output: "USD",
@@ -32,7 +32,7 @@ describe("currency", () => {
 		})
 
 		test("value is fine with same input and output currencies", async() => {
-			expect(exchange({
+			expect(exchangeCurrency({
 				value: 123,
 				input: "CAD",
 				output: "CAD",
@@ -41,25 +41,25 @@ describe("currency", () => {
 		})
 
 		test("throw errors for invalid currencies", async() => {
-			expect(() => exchange({
+			expect(() => exchangeCurrency({
 				value: 100,
 				input: "xyz",
 				output: "USD",
 				rates
 			})).toThrow()
-			expect(() => exchange({
+			expect(() => exchangeCurrency({
 				value: 100,
 				input: null,
 				output: "USD",
 				rates
 			})).toThrow()
-			expect(() => exchange({
+			expect(() => exchangeCurrency({
 				value: 100,
 				input: "",
 				output: "USD",
 				rates
 			})).toThrow()
-			expect(() => exchange({
+			expect(() => exchangeCurrency({
 				value: 100,
 				input: "GBP",
 				output: "zyx",
@@ -72,16 +72,16 @@ describe("currency", () => {
 		const locale = "en-US"
 
 		test("formats price tags", async() => {
-			expect(formatPriceTag({cents: 123, currency: "CAD", locale}))
+			expect(formatCurrency({cents: 123, currency: "CAD", locale}))
 				.toBe("$1.23 CAD")
-			expect(formatPriceTag({cents: 123, currency: "XBT", locale}))
+			expect(formatCurrency({cents: 123, currency: "XBT", locale}))
 				.toBe("Ƀ1.23000000 XBT")
-			expect(formatPriceTag({cents: 123456, currency: "CAD", locale}))
+			expect(formatCurrency({cents: 123456, currency: "CAD", locale}))
 				.toBe("$1,234.56 CAD")
 		})
 
 		test("throws error for unknown formatter", async() => {
-			expect(() => formatPriceTag({cents: 123, currency: "xyz", locale})).toThrow()
+			expect(() => formatCurrency({cents: 123, currency: "xyz", locale})).toThrow()
 		})
 	})
 })

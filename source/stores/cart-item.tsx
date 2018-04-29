@@ -1,5 +1,5 @@
 
-import {formatPriceTag} from "../crnc"
+import {formatCurrency} from "../crnc"
 import {observable, computed, action} from "mobx"
 
 export interface CartItemData {
@@ -24,12 +24,12 @@ export default class CartItem implements CartItemData {
 
 	@computed get price() {
 		const {cents, currency} = this
-		return formatPriceTag({cents, currency})
+		return formatCurrency({cents, currency})
 	}
 
 	@computed get totalPrice() {
 		const {cents, currency} = this
-		return formatPriceTag({cents, currency})
+		return formatCurrency({cents, currency})
 	}
 
 	constructor(data: CartItemData) {

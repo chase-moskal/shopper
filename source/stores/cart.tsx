@@ -1,6 +1,6 @@
 
 import CartItem from "./cart-item"
-import {formatPriceTag} from "../crnc"
+import {formatCurrency} from "../crnc"
 import {observable, action, autorun, computed} from "mobx"
 
 export default class Cart {
@@ -36,7 +36,7 @@ export default class Cart {
 
 	@computed get subtotal(): string {
 		const {subtotalCents: cents, currency} = this
-		return formatPriceTag({cents, currency})
+		return formatCurrency({cents, currency})
 	}
 
 	constructor() {

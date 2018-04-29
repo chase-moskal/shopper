@@ -13,14 +13,14 @@ import {default as CartSystem} from "./components/cart-system"
 import {default as CartList} from "./components/cart-manipulator"
 
 import * as crnc from "./crnc"
-import * as comms from "./comms"
+import * as commotion from "./commotion"
 
 window["mobx"] = mobx
 window["preact"] = preact
 window["mobxPreact"] = mobxPreact
 
 window["crnc"] = crnc
-window["comms"] = comms
+window["commotion"] = commotion
 
 window["shopperman"] = {
 	stores: {
@@ -33,8 +33,8 @@ window["shopperman"] = {
 		CartList
 	},
 
-	comms,
 	crnc,
+	commotion,
 
 	demo: async function() {
 		mobx.configure({enforceActions: true})
@@ -59,20 +59,14 @@ window["shopperman"] = {
 	},
 
 	testCurrencyExchange: async function() {
-		const tag = (value: number, currency: string) => crnc.formatPriceTag({
-			cents: crnc.exchange({value, input: "CAD", output: currency, rates}),
-			currency
-		})
-
-		const {updated, rates} = await crnc.downloadRates()
-
-		const converto = (value: number = 1082) => {
-			console.log(tag(value, "CAD"))
-			console.log(tag(value, "USD"))
-			console.log(tag(value, "EUR"))
-			console.log(tag(value, "GBP"))
+		const {updated, rates} = await crnc.downloadCurrencyExchangeRates()
+		const converto = (cents: number = 1082) => {
+			const input = "CAD"
+			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "CAD", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "USD", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "EUR", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "GBP", rates}))
 		}
-
 		converto()
 		return {converto}
 	}
