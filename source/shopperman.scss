@@ -63,6 +63,51 @@
 	.cart-checkout {
 		margin: $panelspacing;
 	}
+
+	&[data-theme="base"] {
+		.cart-system {
+			color: #444;
+			h1 {
+				text-align: left;
+				text-transform: uppercase;
+				opacity: 0.8;
+				font-style: italic;
+				& > span:nth-of-type(2) {
+					font-weight: normal;
+				}
+			}
+		}
+
+		.cart-button {
+			background: rgba(255,255,255, 0.9);
+		}
+
+		.cart-panel {
+			background: rgba(255,255,255, 0.96);
+			background: linear-gradient(
+				to bottom right,
+				rgba(255,255,255, 0.96),
+				rgba(255,255,255, 0.88),
+				rgba(255,255,255, 0.60)
+			);
+			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+		}
+
+		.cart-checkout {
+			text-align: right;
+		}
+
+		@media (max-width: 800px) {
+			.cart-button {
+				left: auto;
+				right: 0;
+				border-radius: 3px 0 0 3px;
+			}
+			.cart-panel {
+				padding-right: 3em;
+			}
+		}
+	}
 }
 
 @mixin slice() {
@@ -106,50 +151,5 @@ html.shopperman-demo {
 
 	.content {
 		padding: 1em;
-	}
-
-	.shopperman {
-		.cart-system {
-			color: $bgcolor;
-			h1 {
-				text-align: left;
-				text-transform: uppercase;
-				opacity: 0.8;
-				font-style: italic;
-				& > span:nth-of-type(2) {
-					font-weight: normal;
-				}
-			}
-		}
-
-		.cart-button {
-			background: rgba(255,255,255, 0.9);
-		}
-
-		.cart-panel {
-			background: rgba(255,255,255, 0.96);
-			background: linear-gradient(
-				to bottom right,
-				rgba(255,255,255, 0.96),
-				rgba(255,255,255, 0.88),
-				rgba(255,255,255, 0.60)
-			);
-			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-		}
-
-		.cart-checkout {
-			text-align: right;
-		}
-
-		@media (max-width: 800px) {
-			.cart-button {
-				left: auto;
-				right: 0;
-				border-radius: 3px 0 0 3px;
-			}
-			.cart-panel {
-				padding-right: 3em;
-			}
-		}
 	}
 }

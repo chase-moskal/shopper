@@ -28,8 +28,8 @@ const buildOptions = {
 	sassWatch: commander.sassWatch,
 	paths: {
 		nb: "$(npm bin)/",
-		scriptSource: "source/shopperman.global.tsx",
-		scriptBundle: "dist/shopperman.global.bundle.js",
+		scriptSource: "source/shopperman.tsx",
+		scriptBundle: "dist/shopperman.bundle.js",
 		styleSource: "source/shopperman.scss",
 		styleOutput: "dist/shopperman.css",
 		polyfills: [
@@ -52,7 +52,7 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		debug
 			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx()).result
 			: axx(`${nb}tsc`, caxx()).result,
-		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`).result
+		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}).result
 	])
 
 	if (debug) { // debug build
