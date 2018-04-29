@@ -28,8 +28,8 @@ const buildOptions = {
 	sassWatch: commander.sassWatch,
 	paths: {
 		nb: "$(npm bin)/",
-		scriptSource: "source/shopperman.global.tsx",
-		scriptBundle: "dist/shopperman.global.bundle.js",
+		scriptSource: "source/shopperman.tsx",
+		scriptBundle: "dist/shopperman.bundle.js",
 		styleSource: "source/shopperman.scss",
 		styleOutput: "dist/shopperman.css",
 		polyfills: [
