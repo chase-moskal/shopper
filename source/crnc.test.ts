@@ -74,8 +74,8 @@ describe("currency", () => {
 		test("formats price tags", async() => {
 			expect(formatPriceTag({cents: 123, currency: "CAD", locale}))
 				.toBe("$1.23 CAD")
-			expect(formatPriceTag({cents: 123, currency: "BTC", locale}))
-				.toBe("Ƀ1.23 BTC")
+			expect(formatPriceTag({cents: 123, currency: "XBT", locale}))
+				.toBe("Ƀ1.23000000 XBT")
 			expect(formatPriceTag({cents: 123456, currency: "CAD", locale}))
 				.toBe("$1,234.56 CAD")
 		})

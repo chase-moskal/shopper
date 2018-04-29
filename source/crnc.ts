@@ -23,38 +23,41 @@ export function exchange({value, input, output, rates}: ExchangeParams): number 
 	return value * (outputRate / inputRate)
 }
 
-export function centsToDollars(cents: number, locale: string): string {
-	return (Math.ceil(cents) / 100).toLocaleString(locale, {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2
-	})
-}
-
-export interface CurrencyFormatters {
-	[key: string]: (cents: number, locale?: string) => string
-}
-
-const currencyFormatters: CurrencyFormatters = {
-	CAD: (cents, locale) => `\$${centsToDollars(cents, locale)} CAD`,
-	USD: (cents, locale) => `\$${centsToDollars(cents, locale)} USD`,
-	GBP: (cents, locale) => `\£${centsToDollars(cents, locale)} GBP`,
-	BTC: (cents, locale) => `\Ƀ${centsToDollars(cents, locale)} BTC`
-}
+export type CurrencyFormatter = (cents: number) => string
 
 export interface FormatPriceTagParams {
 	cents: number
 	currency: string
+	formatters?: { [key: string]: CurrencyFormatter }
 	locale?: string
-	formatters?: CurrencyFormatters
 }
 
 export function formatPriceTag({
 	cents,
 	currency,
-	locale = undefined,
-	formatters = currencyFormatters
+	formatters,
+	locale = undefined
 }: FormatPriceTagParams): string {
-	const formatter = formatters[currency]
+
+	const centsToDollars = (cents: number): string => (Math.ceil(cents) / 100)
+		.toLocaleString(locale, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2
+		})
+
+	const centsToBitcoins = (cents: number): string => (cents / 100)
+		.toLocaleString(locale, {
+			maximumFractionDigits: 8,
+			minimumFractionDigits: 8
+		})
+
+	const formatter: CurrencyFormatter = (formatters || {
+		CAD: cents => `\$${centsToDollars(cents)} CAD`,
+		USD: cents => `\$${centsToDollars(cents)} USD`,
+		GBP: cents => `\£${centsToDollars(cents)} GBP`,
+		XBT: cents => `\Ƀ${centsToBitcoins(cents)} XBT`
+	})[currency]
+
 	if (!formatter) throw new Error(`unknown formatter "${currency}"`)
-	return formatter(cents, locale)
+	return formatter(cents)
 }
