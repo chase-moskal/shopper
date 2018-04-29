@@ -1,4 +1,6 @@
 
+import {requestJson} from "./comms"
+
 export interface Rates {
 	[key: string]: number
 }
@@ -54,10 +56,19 @@ export function formatPriceTag({
 	const formatter: CurrencyFormatter = (formatters || {
 		CAD: cents => `\$${centsToDollars(cents)} CAD`,
 		USD: cents => `\$${centsToDollars(cents)} USD`,
+		EUR: cents => `\€${centsToDollars(cents)} EUR`,
 		GBP: cents => `\£${centsToDollars(cents)} GBP`,
 		XBT: cents => `\Ƀ${centsToBitcoins(cents)} XBT`
 	})[currency]
 
 	if (!formatter) throw new Error(`unknown formatter "${currency}"`)
 	return formatter(cents)
+}
+
+export async function downloadRates(): Promise<{updated: string; rates: Rates}> {
+	const {base, date, rates} = await requestJson({link: "https://exchangeratesapi.io/api/latest"})
+	return {
+		updated: date,
+		rates: {...rates, [base]: 1.0}
+	}
 }
