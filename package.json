@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.5",
+	"version": "0.0.0-dev.6",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -31,6 +31,7 @@
 		"preact": "8.*"
 	},
 	"dependencies": {
+		"commotion": "0.0.0-dev.0",
 		"crnc": "0.0.0-dev.0",
 		"shopify-buy": "1.4.0"
 	},
