@@ -32,7 +32,7 @@
 	},
 	"dependencies": {
 		"commotion": "0.0.0-dev.0",
-		"crnc": "0.0.0-dev.3",
+		"crnc": "0.0.0-dev.4",
 		"shopify-buy": "1.4.0"
 	},
 	"devDependencies": {

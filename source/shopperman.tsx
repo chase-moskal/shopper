@@ -61,10 +61,10 @@ window["shopperman"] = {
 		const {updated, rates} = await crnc.downloadRates()
 		const converto = (value: number = 10.82) => {
 			const input = "CAD"
-			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "CAD", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "USD", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "EUR", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "GBP", rates}))
+			console.log(crnc.convertAndFormatCurrency({value, input, output: "CAD", rates}))
+			console.log(crnc.convertAndFormatCurrency({value, input, output: "USD", rates}))
+			console.log(crnc.convertAndFormatCurrency({value, input, output: "EUR", rates}))
+			console.log(crnc.convertAndFormatCurrency({value, input, output: "GBP", rates}))
 		}
 		converto()
 		return {converto}
