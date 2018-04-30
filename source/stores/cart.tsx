@@ -30,13 +30,13 @@ export default class Cart {
 		this.currency = currency
 	}
 
-	@computed get subtotalCents(): number {
-		return this.items.reduce((subtotal, item) => subtotal + item.totalCents, 0)
+	@computed get subtotalValue(): number {
+		return this.items.reduce((subtotal, item) => subtotal + item.totalValue, 0)
 	}
 
 	@computed get subtotal(): string {
-		const {subtotalCents: cents, currency} = this
-		return formatCurrency({cents, currency})
+		const {subtotalValue: value, currency} = this
+		return formatCurrency({value, currency})
 	}
 
 	constructor() {

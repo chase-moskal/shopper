@@ -40,7 +40,7 @@ export default class CartItemDisplay extends Component<CartItemDisplayProps, any
 				<span>"{item.title}"</span>
 				<strong>
 					{formatCurrency({
-						cents: item.cents * item.quantity,
+						value: item.value * item.quantity,
 						currency: item.currency
 					})}
 				</strong>

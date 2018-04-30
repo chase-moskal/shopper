@@ -44,27 +44,27 @@ window["shopperman"] = {
 
 		cart.add(new CartItem({
 			id: "AE2468",
-			cents: 1082,
+			value: 10.82,
 			title: "Apple Pie",
 			currency
 		}))
 
 		cart.add(new CartItem({
 			id: "BC3682",
-			cents: 340,
+			value: 3.41,
 			title: "Blueberry Muffin",
 			currency
 		}))
 	},
 
 	testCurrencyExchange: async function() {
-		const {updated, rates} = await crnc.downloadCurrencyExchangeRates()
-		const converto = (cents: number = 1082) => {
+		const {updated, rates} = await crnc.downloadRates()
+		const converto = (value: number = 10.82) => {
 			const input = "CAD"
-			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "CAD", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "USD", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "EUR", rates}))
-			console.log(crnc.exchangeAndFormatCurrency({cents, input, output: "GBP", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "CAD", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "USD", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "EUR", rates}))
+			console.log(crnc.exchangeAndFormatCurrency({value, input, output: "GBP", rates}))
 		}
 		converto()
 		return {converto}
