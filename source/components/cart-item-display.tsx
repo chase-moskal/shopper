@@ -1,9 +1,9 @@
 
+import {formatCurrency} from "crnc"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import {formatCurrency} from "../crnc"
 import CartItem from "../stores/cart-item"
 
 export interface CartItemDisplayProps {
@@ -40,7 +40,7 @@ export default class CartItemDisplay extends Component<CartItemDisplayProps, any
 				<span>"{item.title}"</span>
 				<strong>
 					{formatCurrency({
-						cents: item.cents * item.quantity,
+						value: item.value * item.quantity,
 						currency: item.currency
 					})}
 				</strong>
