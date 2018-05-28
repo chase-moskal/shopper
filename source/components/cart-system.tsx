@@ -60,7 +60,7 @@ export default class CartSystem extends Component<{cart: Cart}, any> {
 					<h1>
 						<span>Shopping Cart</span>
 						&nbsp;
-						<span>({`${cart.items.length} item${cart.items.length === 1 ? "" : "s"}`})</span>
+						<span>- {cart.items.length} item{cart.items.length === 1 ? "" : "s"}</span>
 					</h1>
 					<CartManipulator {...{cart}}/>
 					<div className="cart-checkout">
