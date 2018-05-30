@@ -45,21 +45,21 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 	process.env.FORCE_COLOR = true
 
 	if (sassWatch)
-		await (axx(`${nb}node-sass --watch --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}).result)
+		await (axx(`${nb}node-sass --watch --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}))
 
 	await axx(`rm -rf dist && mkdir dist`)
 	await Promise.all([
 		debug
-			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx()).result
-			: axx(`${nb}tsc`, caxx()).result,
-		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}).result
+			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx())
+			: axx(`${nb}tsc`, caxx()),
+		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true})
 	])
 
 	if (debug) { // debug build
 		await (axx(
 			`${nb}browserify ${scriptSource} --debug -p [ tsify ]`,
 			waxx(scriptBundle)
-		).result)
+		))
 		console.log("✔ done debug build")
 	}
 
@@ -67,14 +67,14 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		await (axx(
 			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV production ] -g uglifyify`,
 			waxx(`${scriptBundle}.temp`)
-		).result)
+		))
 		await (axx(
 			`cat ${[
 				...polyfills,
 				`${scriptBundle}.temp`
 			].join(" ")}`,
 			axx(`${nb}uglifyjs --compress --mangle`, waxx(scriptBundle))
-		).result)
+		))
 		console.log("✔ done production build")
 	}
 }
