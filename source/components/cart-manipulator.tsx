@@ -3,11 +3,11 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import Cart from "../stores/cart"
-import CartItemDisplay from "./cart-item-display"
+import {Cart} from "../stores/cart"
+import {CartItemDisplay} from "./cart-item-display"
 
 @observer
-export default class CartManipulator extends Component<{cart: Cart}, any> {
+export class CartManipulator extends Component<{cart: Cart}, any> {
 	render() {
 		const {cart} = this.props
 		return (

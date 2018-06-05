@@ -9,7 +9,7 @@ export interface CartItemData {
 	title: string
 }
 
-export default class CartItem implements CartItemData {
+export class CartItem implements CartItemData {
 	@observable id: string
 	@observable value: number
 	@observable currency: string

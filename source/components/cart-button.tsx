@@ -3,7 +3,7 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import Cart from "../stores/cart"
+import {Cart} from "../stores/cart"
 
 export interface CartButtonProps {
 	cart: Cart
@@ -11,7 +11,7 @@ export interface CartButtonProps {
 }
 
 @observer
-export default class CartButton extends Component<CartButtonProps, any> {
+export class CartButton extends Component<CartButtonProps, any> {
 	render() {
 		const {cart, onClick} = this.props
 		return (

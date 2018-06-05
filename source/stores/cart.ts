@@ -1,9 +1,9 @@
 
-import CartItem from "./cart-item"
+import {CartItem} from "./cart-item"
 import {formatCurrency} from "crnc"
 import {observable, action, autorun, computed} from "mobx"
 
-export default class Cart {
+export class Cart {
 	@observable items: CartItem[] = []
 	@observable open: boolean = false
 	@observable currency: string = "CAD"

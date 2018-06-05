@@ -4,14 +4,14 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import CartItem from "../stores/cart-item"
+import {CartItem} from "../stores/cart-item"
 
 export interface CartItemDisplayProps {
 	item: CartItem
 }
 
 @observer
-export default class CartItemDisplay extends Component<CartItemDisplayProps, any> {
+export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 
 	private readonly handleQuantityInputChange = (event: Event) => {
 		const input = event.target as HTMLInputElement

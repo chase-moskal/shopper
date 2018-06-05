@@ -3,9 +3,9 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 import {observable, action, autorun} from "mobx"
 
-import Cart from "../stores/cart"
-import CartButton from "./cart-button"
-import CartManipulator from "./cart-manipulator"
+import {Cart} from "../stores/cart"
+import {CartButton} from "./cart-button"
+import {CartManipulator} from "./cart-manipulator"
 
 function isDescendant(child: Element, parent: Element) {
 	if (child === parent) return true
@@ -18,7 +18,7 @@ function isDescendant(child: Element, parent: Element) {
 }
 
 @observer
-export default class CartSystem extends Component<{cart: Cart}, any> {
+export class CartSystem extends Component<{cart: Cart}, any> {
 	private getElement() {
 		const element = document.querySelector(".shopperman .cart-system")
 		if (!element) throw new Error("unable to find shopperman cart system element")

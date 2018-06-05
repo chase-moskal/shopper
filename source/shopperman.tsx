@@ -8,19 +8,8 @@ import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 import * as shopifyBuy from "shopify-buy"
 
-import {default as Cart} from "./stores/cart"
-import {default as CartItem} from "./stores/cart-item"
-import {default as CartButton} from "./components/cart-button"
-import {default as CartSystem} from "./components/cart-system"
-import {default as CartList} from "./components/cart-manipulator"
-
-const shopify = {
-	options: {
-		domain: "dev-bakery.myshopify.com",
-		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25",
-	},
-	collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
-}
+import * as stores from "./stores"
+import * as components from "./components"
 
 window["mobx"] = mobx
 window["preact"] = preact
@@ -30,20 +19,21 @@ window["crnc"] = crnc
 window["commotion"] = commotion
 
 window["shopperman"] = {
-	stores: {
-		Cart,
-		CartItem
-	},
-	components: {
-		CartButton,
-		CartSystem,
-		CartList
-	},
-
-	crnc,
-	commotion,
+	stores,
+	components,
 
 	demo: async function() {
+		const {CartSystem} = components
+		const {Cart, CartItem} = stores
+
+		const shopify = {
+			options: {
+				domain: "dev-bakery.myshopify.com",
+				storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25",
+			},
+			collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
+		}
+
 		mobx.configure({enforceActions: true})
 
 		const cart = new Cart()
