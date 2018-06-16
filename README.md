@@ -1,13 +1,13 @@
 
-# ***shopperman*** <br/> <small>cart ui for custom shopify frontends</small>
+# **shopperman** <br/> <em><small>cart ui for custom shopify frontends</small></em>
 
-### basically
+## basics
 
 frontend tech to implement custom shopify stores
 
 preact components, mobx stores, some scss
 
-### goals
+## goals
 
 - **display a product for sale on a web page**
 	- *buy now* button
@@ -26,3 +26,44 @@ preact components, mobx stores, some scss
 	- info like cart items, currency, is tracked
 	- if you leave the page, and return, state is maintained
 	- if you have multiple tabs open, all cart instances should auto-synchronize in realtime
+
+## ideal usage examples
+
+- **establish some basic options**
+
+	```tsx
+	const options = {
+		shopify: {
+			apiKey: "abc123",
+			domain: "dev-bakery.myshopify.com"
+		},
+		currency: "CAD"
+	}
+	```
+
+- **display a product for sale**
+
+	```tsx
+	import {ShoppermanStore, ProductDisplay} from "shopperman"
+
+	;(async() => {
+
+		const shopperman = new ShoppermanStore(options)
+
+		const products = await shopperman.getProductsInCollection("cde345")
+
+		const productList = (
+			<div className="product-list">
+				{products.map(product =>
+					<ProductDisplay {...{product}}/>
+				)}
+			</div>
+		)
+
+		preact.render(
+			productList,
+			productListArea: document.querySelector(".product-list-area")
+		)
+
+	})()
+	```
