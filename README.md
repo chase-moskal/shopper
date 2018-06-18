@@ -3,9 +3,8 @@
 
 ## basics
 
-frontend tech to implement custom shopify stores
-
-preact components, mobx stores, some scss
+- frontend tech to implement custom shopify stores
+- preact components, mobx stores, some scss
 
 ## goals
 
@@ -66,4 +65,52 @@ preact components, mobx stores, some scss
 		)
 
 	})()
+	```
+
+## architecture
+
+- **state structure**
+
+	```
+	Shopperman
+		currencyControl: CurrencyControl
+		getProductsInCollection(collectionId: string): Promise<Product[]>
+		cart: Cart
+
+	CurrencyControl
+		currency: string
+		setCurrency(currency: string)
+
+	Cart
+		currencyControl: CurrencyControl
+		products: Product[]
+		open: boolean
+		toggle(open: boolean)
+		clear()
+		add(product: Product)
+
+	Product
+		currencyControl: CurrencyControl
+		id: string
+		value: number
+		currency: string
+		title: string
+		quantity: number
+		quantityMin: number
+		quantityMax: number
+		totalValue(): number
+		price(): string
+		totalPrice(): string
+		setQuantity(quantity: number)
+	```
+
+- **components**
+
+	```
+	ProductDisplay {Product}
+
+	CartSystem {Cart}
+		CartButton {Cart}
+		CartManipulator {Cart}
+		CartItemDisplay {Product}
 	```
