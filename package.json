@@ -26,8 +26,8 @@
 		"index.html"
 	],
 	"peerDependencies": {
-		"mobx": "4.*",
-		"mobx-preact": "2.*",
+		"mobx": "5.*",
+		"mobx-preact": "3.*",
 		"preact": "8.*"
 	},
 	"dependencies": {
