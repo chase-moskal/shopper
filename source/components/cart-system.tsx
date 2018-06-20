@@ -1,7 +1,6 @@
 
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {observable, action, autorun} from "mobx"
 
 import {Cart} from "../stores/cart"
 import {CartButton} from "./cart-button"

@@ -62,7 +62,7 @@ window["shopperman"] = {
 				title: "Apple Pie",
 				currency
 			}))
-	
+
 			cart.add(new CartItem({
 				id: "BC3682",
 				value: 3.41,
