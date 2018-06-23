@@ -22,6 +22,10 @@ window["shopperman"] = {
 	stores,
 	components,
 
+	//
+	// SHOPPERMAN DEMO
+	//
+
 	demo: async function() {
 		const {CartSystem} = components
 		const {Cart, CartItem} = stores
@@ -72,14 +76,18 @@ window["shopperman"] = {
 		}
 	},
 
+	//
+	// GLOBALLY AVAILABLE TESTING FUNCTIONS
+	//
+
 	testCurrencyExchange: async function() {
 		const {updated, rates} = await crnc.downloadRates()
 		const converto = (value: number = 10.82) => {
 			const input = "CAD"
-			console.log(crnc.convertAndFormatCurrency({value, input, output: "CAD", rates}))
-			console.log(crnc.convertAndFormatCurrency({value, input, output: "USD", rates}))
-			console.log(crnc.convertAndFormatCurrency({value, input, output: "EUR", rates}))
-			console.log(crnc.convertAndFormatCurrency({value, input, output: "GBP", rates}))
+			const outputs = ["CAD", "USD", "EUR", "GBP"]
+			for (const output of outputs) console.log(
+				crnc.convertAndFormatCurrency({value, input, output, rates})
+			)
 		}
 		converto()
 		return {converto}

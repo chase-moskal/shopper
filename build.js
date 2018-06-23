@@ -16,13 +16,22 @@ BUILD SCRIPT CLI
 */
 
 const commander = require("commander")
-const {axx, maxx, raxx, waxx, caxx} = require("axx")
+const {axx, waxx, caxx} = require("axx")
+
+//
+// PARSE COMMAND LINE ARGUMENTS
+//
 
 commander
 	.option("-d, --debug", "create a debuggable bundle")
 	.option("-w, --sassWatch", "sass compile-on-save watcher mode")
 	.parse(process.argv)
 
+/**
+ * BUILD ROUTINE OPTIONS
+ *  - some options are provided by the command line arguments
+ *  - some options are hard-coded paths
+ */
 const buildOptions = {
 	debug: commander.debug,
 	sassWatch: commander.sassWatch,
@@ -40,22 +49,65 @@ const buildOptions = {
 	}
 }
 
-async function build({debug, paths, sassWatch, cannedVideoOptions}) {
-	const {nb, scriptSource, scriptBundle, styleSource, styleOutput, polyfills} = paths
+/**
+ * BUILD ROUTINE
+ * - intakes build options
+ * - performs a project build
+ * - overwrites the "dist" directory with build results
+ */
+async function build({debug, paths, sassWatch}) {
 	process.env.FORCE_COLOR = true
+	const {
+		nb,
+		scriptSource,
+		scriptBundle,
+		styleSource,
+		styleOutput,
+		polyfills
+	} = paths
 
-	if (sassWatch)
-		await (axx(`${nb}node-sass --watch --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true}))
+	//
+	// SASS WATCH MODE
+	//
+
+	if (sassWatch) {
+		await axx(
+			`${nb}node-sass --watch --source-map true ${styleSource} ${styleOutput}`,
+			caxx(),
+			{combineStderr: true}
+		)
+		return
+	}
+
+	//
+	// CLEAN UP DIST DIRECTORY
+	//
 
 	await axx(`rm -rf dist && mkdir dist`)
+
+	//
+	// TYPESCRIPT COMPILATION
+	// - for the published npm package
+	//
+
 	await Promise.all([
 		debug
 			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx())
 			: axx(`${nb}tsc`, caxx()),
-		axx(`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`, caxx(), {combineStderr: true})
+		axx(
+			`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`,
+			caxx(),
+			{combineStderr: true}
+		)
 	])
 
-	if (debug) { // debug build
+	//
+	// DEBUG BUILD
+	// - bundle build for demo
+	// - provides global access
+	//
+
+	if (debug) {
 		await (axx(
 			`${nb}browserify ${scriptSource} --debug -p [ tsify ]`,
 			waxx(scriptBundle)
@@ -63,20 +115,31 @@ async function build({debug, paths, sassWatch, cannedVideoOptions}) {
 		console.log("✔ done debug build")
 	}
 
-	else { // production build
-		await (axx(
-			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV production ] -g uglifyify`,
+	//
+	// PRODUCTION BUILD
+	// - bundle build with uglify
+	// - optimized build is much smaller
+	//
+
+	else {
+		await axx(
+			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV `
+				+ `production ] -g uglifyify`,
 			waxx(`${scriptBundle}.temp`)
-		))
-		await (axx(
+		)
+		await axx(
 			`cat ${[
 				...polyfills,
 				`${scriptBundle}.temp`
 			].join(" ")}`,
 			axx(`${nb}uglifyjs --compress --mangle`, waxx(scriptBundle))
-		))
+		)
 		console.log("✔ done production build")
 	}
 }
+
+//
+// EXECUTE BUILD ROUTINE
+//
 
 build(buildOptions)
