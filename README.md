@@ -31,10 +31,14 @@
 ```tsx
 ;(async() => {
 
+	import * as crnc from "crnc"
+	import * as preact from "preact"
+	import * as shopperman from "shopperman"
+
 	// basic settings
 	const baseCurrency = "CAD"
 	const displayCurrency = "USD"
-	const rates = await downloadRates()
+	const rates = await crnc.downloadRates()
 	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
 	const shopify = {
 		domain: "dev-bakery.myshopify.com",
@@ -42,23 +46,23 @@
 	}
 
 	// currency control instance
-	const currencyControl = new CurrencyControl({
+	const currencyControl = new shopperman.CurrencyControl({
 		displayCurrency,
 		baseCurrency,
 		rates
 	})
 
 	// cart instance
-	const cart = new Cart({currencyControl})
+	const cart = new shopperman.Cart({currencyControl})
 
-	// shopperman instance
-	const shopperman = new Shopperman({
+	// shopify adapter instance
+	const shopifyAdapter = new shopperman.ShopifyAdapter({
 		shopify,
 		currencyControl
 	})
 
 	// fetch products from shopify
-	const products = await shopperman.getProductsInCollection(collectionId)
+	const products = await shopifyAdapter.getProductsInCollection(collectionId)
 
 	// product listing preact component
 	const productList = (
