@@ -16,5 +16,8 @@
 	"include": [
 		"source/**/*.tsx",
 		"source/**/*.ts"
+	],
+	"exclude": [
+		"source/_archive"
 	]
 }

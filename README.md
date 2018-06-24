@@ -53,7 +53,6 @@
 
 	// shopperman instance
 	const shopperman = new Shopperman({
-		cart,
 		shopify,
 		currencyControl
 	})

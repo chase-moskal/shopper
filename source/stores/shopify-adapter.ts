@@ -3,30 +3,30 @@ import {Product} from "./product"
 import {CurrencyControl} from "./currency-control"
 
 /**
- * SHOPIFY SDK OPTIONS INTERFACE
+ * SHOPIFY SDK SETTINGS INTERFACE
  */
-export interface ShopifyOptions {
+export interface ShopifySettings {
 	domain: string
 	storefrontAccessToken: string
 }
 
 /**
- * SHOPPERMAN OPTIONS INTERFACE
+ * SHOPIFY ADAPTER OPTIONS INTERFACE
  */
-export interface ShoppermanOptions {
-	shopify: ShopifyOptions
+export interface ShopifyAdapterOptions {
+	shopify: ShopifySettings
 	currencyControl: CurrencyControl
 }
 
 /**
- * SHOPPERMAN CLASS
+ * SHOPIFY ADAPTER CLASS
  * - launch shopify api requests
  */
-export class Shopperman {
-	private readonly shopify: ShopifyOptions
+export class ShopifyAdapter {
+	private readonly shopify: ShopifySettings
 	private readonly currencyControl: CurrencyControl
 
-	constructor(options: ShoppermanOptions) {
+	constructor(options: ShopifyAdapterOptions) {
 		Object.assign(this, options)
 	}
 
