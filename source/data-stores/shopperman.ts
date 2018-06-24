@@ -1,23 +1,29 @@
 
-import {Cart} from "./cart"
 import {Product} from "./product"
 import {CurrencyControl} from "./currency-control"
+
+/**
+ * SHOPIFY SDK OPTIONS INTERFACE
+ */
+export interface ShopifyOptions {
+	domain: string
+	storefrontAccessToken: string
+}
 
 /**
  * SHOPPERMAN OPTIONS INTERFACE
  */
 export interface ShoppermanOptions {
-	cart: Cart
+	shopify: ShopifyOptions
 	currencyControl: CurrencyControl
 }
 
 /**
  * SHOPPERMAN CLASS
- * - keeps an array of products
- * - holds a single readonly currency control
+ * - launch shopify api requests
  */
 export class Shopperman {
-	private readonly cart: Cart
+	private readonly shopify: ShopifyOptions
 	private readonly currencyControl: CurrencyControl
 
 	constructor(options: ShoppermanOptions) {

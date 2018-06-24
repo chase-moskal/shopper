@@ -28,41 +28,53 @@
 
 ## ideal usage examples
 
-- **establish some basic options**
+```tsx
+;(async() => {
 
-	```tsx
-	const options = {
-		shopify: {
-			apiKey: "abc123",
-			domain: "dev-bakery.myshopify.com"
-		},
-		currency: "CAD"
+	// basic settings
+	const baseCurrency = "CAD"
+	const displayCurrency = "USD"
+	const rates = await downloadRates()
+	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
+	const shopify = {
+		domain: "dev-bakery.myshopify.com",
+		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 	}
-	```
 
-- **display a product for sale**
+	// currency control instance
+	const currencyControl = new CurrencyControl({
+		displayCurrency,
+		baseCurrency,
+		rates
+	})
 
-	```tsx
-	import {ShoppermanStore, ProductDisplay} from "shopperman"
+	// cart instance
+	const cart = new Cart({currencyControl})
 
-	;(async() => {
+	// shopperman instance
+	const shopperman = new Shopperman({
+		cart,
+		shopify,
+		currencyControl
+	})
 
-		const shopperman = new ShoppermanStore(options)
+	// fetch products from shopify
+	const products = await shopperman.getProductsInCollection(collectionId)
 
-		const products = await shopperman.getProductsInCollection("cde345")
+	// product listing preact component
+	const productList = (
+		<div className="product-list">
+			{products.map(product =>
+				<ProductDisplay {...{product}}/>
+			)}
+		</div>
+	)
 
-		const productList = (
-			<div className="product-list">
-				{products.map(product =>
-					<ProductDisplay {...{product}}/>
-				)}
-			</div>
-		)
+	// render preact component
+	preact.render(
+		productList,
+		productListArea: document.querySelector(".product-list-area")
+	)
 
-		preact.render(
-			productList,
-			productListArea: document.querySelector(".product-list-area")
-		)
-
-	})()
-	```
+})
+```
