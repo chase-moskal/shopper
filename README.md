@@ -38,7 +38,7 @@
 	// basic settings
 	const baseCurrency = "CAD"
 	const displayCurrency = "USD"
-	const rates = await crnc.downloadRates()
+	const {rates} = await crnc.downloadRates()
 	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
 	const shopify = {
 		domain: "dev-bakery.myshopify.com",

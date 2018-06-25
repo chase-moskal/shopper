@@ -24,52 +24,50 @@ window["shopperman"] = shopperman
 window["shoppermanDemo"] = async function() {
 	mobx.configure({enforceActions: true})
 
-	const shopify = {
-		options: {
-			domain: "dev-bakery.myshopify.com",
-			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25",
-		},
-		collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
+	// basic settings
+	const baseCurrency = "CAD"
+	const displayCurrency = "USD"
+	const {rates} = await crnc.downloadRates()
+	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
+	const settings: shopperman.ShopifySettings = {
+		domain: "dev-bakery.myshopify.com",
+		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 	}
 
-	// const cart = new Cart()
-	// preact.render(<CartSystem {...{cart}}/>, document.querySelector(".shopperman"))
-	// const currency = "CAD"
+	// create instances
+	const currencyControl = new shopperman.CurrencyControl({
+		displayCurrency,
+		baseCurrency,
+		rates
+	})
+	const shopifyAdapter = new shopperman.ShopifyAdapter({
+		settings,
+		currencyControl
+	})
+	const cart = new shopperman.Cart({currencyControl})
 
-	// try {
-	// 	const shopifyClient = shopifyBuy.buildClient(shopify.options)
-	// 	const collection = await shopifyClient.collection.fetchWithProducts(shopify.collectionId)
-	// 	for (const product of collection.products) {
-	// 		cart.add(new CartItem({
-	// 			id: product.id,
-	// 			value: parseFloat(product.variants[0].price),
-	// 			title: product.title,
-	// 			currency
-	// 		}))
-	// 	}
-	// }
-	// catch (error) {
-	// 	error.message = "shopify buy error: " + error
-	// 	console.error(error)
+	// fetch products from shopify
+	const products = await shopifyAdapter.getProductsInCollection(collectionId)
+	console.log("PRODUCTS", products)
 
-	// 	cart.add(new CartItem({
-	// 		id: "AE2468",
-	// 		value: 10.82,
-	// 		title: "Apple Pie",
-	// 		currency
-	// 	}))
+	// // product listing preact component
+	// const productList = (
+	// 	<div className="product-list">
+	// 		{products.map(product =>
+	// 			<ProductDisplay {...{product}}/>
+	// 		)}
+	// 	</div>
+	// )
 
-	// 	cart.add(new CartItem({
-	// 		id: "BC3682",
-	// 		value: 3.41,
-	// 		title: "Blueberry Muffin",
-	// 		currency
-	// 	}))
-	// }
+	// // render preact component
+	// preact.render(
+	// 	productList,
+	// 	productListArea: document.querySelector(".product-list-area")
+	// )
 }
 
 //
-// CURRENCY CONVERSION TEST
+// TEST CURRENCY EXCHANGE
 //
 
 window["shoppermanTestCurrencyExchange"] = async function() {
