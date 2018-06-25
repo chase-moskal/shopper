@@ -35,7 +35,7 @@ window["shoppermanDemo"] = async function() {
 	}
 
 	// create instances
-	const currencyControl = new shopperman.CurrencyControl({
+	const currencyControl = window["currencyControl"] = new shopperman.CurrencyControl({
 		displayCurrency,
 		baseCurrency,
 		rates
@@ -50,20 +50,20 @@ window["shoppermanDemo"] = async function() {
 	const products = await shopifyAdapter.getProductsInCollection(collectionId)
 	console.log("PRODUCTS", products)
 
-	// // product listing preact component
-	// const productList = (
-	// 	<div className="product-list">
-	// 		{products.map(product =>
-	// 			<ProductDisplay {...{product}}/>
-	// 		)}
-	// 	</div>
-	// )
+	// product listing preact component
+	const productList = (
+		<div className="product-list">
+			{products.map(product =>
+				<shopperman.ProductDisplay {...{product}}/>
+			)}
+		</div>
+	)
 
-	// // render preact component
-	// preact.render(
-	// 	productList,
-	// 	productListArea: document.querySelector(".product-list-area")
-	// )
+	// render preact component
+	preact.render(
+		productList,
+		document.querySelector(".product-list-area")
+	)
 }
 
 //
