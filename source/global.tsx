@@ -50,19 +50,20 @@ window["shoppermanDemo"] = async function() {
 	const products = await shopifyAdapter.getProductsInCollection(collectionId)
 	console.log("PRODUCTS", products)
 
-	// product listing preact component
-	const productList = (
+	// render product list
+	preact.render(
 		<div className="product-list">
 			{products.map(product =>
 				<shopperman.ProductDisplay {...{product}}/>
 			)}
-		</div>
+		</div>,
+		document.querySelector(".shopperman .product-area")
 	)
 
-	// render preact component
+	// render cart system
 	preact.render(
-		productList,
-		document.querySelector(".product-list-area")
+		<shopperman.CartSystem {...{cart}}/>,
+		document.querySelector(".shopperman .cart-area")
 	)
 }
 

@@ -21,8 +21,8 @@ export interface CartOptions {
  */
 export class Cart {
 	private readonly currencyControl: CurrencyControl
-	@observable items: CartItem[]
-	@observable open: boolean
+	@observable items: CartItem[] = []
+	@observable open: boolean = false
 
 	constructor(options: CartOptions) {
 		this.currencyControl = options.currencyControl
@@ -92,21 +92,21 @@ export class Cart {
 	}
 
 	/**
-	 * Subtotal value
+	 * Value
 	 * - sum up the value of every product in the cart
 	 * - return the sum
 	 */
-	@computed get subtotalValue(): number {
+	@computed get value(): number {
 		const reducer = (subtotal, item) => subtotal + item.product.totalValue
 		return this.items.reduce(reducer, 0)
 	}
 
 	/**
-	 * Subtotal price
+	 * Price
 	 * - return the whole cart's formatted subtotal price tag
 	 */
-	@computed get subtotalPrice(): string {
-		const {subtotalValue: value, currencyControl} = this
+	@computed get price(): string {
+		const {value, currencyControl} = this
 		return currencyControl.convertAndFormat(value)
 	}
 }

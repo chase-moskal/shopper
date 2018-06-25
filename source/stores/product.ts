@@ -19,9 +19,9 @@ export interface ProductOptions {
  * - expose getters for the total value and formatted price tag
  */
 export class Product {
-	private readonly id: string
 	private readonly currencyControl: CurrencyControl
 
+	readonly id: string
 	readonly value: number
 	readonly title: string
 
