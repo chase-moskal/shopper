@@ -3,7 +3,10 @@
 
 .shopperman {
 	$panelspacing: 1em;
-	position: relative;
+
+	.cart-area {
+		position: relative;
+	}
 
 	.cart-system {
 		position: absolute;
@@ -27,8 +30,8 @@
 		padding: 0.5em;
 		background: rgba(0,0,0, 0.2);
 		border-radius: 0 3px 3px 0;
-		cursor: pointer;
 		user-select: none;
+		cursor: pointer;
 
 		.cart-button-text {
 			display: none;

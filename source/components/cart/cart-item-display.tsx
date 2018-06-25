@@ -3,7 +3,7 @@ import {formatCurrency} from "crnc"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {CartItem} from "../stores/cart-item"
+import {CartItem} from "../../stores/cart-item"
 
 export interface CartItemDisplayProps {
 	item: CartItem
@@ -21,6 +21,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 
 	render() {
 		const {item} = this.props
+		const {product} = item
 		return (
 			<li>
 				<span>
@@ -35,14 +36,9 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 						onBlur={this.handleQuantityInputChange}
 						/>
 				</span>
-				<span>#{item.id}</span>
-				<span>"{item.title}"</span>
-				<strong>
-					{formatCurrency({
-						value: item.value * item.quantity,
-						currency: item.currency
-					})}
-				</strong>
+				<span>#{product.id}</span>
+				<span>"{product.title}"</span>
+				<strong>{product.price}</strong>
 			</li>
 		)
 	}

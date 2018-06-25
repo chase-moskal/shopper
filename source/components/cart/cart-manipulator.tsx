@@ -2,7 +2,7 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {Cart} from "../stores/cart"
+import {Cart} from "../../stores/cart"
 import {CartItemDisplay} from "./cart-item-display"
 
 @observer
@@ -18,7 +18,7 @@ export class CartManipulator extends Component<{cart: Cart}, any> {
 					<li>
 						<span>Subtotal:</span>
 						&nbsp;
-						<strong>{cart.subtotal}</strong>
+						<strong>{cart.price}</strong>
 					</li>
 				</ol>
 			</div>

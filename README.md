@@ -26,91 +26,58 @@
 	- if you leave the page, and return, state is maintained
 	- if you have multiple tabs open, all cart instances should auto-synchronize in realtime
 
-## ideal usage examples
+## example usage
 
-- **establish some basic options**
+```tsx
+;(async() => {
 
-	```tsx
-	const options = {
-		shopify: {
-			apiKey: "abc123",
-			domain: "dev-bakery.myshopify.com"
-		},
-		currency: "CAD"
+	import * as crnc from "crnc"
+	import * as preact from "preact"
+	import * as shopperman from "shopperman"
+
+	// basic settings
+	const baseCurrency = "CAD"
+	const displayCurrency = "USD"
+	const {rates} = await crnc.downloadRates()
+	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
+	const shopify = {
+		domain: "dev-bakery.myshopify.com",
+		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 	}
-	```
 
-- **display a product for sale**
+	// currency control instance
+	const currencyControl = new shopperman.CurrencyControl({
+		displayCurrency,
+		baseCurrency,
+		rates
+	})
 
-	```tsx
-	import {ShoppermanStore, ProductDisplay} from "shopperman"
+	// cart instance
+	const cart = new shopperman.Cart({currencyControl})
 
-	;(async() => {
+	// shopify adapter instance
+	const shopifyAdapter = new shopperman.ShopifyAdapter({
+		shopify,
+		currencyControl
+	})
 
-		const shopperman = new ShoppermanStore(options)
+	// fetch products from shopify
+	const products = await shopifyAdapter.getProductsInCollection(collectionId)
 
-		const products = await shopperman.getProductsInCollection("cde345")
+	// product listing preact component
+	const productList = (
+		<div className="product-list">
+			{products.map(product =>
+				<ProductDisplay {...{product}}/>
+			)}
+		</div>
+	)
 
-		const productList = (
-			<div className="product-list">
-				{products.map(product =>
-					<ProductDisplay {...{product}}/>
-				)}
-			</div>
-		)
+	// render preact component
+	preact.render(
+		productList,
+		productListArea: document.querySelector(".product-list-area")
+	)
 
-		preact.render(
-			productList,
-			productListArea: document.querySelector(".product-list-area")
-		)
-
-	})()
-	```
-
-## architecture
-
-- **state structure**
-
-	```
-	Shopperman
-		currencyControl: CurrencyControl
-		getProductsInCollection(collectionId: string): Promise<Product[]>
-		cart: Cart
-
-	CurrencyControl
-		currency: string
-		setCurrency(currency: string)
-
-	Cart
-		currencyControl: CurrencyControl
-		products: Product[]
-		open: boolean
-		toggle(open: boolean)
-		clear()
-		add(product: Product)
-
-	Product
-		currencyControl: CurrencyControl
-		id: string
-		value: number
-		currency: string
-		title: string
-		quantity: number
-		quantityMin: number
-		quantityMax: number
-		totalValue(): number
-		price(): string
-		totalPrice(): string
-		setQuantity(quantity: number)
-	```
-
-- **components**
-
-	```
-	ProductDisplay {Product}
-
-	CartSystem {Cart}
-		CartButton {Cart}
-		CartManipulator {Cart}
-		CartItemDisplay {Product}
-	```
+})
+```

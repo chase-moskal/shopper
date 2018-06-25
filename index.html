@@ -7,19 +7,20 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton:400,800"/>
 	<link rel="stylesheet" href="dist/shopperman.css"/>
 </head>
-<body>
+<body class="shopperman" data-theme="base">
 
 	<div class="slice">
-		<div class="shopperman" data-theme="base"></div>
+		<div class="cart-area"></div>
 		<div class="content">
 			<h1>shopperman</h1>
 			<p>frontend shopping cart tech for web devs</p>
 			<p>preact, mobx, typescript</p>
+			<div class="product-area"></div>
 			<p style="margin-top: 100em;">cheers</p>
 		</div>
 	</div>
 
-	<script src="dist/shopperman.bundle.js"></script>
-	<script>shopperman.demo()</script>
+	<script src="dist/global.bundle.js"></script>
+	<script>shoppermanDemo()</script>
 </body>
 </html>

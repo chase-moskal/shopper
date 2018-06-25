@@ -2,24 +2,25 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {Cart} from "../stores/cart"
+import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
+import {isDescendant} from "../../toolbox"
 import {CartManipulator} from "./cart-manipulator"
 
-function isDescendant(child: Element, parent: Element) {
-	if (child === parent) return true
-	let {parentElement} = child
-	while (parentElement) {
-		if (parentElement === parent) return true
-		parentElement = parentElement.parentElement
-	}
-	return false
+/**
+ * CART SYSTEM PROPS INTERFACE
+ */
+export interface CartSystemProps {
+	cart: Cart
 }
 
+/**
+ * CART SYSTEM CLASS
+ */
 @observer
-export class CartSystem extends Component<{cart: Cart}, any> {
+export class CartSystem extends Component<CartSystemProps, any> {
 	private getElement() {
-		const element = document.querySelector(".shopperman .cart-system")
+		const element = this.base // document.querySelector(".shopperman .cart-system")
 		if (!element) throw new Error("unable to find shopperman cart system element")
 		return element
 	}
