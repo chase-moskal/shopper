@@ -18,39 +18,53 @@ window["mobxPreact"] = mobxPreact
 window["shopperman"] = shopperman
 
 //
-// SHOPPERMAN DEMO
+// SHOPPERMAN DEMO FUNCTION
 //
 
 window["shoppermanDemo"] = async function() {
-	mobx.configure({enforceActions: true})
 
+	//
 	// basic settings
+	//
+
+	mobx.configure({enforceActions: true})
 	const baseCurrency = "CAD"
 	const displayCurrency = "USD"
-	const {rates} = await crnc.downloadRates()
 	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
 	const settings: shopperman.ShopifySettings = {
 		domain: "dev-bakery.myshopify.com",
 		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 	}
 
+	const {rates} = await crnc.downloadRates()
+
+	//
 	// create instances
+	//
+
 	const currencyControl = window["currencyControl"] = new shopperman.CurrencyControl({
 		displayCurrency,
 		baseCurrency,
 		rates
 	})
+
 	const shopifyAdapter = new shopperman.ShopifyAdapter({
 		settings,
 		currencyControl
 	})
+
 	const cart = new shopperman.Cart({currencyControl})
 
+	//
 	// fetch products from shopify
-	const products = await shopifyAdapter.getProductsInCollection(collectionId)
-	console.log("PRODUCTS", products)
+	//
 
+	const products = await shopifyAdapter.getProductsInCollection(collectionId)
+
+	//
 	// render product list
+	//
+
 	preact.render(
 		<div className="product-list">
 			{products.map(product =>
@@ -60,7 +74,10 @@ window["shoppermanDemo"] = async function() {
 		document.querySelector(".shopperman .product-area")
 	)
 
+	//
 	// render cart system
+	//
+
 	preact.render(
 		<shopperman.CartSystem {...{cart}}/>,
 		document.querySelector(".shopperman .cart-area")
@@ -68,7 +85,7 @@ window["shoppermanDemo"] = async function() {
 }
 
 //
-// TEST CURRENCY EXCHANGE
+// TEST CURRENCY EXCHANGE FUNCTION
 //
 
 window["shoppermanTestCurrencyExchange"] = async function() {

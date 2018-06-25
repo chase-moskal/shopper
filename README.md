@@ -26,7 +26,7 @@
 	- if you leave the page, and return, state is maintained
 	- if you have multiple tabs open, all cart instances should auto-synchronize in realtime
 
-## ideal usage examples
+## example usage
 
 ```tsx
 ;(async() => {
