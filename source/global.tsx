@@ -67,7 +67,7 @@ window["shoppermanDemo"] = async function() {
 	// create cart model
 	//
 
-	const cart = new shopperman.Cart({
+	const cart = window["cart"] = new shopperman.Cart({
 		currencyControl,
 		items: products.map(product =>
 			new shopperman.CartItem({

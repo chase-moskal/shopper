@@ -4,9 +4,6 @@ import {CartItem} from "./cart-item"
 import {observable, action, computed} from "mobx"
 import {CurrencyControl} from "./currency-control"
 
-const quantityMin = 1
-const quantityMax = 5
-
 /**
  * CART OPTIONS INTERFACE
  */
@@ -37,7 +34,7 @@ export class Cart {
 	 * - active items have cart quantity greater than zero
 	 */
 	@computed get activeItems() {
-		return [...this.items].filter(item => item.quantity > 0)
+		return this.items.filter(item => item.quantity > 0)
 	}
 
 	/**
@@ -67,34 +64,6 @@ export class Cart {
 		this.items = []
 	}
 
-	// /**
-	//  * Add
-	//  * - put a product into the cart
-	//  */
-	// @action add(product: Product): CartItem {
-	// 	const {currencyControl} = this
-	// 	const existingItem = this.getProductItem(product)
-
-	// 	// increment quantity of existing item
-	// 	if (existingItem) {
-	// 		const item = existingItem
-	// 		item.setQuantity(item.quantity + 1)
-	// 		return item
-	// 	}
-
-	// 	// add new item for product
-	// 	else {
-	// 		const item = new CartItem({
-	// 			currencyControl,
-	// 			product,
-	// 			quantityMin,
-	// 			quantityMax
-	// 		})
-	// 		this.items.push(item)
-	// 		return item
-	// 	}
-	// }
-
 	/**
 	 * Remove
 	 * - take a product out of the cart
@@ -109,8 +78,8 @@ export class Cart {
 	 * - return the sum
 	 */
 	@computed get value(): number {
-		const reducer = (subtotal, item) => subtotal + item.product.totalValue
-		return this.items.reduce(reducer, 0)
+		const reducer = (subtotal, item: CartItem) => subtotal + item.product.value
+		return this.activeItems.reduce(reducer, 0)
 	}
 
 	/**

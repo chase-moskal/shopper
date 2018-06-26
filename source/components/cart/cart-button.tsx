@@ -16,7 +16,7 @@ export class CartButton extends Component<CartButtonProps, any> {
 		return (
 			<a className="cart-button" onClick={onClick}>
 				<span className="cart-button-text">Cart</span>
-				<span className="cart-button-numeral">{cart.items.length}</span>
+				<span className="cart-button-numeral">{cart.activeItems.length}</span>
 			</a>
 		)
 	}

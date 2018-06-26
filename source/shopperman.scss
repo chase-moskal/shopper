@@ -4,6 +4,19 @@
 .shopperman {
 	$panelspacing: 1em;
 
+	.product-area {
+		.product-display {
+			.button {
+				cursor: default;
+			}
+			&[data-in-cart="false"] {
+				.button {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
 	.cart-area {
 		position: relative;
 	}
@@ -154,5 +167,16 @@ html.shopperman-demo {
 
 	.content {
 		padding: 1em;
+	}
+
+	.product-display {
+		margin-top: 3em;
+
+		.button {
+			display: inline-block;
+			width: 8em;
+			background: rgba(255,255,255, 0.1);
+			padding: 0.32em 1em;
+		}
 	}
 }

@@ -25,19 +25,19 @@ export class CartItem {
 	readonly quantityMin: number
 	readonly quantityMax: number
 
-	@observable quantity: number = 1
+	@observable quantity: number = 0
 
 	constructor(options: CartItemOptions) {
 		Object.assign(this, options)
 	}
 
-	@computed value(): number {
+	@computed get value(): number {
 		const {quantity, product} = this
 		const {value} = product
 		return value * quantity
 	}
 
-	@computed price(): string {
+	@computed get price(): string {
 		const {value, currencyControl} = this
 		return currencyControl.convertAndFormat(value)
 	}

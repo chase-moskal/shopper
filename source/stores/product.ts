@@ -1,6 +1,5 @@
 
 import {computed} from "mobx"
-
 import {CurrencyControl} from "./currency-control"
 
 /**
@@ -17,7 +16,7 @@ export interface ProductOptions {
 /**
  * PRODUCT CLASS
  * - represent a single ecommerce product
- * - expose getters for the total value and formatted price tag
+ * - expose getter for the formatted price tag
  */
 export class Product {
 	private readonly currencyControl: CurrencyControl
