@@ -39,7 +39,7 @@ window["shoppermanDemo"] = async function() {
 	const {rates} = await crnc.downloadRates()
 
 	//
-	// create instances
+	// currency control instance
 	//
 
 	const currencyControl = window["currencyControl"] = new shopperman.CurrencyControl({
@@ -48,12 +48,14 @@ window["shoppermanDemo"] = async function() {
 		rates
 	})
 
+	//
+	// shopify adapter allows us to fetch products
+	//
+
 	const shopifyAdapter = new shopperman.ShopifyAdapter({
 		settings,
 		currencyControl
 	})
-
-	const cart = new shopperman.Cart({currencyControl})
 
 	//
 	// fetch products from shopify
@@ -62,13 +64,28 @@ window["shoppermanDemo"] = async function() {
 	const products = await shopifyAdapter.getProductsInCollection(collectionId)
 
 	//
+	// create cart model
+	//
+
+	const cart = new shopperman.Cart({
+		currencyControl,
+		items: products.map(product =>
+			new shopperman.CartItem({
+				product,
+				currencyControl,
+				quantityMin: 0,
+				quantityMax: 5
+			}))
+	})
+
+	//
 	// render product list
 	//
 
 	preact.render(
 		<div className="product-list">
 			{products.map(product =>
-				<shopperman.ProductDisplay {...{product}}/>
+				<shopperman.ProductDisplay {...{cart, product}}/>
 			)}
 		</div>,
 		document.querySelector(".shopperman .product-area")

@@ -7,8 +7,8 @@ import {CurrencyControl} from "./currency-control"
  * CART ITEM OPTIONS INTERFACE
  */
 export interface CartItemOptions {
-	currencyControl: CurrencyControl
 	product: Product
+	currencyControl: CurrencyControl
 	quantityMin: number
 	quantityMax: number
 }

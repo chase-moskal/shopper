@@ -12,7 +12,7 @@ export class CartManipulator extends Component<{cart: Cart}, any> {
 		return (
 			<div className="cart-manipulator">
 				<ol className="cart-list-items">
-					{cart.items.map(item => <CartItemDisplay {...{item}}/>)}
+					{cart.activeItems.map(item => <CartItemDisplay {...{item}}/>)}
 				</ol>
 				<ol className="cart-list-results">
 					<li>
