@@ -9,6 +9,7 @@ import {CurrencyControl} from "./currency-control"
 export interface ProductOptions {
 	id: string
 	title: string
+	description: string
 	value: number
 	currencyControl: CurrencyControl
 }
@@ -24,6 +25,7 @@ export class Product {
 	readonly id: string
 	readonly value: number
 	readonly title: string
+	readonly description: string
 
 	constructor(options: ProductOptions) {
 		Object.assign(this, options)

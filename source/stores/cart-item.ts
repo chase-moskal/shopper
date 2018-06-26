@@ -31,15 +31,15 @@ export class CartItem {
 		Object.assign(this, options)
 	}
 
-	@computed totalValue(): number {
-		const {value} = this.product
-		const {quantity} = this
+	@computed value(): number {
+		const {quantity, product} = this
+		const {value} = product
 		return value * quantity
 	}
 
-	@computed totalPrice(): string {
-		const {totalValue, currencyControl} = this
-		return currencyControl.convertAndFormat(totalValue)
+	@computed price(): string {
+		const {value, currencyControl} = this
+		return currencyControl.convertAndFormat(value)
 	}
 
 	@action setQuantity(quantity: number): void {

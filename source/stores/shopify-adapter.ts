@@ -48,6 +48,7 @@ export class ShopifyAdapter {
 				id: info.id,
 				value: parseFloat(info.variants[0].price),
 				title: info.title,
+				description: info.descriptionHtml,
 				currencyControl
 			}))
 			return products

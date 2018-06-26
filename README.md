@@ -81,3 +81,12 @@
 
 })
 ```
+
+## security notes
+
+- **dangerouslySetInnerHtml with shopify product descriptions**
+
+	html from the shopify api (product descriptions) is injected without
+	sanitization
+
+	this should be safe, so long as the connection to shopify is secured via https
