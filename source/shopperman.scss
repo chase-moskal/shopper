@@ -26,6 +26,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
+
 		&, & * {
 			margin: 0;
 			padding: 0;
@@ -35,10 +36,9 @@
 	.cart-button {
 		z-index: 1;
 		position: absolute;
+		display: inline-block;
 		top: 2em;
 		left: 100%;
-
-		display: inline-block;
 		width: 3em;
 		padding: 0.5em;
 		background: rgba(0,0,0, 0.2);
@@ -68,11 +68,22 @@
 		display: block;
 	}
 
-	.cart-list-items, .cart-list-results {
-		list-style: none;
-		padding: $panelspacing;
-		li {
-			display: flex;
+	.cart-manipulator {
+		.cart-list-items, .cart-list-results {
+			list-style: none;
+			padding: $panelspacing;
+
+			li {
+				display: flex;
+			}
+		}
+	}
+
+	.cart-item-display {
+		display: flex;
+
+		.remove-button {
+			cursor: pointer;
 		}
 	}
 

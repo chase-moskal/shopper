@@ -1,8 +1,6 @@
 
-import {formatCurrency} from "crnc"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-
 import {CartItem} from "../../stores/cart-item"
 
 export interface CartItemDisplayProps {
@@ -12,18 +10,23 @@ export interface CartItemDisplayProps {
 @observer
 export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 
-	private readonly handleQuantityInputChange = (event: Event) => {
+	private readonly handleQuantityInputChange = (event: Event): void => {
 		const input = event.target as HTMLInputElement
 		const {item} = this.props
 		const value = parseInt(input.value)
 		item.setQuantity(value)
 	}
 
+	private readonly handleRemoval = (event: Event): void => {
+		this.props.item.setQuantity(0)
+	}
+
 	render() {
 		const {item} = this.props
 		const {product} = item
 		return (
-			<li>
+			<li className="cart-item-display">
+				<a className="remove-button" onClick={this.handleRemoval}>✖</a>
 				<span>
 					<input type="number"
 						value={item.quantity.toString()}

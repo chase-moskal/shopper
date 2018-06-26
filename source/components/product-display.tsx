@@ -28,8 +28,10 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 
 	private addToCart() {
 		const {cartItem} = this
+		const {cart} = this.props
 		const {quantity} = cartItem
 		this.cartItem.setQuantity(quantity + 1)
+		cart.toggle(true)
 	}
 
 	private readonly handleButtonClick = (event: MouseEvent): void => {
