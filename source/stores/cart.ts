@@ -4,9 +4,6 @@ import {CartItem} from "./cart-item"
 import {CurrencyControl} from "./currency-control"
 import {observable, action, computed, autorun, reaction} from "mobx"
 
-/** Checkout handler — function performs checkout */
-export type CheckoutHandler = (items: CartItem[]) => Promise<void>
-
 /**
  * CART OPTIONS INTERFACE
  */

@@ -3,6 +3,7 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
 import {Cart} from "../../../stores/cart"
+import {CartCheckout} from "./cart-checkout"
 import {CartManipulator} from "./cart-manipulator"
 import {CartCalculatedResults} from "./cart-calculated-results"
 import {CheckoutMachineBase} from "../../../stores/checkout-machine-base"
@@ -21,7 +22,7 @@ export interface CartPanelProps {
 @observer
 export class CartPanel extends Component<CartPanelProps, any> {
 
-	private readonly handleCheckout = (event: Event) => {
+	private readonly onCheckout = (event: Event) => {
 		const checkoutWindow = window.open("", "_blank")
 		const {cart, checkoutMachine} = this.props
 		checkoutMachine.checkout(cart.activeItems)
@@ -36,6 +37,8 @@ export class CartPanel extends Component<CartPanelProps, any> {
 
 	render() {
 		const {cart} = this.props
+		const {onCheckout} = this
+
 		return (
 			<div className="cart-panel">
 				<h1>
@@ -43,25 +46,9 @@ export class CartPanel extends Component<CartPanelProps, any> {
 					&nbsp;
 					<span>- {cart.activeItems.length === 0 ? "empty" : `${cart.activeItems.length} item${cart.activeItems.length === 1 ? "" : "s"}`}</span>
 				</h1>
-
 				<CartManipulator {...{cart}}/>
-
 				<CartCalculatedResults {...{cart}}/>
-
-				<div className="cart-checkout">
-					{
-						cart.activeItems.length
-							? (
-								<a className="checkout-button"
-									href="#"
-									onClick={this.handleCheckout}
-									target="_blank">
-										Checkout
-								</a>
-							)
-							: null
-					}
-				</div>
+				<CartCheckout {...{cart, onCheckout, buttonText: "Checkout"}}/>
 			</div>
 		)
 	}
