@@ -29,13 +29,13 @@ export class CartSystem extends Component<CartSystemProps, any> {
 
 	private readonly handleOutsideActivity = ({target}: MouseEvent) => {
 		if (!isDescendant(target as Element, this.getElement())) {
-			this.props.cart.toggle(false)
+			this.props.cart.togglePanelOpen(false)
 		}
 	}
 
-	private readonly handleCartButtonClick = () => this.props.cart.toggle()
+	private readonly handleCartButtonClick = () => this.props.cart.togglePanelOpen()
 
-	private readonly handleCartBlur = () => this.props.cart.toggle(false)
+	private readonly handleCartBlur = () => this.props.cart.togglePanelOpen(false)
 
 	componentWillMount() {
 		window.addEventListener("mousedown", this.handleOutsideActivity)
@@ -52,9 +52,11 @@ export class CartSystem extends Component<CartSystemProps, any> {
 	private readonly handleCheckout = (event: Event) => {
 		const checkoutWindow = window.open("", "_blank")
 		const {cart, checkoutMachine} = this.props
-		const checkoutUrl = checkoutMachine.checkout(cart.activeItems)
+		checkoutMachine.checkout(cart.activeItems)
 			.then(checkoutUrl => {
 				checkoutWindow.location.href = checkoutUrl
+				cart.clear()
+				cart.togglePanelOpen(false)
 			})
 		event.preventDefault()
 		return false
@@ -65,7 +67,7 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		return (
 			<section
 				className="cart-system"
-				data-open={cart.open ? "true" : "false"}
+				data-open={cart.panelOpen ? "true" : "false"}
 				onBlur={this.handleCartBlur}>
 
 					<CartButton {...{cart, onClick: this.handleCartButtonClick}}/>

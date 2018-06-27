@@ -17,18 +17,18 @@ export interface CartOptions {
 
 /**
  * CART CLASS
- * - keeps an array of cart items
+ * - maintain a cart containing products and keeping track of quantities etc
+ * - you must provide a catalog of all available items
  * - items with quantity 0 are considered "not in the cart"
  */
 export class Cart {
 	private readonly currencyControl: CurrencyControl
 
-	@observable items: CartItem[] = []
-	@observable open: boolean = false
-	// @observable checkoutUrl: string
+	@observable itemCatalog: CartItem[] = []
+	@observable panelOpen: boolean = false
 
 	constructor(options: CartOptions) {
-		this.items = options.items
+		this.itemCatalog = options.items
 		this.currencyControl = options.currencyControl
 	}
 
@@ -38,7 +38,7 @@ export class Cart {
 	 * - active items have cart quantity greater than zero
 	 */
 	@computed get activeItems(): CartItem[] {
-		return this.items.filter(item => item.quantity > 0)
+		return this.itemCatalog.filter(item => item.quantity > 0)
 	}
 
 	/**
@@ -61,30 +61,15 @@ export class Cart {
 	}
 
 	/**
-	 * Get product item
-	 * - get a cart item by providing the product inside
+	 * Toggle panel open
+	 * - toggle the panel open status
+	 * - provide a boolean to just set it
 	 */
-	getProductItem(product: Product): CartItem {
-		return this.items.find(i => i.product === product)
-	}
-
-	/**
-	 * Toggle
-	 * - toggle the cart open or closed
-	 */
-	@action toggle(open: boolean = null): boolean {
-		this.open = open === null
-			? !this.open
+	@action togglePanelOpen(open: boolean = null): boolean {
+		this.panelOpen = open === null
+			? !this.panelOpen
 			: open
-		return this.open
-	}
-
-	/**
-	 * Clear
-	 * - remove all products from the cart
-	 */
-	@action clear(): void {
-		this.items = []
+		return this.panelOpen
 	}
 
 	/**
@@ -92,6 +77,24 @@ export class Cart {
 	 * - take a product out of the cart
 	 */
 	@action remove(product: Product): void {
-		this.items = this.items.filter(item => item.product !== product)
+		this.itemCatalog = this.itemCatalog.filter(item => item.product !== product)
+	}
+
+	/**
+	 * Clear
+	 * - remove all products from the cart
+	 */
+	clear(): void {
+		for (const item of this.itemCatalog) {
+			item.setQuantity(0)
+		}
+	}
+
+	/**
+	 * Get product item
+	 * - get a cart item by providing the product inside
+	 */
+	getProductItem(product: Product): CartItem {
+		return this.itemCatalog.find(i => i.product === product)
 	}
 }

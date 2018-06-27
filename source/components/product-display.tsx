@@ -31,7 +31,7 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 		const {cart} = this.props
 		const {quantity} = cartItem
 		this.cartItem.setQuantity(quantity + 1)
-		cart.toggle(true)
+		cart.togglePanelOpen(true)
 	}
 
 	private readonly handleButtonClick = (event: MouseEvent): void => {
