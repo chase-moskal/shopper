@@ -15,11 +15,17 @@ export class CartManipulator extends Component<{cart: Cart}, any> {
 					{cart.activeItems.map(item => <CartItemDisplay {...{item}}/>)}
 				</ol>
 				<ol className="cart-list-results">
-					<li>
-						<span>Subtotal:</span>
-						&nbsp;
-						<strong>{cart.price}</strong>
-					</li>
+					{
+						cart.activeItems.length
+							? (
+								<li>
+									<span>Subtotal:</span>
+									&nbsp;
+									<strong>{cart.price}</strong>
+								</li>
+							)
+							: null
+					}
 				</ol>
 			</div>
 		)

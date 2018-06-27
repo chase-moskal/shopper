@@ -31,7 +31,9 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		}
 	}
 
-	private readonly handleCartButtonClick = (event: MouseEvent) => this.props.cart.toggle()
+	private readonly handleCartButtonClick = () => this.props.cart.toggle()
+
+	private readonly handleCartBlur = () => this.props.cart.toggle(false)
 
 	componentWillMount() {
 		window.addEventListener("mousedown", this.handleOutsideActivity)
@@ -51,22 +53,27 @@ export class CartSystem extends Component<CartSystemProps, any> {
 			<section
 				className="cart-system"
 				data-open={cart.open ? "true" : "false"}
-				onBlur={event => {
-					this.props.cart.toggle(false)
-				}}
-				>
-				<CartButton {...{cart, onClick: this.handleCartButtonClick}}/>
-				<div className="cart-panel">
-					<h1>
-						<span>Shopping Cart</span>
-						&nbsp;
-						<span>- {cart.items.length} item{cart.items.length === 1 ? "" : "s"}</span>
-					</h1>
-					<CartManipulator {...{cart}}/>
-					<div className="cart-checkout">
-						<a>Checkout</a>
+				onBlur={this.handleCartBlur}>
+
+					<CartButton {...{cart, onClick: this.handleCartButtonClick}}/>
+
+					<div className="cart-panel">
+						<h1>
+							<span>Shopping Cart</span>
+							&nbsp;
+							<span>- {cart.activeItems.length === 0 ? "empty" : `${cart.activeItems.length} item${cart.activeItems.length === 1 ? "" : "s"}`}</span>
+						</h1>
+
+						<CartManipulator {...{cart}}/>
+
+						<div className="cart-checkout">
+							{
+								cart.activeItems.length
+									? <a className="checkout-button">Checkout</a>
+									: null
+							}
+						</div>
 					</div>
-				</div>
 			</section>
 		)
 	}

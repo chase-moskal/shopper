@@ -73,7 +73,7 @@ window["shoppermanDemo"] = async function() {
 			new shopperman.CartItem({
 				product,
 				currencyControl,
-				quantityMin: 0,
+				quantityMin: 1,
 				quantityMax: 5
 			}))
 	})

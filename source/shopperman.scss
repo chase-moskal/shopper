@@ -3,6 +3,7 @@
 
 .shopperman {
 	$panelspacing: 1em;
+	$bradius: 2px;
 
 	.product-area {
 		.product-display {
@@ -42,7 +43,7 @@
 		width: 3em;
 		padding: 0.5em;
 		background: rgba(0,0,0, 0.2);
-		border-radius: 0 3px 3px 0;
+		border-radius: 0 $bradius $bradius 0;
 		user-select: none;
 		cursor: pointer;
 
@@ -58,9 +59,9 @@
 		right: 0;
 		width: 96%;
 		max-width: 40em;
-		min-height: 10em;
+		min-height: 6em;
 		background: rgba(0,0,0, 0.2);
-		border-radius: 3px 0 3px 3px;
+		border-radius: $bradius 0 $bradius $bradius;
 		padding: $panelspacing;
 	}
 
@@ -71,10 +72,19 @@
 	.cart-manipulator {
 		.cart-list-items, .cart-list-results {
 			list-style: none;
-			padding: $panelspacing;
+			margin-top: $panelspacing;
 
 			li {
 				display: flex;
+				padding: 0.1em 0;
+			}
+		}
+
+		.cart-list-results {
+			text-align: right;
+
+			li {
+				justify-content: flex-end;
 			}
 		}
 	}
@@ -88,7 +98,18 @@
 	}
 
 	.cart-checkout {
-		margin: $panelspacing;
+		margin-top: $panelspacing;
+
+		.checkout-button {
+			display: inline-block;
+			font-weight: bold;
+			padding: 1em 2em;
+			color: #fff;
+			background: #1e9b2a;
+			text-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
+			border-radius: $bradius;
+			cursor: pointer;
+		}
 	}
 
 	&[data-theme="base"] {
@@ -128,7 +149,7 @@
 			.cart-button {
 				left: auto;
 				right: 0;
-				border-radius: 3px 0 0 3px;
+				border-radius: $bradius 0 0 $bradius;
 			}
 			.cart-panel {
 				padding-right: 3em;
