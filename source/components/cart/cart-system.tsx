@@ -6,12 +6,14 @@ import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
 import {isDescendant} from "../../toolbox"
 import {CartManipulator} from "./cart-manipulator"
+import {CheckoutMachineBase} from "../../stores/checkout-machine-base"
 
 /**
  * CART SYSTEM PROPS INTERFACE
  */
 export interface CartSystemProps {
 	cart: Cart
+	checkoutMachine: CheckoutMachineBase
 }
 
 /**
@@ -47,6 +49,17 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		// window.removeEventListener("blur", this.handleOutsideActivity)
 	}
 
+	private readonly handleCheckout = (event: Event) => {
+		const checkoutWindow = window.open("", "_blank")
+		const {cart, checkoutMachine} = this.props
+		const checkoutUrl = checkoutMachine.checkout(cart.activeItems)
+			.then(checkoutUrl => {
+				checkoutWindow.location.href = checkoutUrl
+			})
+		event.preventDefault()
+		return false
+	}
+
 	render() {
 		const {cart} = this.props
 		return (
@@ -69,7 +82,14 @@ export class CartSystem extends Component<CartSystemProps, any> {
 						<div className="cart-checkout">
 							{
 								cart.activeItems.length
-									? <a className="checkout-button">Checkout</a>
+									? (
+										<a className="checkout-button"
+											href="#"
+											onClick={this.handleCheckout}
+											target="_blank">
+												Checkout
+										</a>
+									)
 									: null
 							}
 						</div>

@@ -41,7 +41,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 				</span>
 				<span>#{product.id.substr(0, 7)}</span>
 				<span>"{product.title}"</span>
-				<strong>{product.price}</strong>
+				<strong>{item.price}</strong>
 			</li>
 		)
 	}

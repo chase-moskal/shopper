@@ -1,7 +1,11 @@
 
-import {Product} from "./product"
 import * as shopifyBuy from "shopify-buy"
+
+import {Product} from "./product"
 import {CurrencyControl} from "./currency-control"
+import {ShopifyCheckoutMachine} from "./shopify-checkout-machine"
+
+export type ShopifyClient = any
 
 /**
  * SHOPIFY SDK SETTINGS INTERFACE
@@ -24,15 +28,20 @@ export interface ShopifyAdapterOptions {
  * - wrapper for the shopify buy sdk
  * - launch shopify api requests
  * - return results with instances of shopperman typescript classes
+ * - exposes a checkout machine which can be used by other components
  */
 export class ShopifyAdapter {
+	readonly checkoutMachine: ShopifyCheckoutMachine
+
 	private readonly settings: ShopifySettings
 	private readonly currencyControl: CurrencyControl
-	private readonly shopifyClient: any
+	private readonly shopifyClient: ShopifyClient
 
 	constructor(options: ShopifyAdapterOptions) {
 		Object.assign(this, options)
-		this.shopifyClient = shopifyBuy.buildClient(this.settings)
+		const shopifyClient = shopifyBuy.buildClient(this.settings)
+		this.checkoutMachine = new ShopifyCheckoutMachine({shopifyClient})
+		this.shopifyClient = shopifyClient
 	}
 
 	/**
@@ -45,7 +54,7 @@ export class ShopifyAdapter {
 		try {
 			const collection = await shopifyClient.collection.fetchWithProducts(collectionId)
 			const products: Product[] = collection.products.map(info => new Product({
-				id: info.id,
+				id: info.variants[0].id,
 				value: parseFloat(info.variants[0].price),
 				title: info.title,
 				description: info.descriptionHtml,

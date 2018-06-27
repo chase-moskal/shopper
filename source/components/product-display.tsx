@@ -52,7 +52,7 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 				<div className="box">
 					<p className="price">{product.price}</p>
 					<a className="button" onClick={this.handleButtonClick}>
-							{inCart ? buttonText2 : buttonText1}
+						{inCart ? buttonText2 : buttonText1}
 					</a>
 				</div>
 				<p className="description"

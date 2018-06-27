@@ -1,8 +1,11 @@
 
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
-import {observable, action, computed} from "mobx"
 import {CurrencyControl} from "./currency-control"
+import {observable, action, computed, autorun, reaction} from "mobx"
+
+/** Checkout handler — function performs checkout */
+export type CheckoutHandler = (items: CartItem[]) => Promise<void>
 
 /**
  * CART OPTIONS INTERFACE
@@ -22,6 +25,7 @@ export class Cart {
 
 	@observable items: CartItem[] = []
 	@observable open: boolean = false
+	// @observable checkoutUrl: string
 
 	constructor(options: CartOptions) {
 		this.items = options.items
@@ -33,8 +37,27 @@ export class Cart {
 	 * - getter for items which are "in the cart"
 	 * - active items have cart quantity greater than zero
 	 */
-	@computed get activeItems() {
+	@computed get activeItems(): CartItem[] {
 		return this.items.filter(item => item.quantity > 0)
+	}
+
+	/**
+	 * Value
+	 * - sum up the value of every product in the cart
+	 * - return the sum
+	 */
+	@computed get value(): number {
+		const reducer = (subtotal, item: CartItem) => subtotal + item.value
+		return this.activeItems.reduce(reducer, 0)
+	}
+
+	/**
+	 * Price
+	 * - return the whole cart's formatted subtotal price tag
+	 */
+	@computed get price(): string {
+		const {value, currencyControl} = this
+		return currencyControl.convertAndFormat(value)
 	}
 
 	/**
@@ -70,24 +93,5 @@ export class Cart {
 	 */
 	@action remove(product: Product): void {
 		this.items = this.items.filter(item => item.product !== product)
-	}
-
-	/**
-	 * Value
-	 * - sum up the value of every product in the cart
-	 * - return the sum
-	 */
-	@computed get value(): number {
-		const reducer = (subtotal, item: CartItem) => subtotal + item.product.value
-		return this.activeItems.reduce(reducer, 0)
-	}
-
-	/**
-	 * Price
-	 * - return the whole cart's formatted subtotal price tag
-	 */
-	@computed get price(): string {
-		const {value, currencyControl} = this
-		return currencyControl.convertAndFormat(value)
 	}
 }

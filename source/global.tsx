@@ -57,6 +57,8 @@ window["shoppermanDemo"] = async function() {
 		currencyControl
 	})
 
+	const {checkoutMachine} = shopifyAdapter
+
 	//
 	// fetch products from shopify
 	//
@@ -96,7 +98,7 @@ window["shoppermanDemo"] = async function() {
 	//
 
 	preact.render(
-		<shopperman.CartSystem {...{cart}}/>,
+		<shopperman.CartSystem {...{cart, checkoutMachine}}/>,
 		document.querySelector(".shopperman .cart-area")
 	)
 }
