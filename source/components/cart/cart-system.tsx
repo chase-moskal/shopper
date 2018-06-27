@@ -5,7 +5,7 @@ import {observer} from "mobx-preact"
 import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
 import {isDescendant} from "../../toolbox"
-import {CartManipulator} from "./cart-manipulator"
+import {CartPanel} from "./panel/cart-panel"
 import {CheckoutMachineBase} from "../../stores/checkout-machine-base"
 
 /**
@@ -49,53 +49,15 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		// window.removeEventListener("blur", this.handleOutsideActivity)
 	}
 
-	private readonly handleCheckout = (event: Event) => {
-		const checkoutWindow = window.open("", "_blank")
-		const {cart, checkoutMachine} = this.props
-		checkoutMachine.checkout(cart.activeItems)
-			.then(checkoutUrl => {
-				checkoutWindow.location.href = checkoutUrl
-				cart.clear()
-				cart.togglePanelOpen(false)
-			})
-		event.preventDefault()
-		return false
-	}
-
 	render() {
-		const {cart} = this.props
+		const {cart, checkoutMachine} = this.props
 		return (
 			<section
 				className="cart-system"
-				data-open={cart.panelOpen ? "true" : "false"}
+				data-panel-open={cart.panelOpen ? "true" : "false"}
 				onBlur={this.handleCartBlur}>
-
 					<CartButton {...{cart, onClick: this.handleCartButtonClick}}/>
-
-					<div className="cart-panel">
-						<h1>
-							<span>Shopping Cart</span>
-							&nbsp;
-							<span>- {cart.activeItems.length === 0 ? "empty" : `${cart.activeItems.length} item${cart.activeItems.length === 1 ? "" : "s"}`}</span>
-						</h1>
-
-						<CartManipulator {...{cart}}/>
-
-						<div className="cart-checkout">
-							{
-								cart.activeItems.length
-									? (
-										<a className="checkout-button"
-											href="#"
-											onClick={this.handleCheckout}
-											target="_blank">
-												Checkout
-										</a>
-									)
-									: null
-							}
-						</div>
-					</div>
+					<CartPanel {...{cart, checkoutMachine}}/>
 			</section>
 		)
 	}

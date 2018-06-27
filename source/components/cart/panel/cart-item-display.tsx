@@ -1,7 +1,7 @@
 
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {CartItem} from "../../stores/cart-item"
+import {CartItem} from "../../../stores/cart-item"
 
 export interface CartItemDisplayProps {
 	item: CartItem
