@@ -29,7 +29,7 @@ window["shoppermanDemo"] = async function() {
 
 	mobx.configure({enforceActions: true})
 	const baseCurrency = "CAD"
-	const displayCurrency = "USD"
+	const displayCurrency = "EUR"
 	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
 	const settings: shopperman.ShopifySettings = {
 		domain: "dev-bakery.myshopify.com",

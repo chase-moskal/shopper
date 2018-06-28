@@ -22,7 +22,44 @@ export interface CartPanelProps {
 @observer
 export class CartPanel extends Component<CartPanelProps, any> {
 
-	private readonly onCheckout = (event: Event) => {
+	/**
+	 * Cart title bar displays number of items
+	 */
+	private readonly CartTitleBar = ({cart}: {cart: Cart}) => (
+		<h1>
+			<span>Shopping Cart</span>
+			&nbsp;
+			<span>– {
+				cart.activeItems.length === 0
+					? "empty"
+					: `${
+						cart.activeItems.length} item${cart.activeItems.length === 1
+							? ""
+							: "s"
+					}`
+			}</span>
+		</h1>
+	)
+
+	/**
+	 * Handle cart close
+	 */
+	private readonly handleCartClose = (event: MouseEvent) => {
+		const {cart} = this.props
+		cart.togglePanelOpen(false)
+	}
+
+	/**
+	 * Cart close button component
+	 */
+	private readonly CartCloseButton = () => (
+		<a onClick={this.handleCartClose}>Close</a>
+	)
+
+	/**
+	 * Handle checkout by calling the checkout machine
+	 */
+	private readonly handleCheckout = (event: Event) => {
 		const checkoutWindow = window.open("", "_blank")
 		const {cart, checkoutMachine} = this.props
 		checkoutMachine.checkout(cart.activeItems)
@@ -35,17 +72,17 @@ export class CartPanel extends Component<CartPanelProps, any> {
 		return false
 	}
 
+	/**
+	 * Render the cart component
+	 */
 	render() {
 		const {cart} = this.props
-		const {onCheckout} = this
+		const {handleCheckout: onCheckout, CartCloseButton, CartTitleBar} = this
 
 		return (
 			<div className="cart-panel">
-				<h1>
-					<span>Shopping Cart</span>
-					&nbsp;
-					<span>- {cart.activeItems.length === 0 ? "empty" : `${cart.activeItems.length} item${cart.activeItems.length === 1 ? "" : "s"}`}</span>
-				</h1>
+				<CartTitleBar {...{cart}}/>
+				<CartCloseButton {...{cart}}/>
 				<CartManipulator {...{cart}}/>
 				<CartCalculatedResults {...{cart}}/>
 				<CartCheckout {...{cart, onCheckout, buttonText: "Checkout"}}/>
