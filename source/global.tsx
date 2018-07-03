@@ -98,7 +98,7 @@ window["shoppermanDemo"] = async function() {
 	//
 
 	preact.render(
-		<shopperman.CartSystem {...{cart, checkoutMachine}}/>,
+		<shopperman.CartSystem {...{cart, checkoutMachine, checkoutInNewWindow: false}}/>,
 		document.querySelector(".shopperman .cart-area")
 	)
 }

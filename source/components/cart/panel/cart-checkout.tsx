@@ -4,10 +4,10 @@ import {observer} from "mobx-preact"
 import {Cart} from "../../../stores/cart"
 
 /**
- * Checkout handler
+ * Perform checkout function signature
  * - function to call when the checkout is triggered
  */
-export type CheckoutHandler = (event: Event) => void
+export type PerformCheckout = () => Promise<string>
 
 /**
  * CART CHECKOUT PROPS INTERFACE
@@ -15,7 +15,7 @@ export type CheckoutHandler = (event: Event) => void
 export interface CartCheckoutProps {
 	cart: Cart
 	buttonText: string
-	onCheckout: CheckoutHandler
+	performCheckout: PerformCheckout
 }
 
 /**
@@ -24,15 +24,22 @@ export interface CartCheckoutProps {
 @observer
 export class CartCheckout extends Component<CartCheckoutProps, any> {
 
+	private readonly handleCheckout = (event: Event) => {
+		this.props.performCheckout()
+		event.preventDefault()
+		return false
+	}
+
 	render() {
-		const {cart, onCheckout, buttonText} = this.props
+		const {handleCheckout} = this
+		const {cart, buttonText} = this.props
 		return (
 			<div className="cart-checkout">{
 				cart.activeItems.length
 					? (
 						<a className="checkout-button"
 							href="#"
-							onClick={onCheckout}
+							onClick={handleCheckout}
 							target="_blank">
 								{buttonText}
 						</a>

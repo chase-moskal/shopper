@@ -3,17 +3,16 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
 import {Cart} from "../../../stores/cart"
-import {CartCheckout} from "./cart-checkout"
 import {CartManipulator} from "./cart-manipulator"
+import {CartCheckout, PerformCheckout} from "./cart-checkout"
 import {CartCalculatedResults} from "./cart-calculated-results"
-import {CheckoutMachineBase} from "../../../stores/checkout-machine-base"
 
 /**
  * CART CALCULATED RESULTS PROPS INTERFACE
  */
 export interface CartPanelProps {
 	cart: Cart
-	checkoutMachine: CheckoutMachineBase
+	performCheckout: PerformCheckout
 }
 
 /**
@@ -57,27 +56,11 @@ export class CartPanel extends Component<CartPanelProps, any> {
 	)
 
 	/**
-	 * Handle checkout by calling the checkout machine
-	 */
-	private readonly handleCheckout = (event: Event) => {
-		const checkoutWindow = window.open("", "_blank")
-		const {cart, checkoutMachine} = this.props
-		checkoutMachine.checkout(cart.activeItems)
-			.then(checkoutUrl => {
-				checkoutWindow.location.href = checkoutUrl
-				cart.clear()
-				cart.togglePanelOpen(false)
-			})
-		event.preventDefault()
-		return false
-	}
-
-	/**
 	 * Render the cart component
 	 */
 	render() {
-		const {cart} = this.props
-		const {handleCheckout: onCheckout, CartCloseButton, CartTitleBar} = this
+		const {cart, performCheckout} = this.props
+		const {CartCloseButton, CartTitleBar} = this
 
 		return (
 			<div className="cart-panel">
@@ -85,7 +68,7 @@ export class CartPanel extends Component<CartPanelProps, any> {
 				<CartCloseButton {...{cart}}/>
 				<CartManipulator {...{cart}}/>
 				<CartCalculatedResults {...{cart}}/>
-				<CartCheckout {...{cart, onCheckout, buttonText: "Checkout"}}/>
+				<CartCheckout {...{cart, performCheckout, buttonText: "Checkout"}}/>
 			</div>
 		)
 	}
