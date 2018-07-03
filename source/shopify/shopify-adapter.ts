@@ -1,8 +1,8 @@
 
 import * as shopifyBuy from "shopify-buy"
 
-import {Product} from "./product"
-import {CurrencyControl} from "./currency-control"
+import {Product} from "../stores/product"
+import {CurrencyControl} from "../stores/currency-control"
 import {ShopifyCheckoutMachine} from "./shopify-checkout-machine"
 
 export type ShopifyClient = any

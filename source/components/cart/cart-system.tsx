@@ -6,7 +6,7 @@ import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
 import {CartPanel} from "./panel/cart-panel"
 import {PerformCheckout} from "./panel/cart-checkout"
-import {CheckoutMachineBase} from "../../stores/checkout-machine-base"
+import {CheckoutMachineBase} from "../../tools/checkout-machine-base"
 // import {isDescendant} from "../../toolbox"
 
 /**

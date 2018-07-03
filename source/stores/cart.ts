@@ -2,7 +2,7 @@
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
 import {CurrencyControl} from "./currency-control"
-import {observable, action, computed, autorun, reaction} from "mobx"
+import {observable, action, computed} from "mobx"
 
 /**
  * CART OPTIONS INTERFACE

@@ -19,12 +19,11 @@ export interface ProductOptions {
  * - expose getter for the formatted price tag
  */
 export class Product {
-	private readonly currencyControl: CurrencyControl
-
 	readonly id: string
 	readonly value: number
 	readonly title: string
 	readonly description: string
+	private readonly currencyControl: CurrencyControl
 
 	constructor(options: ProductOptions) {
 		Object.assign(this, options)
