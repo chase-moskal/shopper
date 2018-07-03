@@ -22,7 +22,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 		const {product} = item
 		return (
 			<li className="cart-item-display">
-				<a className="remove-button" onClick={this.handleRemoval}>Remove</a>
+				<a className="remove-button" onClick={this.handleRemoval} title="remove item">❌</a>
 				<span>
 					<input type="number"
 						value={item.quantity.toString()}

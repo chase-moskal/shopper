@@ -62,7 +62,6 @@ export class CartPanel extends Component<CartPanelProps, any> {
 		return (
 			<div className="cart-panel">
 				{this.renderCartTitleBar()}
-				{this.renderCartCloseButton()}
 				<CartManipulator {...{cart}}/>
 				<CartCalculatedResults {...{cart}}/>
 				<CartCheckout {...{cart, performCheckout, buttonText: "Checkout"}}/>

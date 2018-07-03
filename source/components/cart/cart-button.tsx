@@ -7,10 +7,16 @@ import {CartButtonProps} from "./interfaces"
 export class CartButton extends Component<CartButtonProps, any> {
 	render() {
 		const {cart, onClick} = this.props
+		const title: string = cart.panelOpen
+			? "close shopping cart"
+			: "open shopping cart"
 		return (
-			<a className="cart-button" onClick={onClick}>
-				<span className="cart-button-text">Cart</span>
-				<span className="cart-button-numeral">{cart.activeItems.length}</span>
+			<a className="cart-button" {...{onClick, title}}>
+				{
+					cart.panelOpen
+						? <span className="cart-close">❌</span>
+						: <span className="cart-numeral">{cart.activeItems.length}</span>
+				}
 			</a>
 		)
 	}
