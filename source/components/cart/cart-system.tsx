@@ -4,9 +4,10 @@ import {observer} from "mobx-preact"
 
 import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
-import {isDescendant} from "../../toolbox"
 import {CartPanel} from "./panel/cart-panel"
+import {PerformCheckout} from "./panel/cart-checkout"
 import {CheckoutMachineBase} from "../../stores/checkout-machine-base"
+// import {isDescendant} from "../../toolbox"
 
 /**
  * CART SYSTEM PROPS INTERFACE
@@ -28,26 +29,13 @@ export interface CartSystemProps {
  */
 @observer
 export class CartSystem extends Component<CartSystemProps, any> {
-	private getElement() {
-		const element = this.base // document.querySelector(".shopperman .cart-system")
-		if (!element) throw new Error("unable to find shopperman cart system element")
-		return element
-	}
-
-	private readonly handleOutsideActivity = ({target}: MouseEvent) => {
-		if (!isDescendant(target as Element, this.getElement())) {
-			this.props.cart.togglePanelOpen(false)
-		}
-	}
-
-	private readonly handleCartButtonClick = () => this.props.cart.togglePanelOpen()
-
-	private readonly handleCartBlur = () => this.props.cart.togglePanelOpen(false)
 
 	/**
-	 * Handle checkout by calling the checkout machine
+	 * Perform checkout function
+	 * - call the checkout machine to obtain checkout url
+	 * - open the checkout url in a new window or same window
 	 */
-	private readonly performCheckout = async(): Promise<string> => {
+	private readonly performCheckout: PerformCheckout = async(): Promise<string> => {
 		const {cart, checkoutMachine, checkoutInNewWindow} = this.props
 
 		const checkoutLocation: Location = checkoutInNewWindow
@@ -62,21 +50,12 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		return checkoutUrl
 	}
 
-	componentWillMount() {
-		window.addEventListener("mousedown", this.handleOutsideActivity)
-		// window.addEventListener("focus", this.handleOutsideActivity, true)
-		// window.addEventListener("blur", this.handleOutsideActivity, true)
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("mousedown", this.handleOutsideActivity)
-		// window.removeEventListener("focus", this.handleOutsideActivity)
-		// window.removeEventListener("blur", this.handleOutsideActivity)
-	}
+	private readonly handleCartButtonClick = () => this.props.cart.togglePanelOpen()
+	private readonly handleCartBlur = () => this.props.cart.togglePanelOpen(false)
 
 	render() {
 		const {performCheckout} = this
-		const {cart, checkoutMachine, checkoutInNewWindow} = this.props
+		const {cart} = this.props
 		return (
 			<section
 				className="cart-system"
@@ -87,4 +66,28 @@ export class CartSystem extends Component<CartSystemProps, any> {
 			</section>
 		)
 	}
+
+	// private getElement() {
+	// 	const element = this.base // document.querySelector(".shopperman .cart-system")
+	// 	if (!element) throw new Error("unable to find shopperman cart system element")
+	// 	return element
+	// }
+
+	// private readonly handleOutsideActivity = ({target}: MouseEvent) => {
+	// 	if (!isDescendant(target as Element, this.getElement())) {
+	// 		this.props.cart.togglePanelOpen(false)
+	// 	}
+	// }
+
+	// componentWillMount() {
+	// 	window.addEventListener("mousedown", this.handleOutsideActivity)
+	// 	// window.addEventListener("focus", this.handleOutsideActivity, true)
+	// 	// window.addEventListener("blur", this.handleOutsideActivity, true)
+	// }
+
+	// componentWillUnmount() {
+	// 	window.removeEventListener("mousedown", this.handleOutsideActivity)
+	// 	// window.removeEventListener("focus", this.handleOutsideActivity)
+	// 	// window.removeEventListener("blur", this.handleOutsideActivity)
+	// }
 }
