@@ -2,18 +2,10 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {Cart} from "../../../stores/cart"
+import {CartPanelProps} from "./interfaces"
+import {CartCheckout} from "./cart-checkout"
 import {CartManipulator} from "./cart-manipulator"
-import {CartCheckout, PerformCheckout} from "./cart-checkout"
 import {CartCalculatedResults} from "./cart-calculated-results"
-
-/**
- * CART CALCULATED RESULTS PROPS INTERFACE
- */
-export interface CartPanelProps {
-	cart: Cart
-	performCheckout: PerformCheckout
-}
 
 /**
  * CART CALCULATED RESULTS CLASS

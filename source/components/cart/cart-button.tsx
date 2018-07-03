@@ -1,12 +1,7 @@
 
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {Cart} from "../../stores/cart"
-
-export interface CartButtonProps {
-	cart: Cart
-	onClick: (event: MouseEvent) => void
-}
+import {CartButtonProps} from "./interfaces"
 
 @observer
 export class CartButton extends Component<CartButtonProps, any> {

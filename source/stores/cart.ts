@@ -1,16 +1,9 @@
 
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
-import {CurrencyControl} from "./currency-control"
+import {CartOptions} from "./interfaces"
 import {observable, action, computed} from "mobx"
-
-/**
- * CART OPTIONS INTERFACE
- */
-export interface CartOptions {
-	items: CartItem[]
-	currencyControl: CurrencyControl
-}
+import {CurrencyControl} from "./currency-control"
 
 /**
  * CART CLASS

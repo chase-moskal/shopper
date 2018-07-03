@@ -1,17 +1,7 @@
 
 import {computed} from "mobx"
+import {ProductOptions} from "./interfaces"
 import {CurrencyControl} from "./currency-control"
-
-/**
- * PRODUCT OPTIONS INTERFACE
- */
-export interface ProductOptions {
-	id: string
-	title: string
-	description: string
-	value: number
-	currencyControl: CurrencyControl
-}
 
 /**
  * PRODUCT CLASS

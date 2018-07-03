@@ -3,16 +3,8 @@ import {computed} from "mobx"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {Cart} from "../stores/cart"
-import {Product} from "../stores/product"
 import {CartItem} from "../stores/cart-item"
-
-export interface ProductDisplayProps {
-	cart: Cart
-	product: Product
-	buttonText1?: string
-	buttonText2?: string
-}
+import {ProductDisplayProps} from "./interfaces"
 
 @observer
 export class ProductDisplay extends Component<ProductDisplayProps> {

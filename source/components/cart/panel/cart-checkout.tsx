@@ -1,22 +1,7 @@
 
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {Cart} from "../../../stores/cart"
-
-/**
- * Perform checkout function signature
- * - function to call when the checkout is triggered
- */
-export type PerformCheckout = () => Promise<string>
-
-/**
- * CART CHECKOUT PROPS INTERFACE
- */
-export interface CartCheckoutProps {
-	cart: Cart
-	buttonText: string
-	performCheckout: PerformCheckout
-}
+import {CartCheckoutProps} from "./interfaces"
 
 /**
  * CART CHECKOUT CLASS

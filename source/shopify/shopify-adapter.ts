@@ -4,24 +4,7 @@ import * as shopifyBuy from "shopify-buy"
 import {Product} from "../stores/product"
 import {CurrencyControl} from "../stores/currency-control"
 import {ShopifyCheckoutMachine} from "./shopify-checkout-machine"
-
-export type ShopifyClient = any
-
-/**
- * SHOPIFY SDK SETTINGS INTERFACE
- */
-export interface ShopifySettings {
-	domain: string
-	storefrontAccessToken: string
-}
-
-/**
- * SHOPIFY ADAPTER OPTIONS INTERFACE
- */
-export interface ShopifyAdapterOptions {
-	settings: ShopifySettings
-	currencyControl: CurrencyControl
-}
+import {ShopifyClient, ShopifySettings, ShopifyAdapterOptions} from "./interfaces"
 
 /**
  * SHOPIFY ADAPTER CLASS
@@ -34,8 +17,8 @@ export class ShopifyAdapter {
 	readonly checkoutMachine: ShopifyCheckoutMachine
 
 	private readonly settings: ShopifySettings
-	private readonly currencyControl: CurrencyControl
 	private readonly shopifyClient: ShopifyClient
+	private readonly currencyControl: CurrencyControl
 
 	constructor(options: ShopifyAdapterOptions) {
 		Object.assign(this, options)

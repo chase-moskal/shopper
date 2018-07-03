@@ -2,27 +2,10 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {Cart} from "../../stores/cart"
 import {CartButton} from "./cart-button"
 import {CartPanel} from "./panel/cart-panel"
-import {PerformCheckout} from "./panel/cart-checkout"
-import {CheckoutMachineBase} from "../../tools/checkout-machine-base"
-// import {isDescendant} from "../../toolbox"
-
-/**
- * CART SYSTEM PROPS INTERFACE
- */
-export interface CartSystemProps {
-
-	/** Cart store contains cart items */
-	cart: Cart
-
-	/** Checkout machine generates checkout url */
-	checkoutMachine: CheckoutMachineBase
-
-	/** Whether to open the checkout url in a new window */
-	checkoutInNewWindow: boolean
-}
+import {CartSystemProps} from "./interfaces"
+import {PerformCheckout} from "./panel/interfaces"
 
 /**
  * CART SYSTEM CLASS
