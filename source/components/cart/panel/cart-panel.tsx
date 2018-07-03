@@ -22,50 +22,55 @@ export interface CartPanelProps {
 export class CartPanel extends Component<CartPanelProps, any> {
 
 	/**
-	 * Cart title bar displays number of items
+	 * Render cart title bar
+	 * - displays number of cart items
 	 */
-	private readonly CartTitleBar = ({cart}: {cart: Cart}) => (
-		<h1>
-			<span>Shopping Cart</span>
-			&nbsp;
-			<span>– {
-				cart.activeItems.length === 0
-					? "empty"
-					: `${
-						cart.activeItems.length} item${cart.activeItems.length === 1
-							? ""
-							: "s"
-					}`
-			}</span>
-		</h1>
-	)
+	private renderCartTitleBar() {
+		const {cart} = this.props
+		return (
+			<h1>
+				<span>Shopping Cart</span>
+				&nbsp;
+				<span>– {
+					cart.activeItems.length === 0
+						? "empty"
+						: `${
+							cart.activeItems.length} item${cart.activeItems.length === 1
+								? ""
+								: "s"
+						}`
+				}</span>
+			</h1>
+		)
+	}
 
 	/**
 	 * Handle cart close
 	 */
 	private readonly handleCartClose = (event: MouseEvent) => {
-		const {cart} = this.props
-		cart.togglePanelOpen(false)
+		this.props.cart.togglePanelOpen(false)
 	}
 
 	/**
-	 * Cart close button component
+	 * Render cart close button
+	 * - click to close the cart
 	 */
-	private readonly CartCloseButton = () => (
-		<a onClick={this.handleCartClose}>Close</a>
-	)
+	private renderCartCloseButton() {
+		return (
+			<a onClick={this.handleCartClose}>Close</a>
+		)
+	}
 
 	/**
 	 * Render the cart component
 	 */
 	render() {
 		const {cart, performCheckout} = this.props
-		const {CartCloseButton, CartTitleBar} = this
 
 		return (
 			<div className="cart-panel">
-				<CartTitleBar {...{cart}}/>
-				<CartCloseButton {...{cart}}/>
+				{this.renderCartTitleBar()}
+				{this.renderCartCloseButton()}
 				<CartManipulator {...{cart}}/>
 				<CartCalculatedResults {...{cart}}/>
 				<CartCheckout {...{cart, performCheckout, buttonText: "Checkout"}}/>
