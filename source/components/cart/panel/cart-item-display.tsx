@@ -18,11 +18,15 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 	}
 
 	render() {
-		const {item} = this.props
+		const {item, cartItemText} = this.props
 		const {product} = item
 		return (
 			<li className="cart-item-display">
-				<a className="remove-button" onClick={this.handleRemoval} title="remove item">❌</a>
+				<a className="remove-button"
+					onClick={this.handleRemoval}
+					title={cartItemText.remove.title}>
+						{cartItemText.remove.content}
+				</a>
 				<span>
 					<input type="number"
 						value={item.quantity.toString()}

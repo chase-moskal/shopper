@@ -18,10 +18,10 @@ export class CartPanel extends Component<CartPanelProps, any> {
 	 * - displays number of cart items
 	 */
 	private renderCartTitleBar() {
-		const {cart} = this.props
+		const {cart, cartPanelText} = this.props
 		return (
 			<h1>
-				<span>Shopping Cart</span>
+				<span>{cartPanelText.heading}</span>
 				&nbsp;
 				<span>– {
 					cart.activeItems.length === 0
@@ -57,14 +57,14 @@ export class CartPanel extends Component<CartPanelProps, any> {
 	 * Render the cart component
 	 */
 	render() {
-		const {cart, performCheckout} = this.props
-
+		const {cart, performCheckout, cartPanelText} = this.props
+		const {cartItemText, cartCalculatedText, cartCheckoutText} = cartPanelText
 		return (
 			<div className="cart-panel">
 				{this.renderCartTitleBar()}
-				<CartManipulator {...{cart}}/>
-				<CartCalculatedResults {...{cart}}/>
-				<CartCheckout {...{cart, performCheckout, buttonText: "Checkout"}}/>
+				<CartManipulator {...{cart, cartItemText}}/>
+				<CartCalculatedResults {...{cart, cartCalculatedText}}/>
+				<CartCheckout {...{cart, performCheckout, cartCheckoutText}}/>
 			</div>
 		)
 	}

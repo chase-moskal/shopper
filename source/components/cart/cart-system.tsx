@@ -4,11 +4,41 @@ import {observer} from "mobx-preact"
 
 import {CartButton} from "./cart-button"
 import {CartPanel} from "./panel/cart-panel"
-import {CartSystemProps} from "./interfaces"
 import {PerformCheckout} from "./panel/interfaces"
+import {CartSystemProps, CartText} from "./interfaces"
+
+export const defaultCartText: CartText = {
+	cartButtonText: {
+		open: {
+			title: "Close the cart",
+			content: "❌"
+		},
+		closed: {
+			title: "Open the cart"
+		}
+	},
+	cartPanelText: {
+		heading: "Shopping cart",
+		cartItemText: {
+			remove: {
+				title: "Remove cart item",
+				content: "❌"
+			}
+		},
+		cartCalculatedText: {
+			subtotal: {
+				content: "Subtotal"
+			}
+		},
+		cartCheckoutText: {
+			title: "Buy cart items",
+			content: "Checkout"
+		}
+	}
+}
 
 /**
- * CART SYSTEM CLASS
+ * Cart system class
  */
 @observer
 export class CartSystem extends Component<CartSystemProps, any> {
@@ -37,40 +67,17 @@ export class CartSystem extends Component<CartSystemProps, any> {
 	private readonly handleCartBlur = () => this.props.cart.togglePanelOpen(false)
 
 	render() {
-		const {performCheckout} = this
-		const {cart} = this.props
+		const {performCheckout, handleCartButtonClick: onClick} = this
+		const {cart, cartText = defaultCartText} = this.props
+		const {cartButtonText, cartPanelText} = cartText
 		return (
 			<section
 				className="cart-system"
 				data-panel-open={cart.panelOpen ? "true" : "false"}
 				onBlur={this.handleCartBlur}>
-					<CartButton {...{cart, onClick: this.handleCartButtonClick}}/>
-					<CartPanel {...{cart, performCheckout}}/>
+					<CartButton {...{cart, onClick, cartButtonText}}/>
+					<CartPanel {...{cart, performCheckout, cartPanelText}}/>
 			</section>
 		)
 	}
-
-	// private getElement() {
-	// 	const element = this.base // document.querySelector(".shopperman .cart-system")
-	// 	if (!element) throw new Error("unable to find shopperman cart system element")
-	// 	return element
-	// }
-
-	// private readonly handleOutsideActivity = ({target}: MouseEvent) => {
-	// 	if (!isDescendant(target as Element, this.getElement())) {
-	// 		this.props.cart.togglePanelOpen(false)
-	// 	}
-	// }
-
-	// componentWillMount() {
-	// 	window.addEventListener("mousedown", this.handleOutsideActivity)
-	// 	// window.addEventListener("focus", this.handleOutsideActivity, true)
-	// 	// window.addEventListener("blur", this.handleOutsideActivity, true)
-	// }
-
-	// componentWillUnmount() {
-	// 	window.removeEventListener("mousedown", this.handleOutsideActivity)
-	// 	// window.removeEventListener("focus", this.handleOutsideActivity)
-	// 	// window.removeEventListener("blur", this.handleOutsideActivity)
-	// }
 }

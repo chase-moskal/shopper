@@ -2,11 +2,34 @@
 import {Cart} from "../../../stores/cart"
 import {CartItem} from "../../../stores/cart-item"
 
-/**
- * CART CALCULATED RESULTS PROPS INTERFACE
- */
+export interface CartItemText {
+	remove: {
+		title: string
+		content: string
+	}
+}
+
+export interface CartCalculatedText {
+	subtotal: {
+		content: string
+	}
+}
+
+export interface CartCheckoutText {
+	title: string
+	content: string
+}
+
+export interface CartPanelText {
+	heading: string
+	cartItemText: CartItemText
+	cartCalculatedText: CartCalculatedText
+	cartCheckoutText: CartCheckoutText
+}
+
 export interface CartCalculatedResultsProps {
 	cart: Cart
+	cartCalculatedText: CartCalculatedText
 }
 
 /**
@@ -15,26 +38,24 @@ export interface CartCalculatedResultsProps {
  */
 export type PerformCheckout = () => Promise<string>
 
-/**
- * CART CHECKOUT PROPS INTERFACE
- */
 export interface CartCheckoutProps {
 	cart: Cart
-	buttonText: string
+	cartCheckoutText: CartCheckoutText
 	performCheckout: PerformCheckout
 }
 
-/**
- * CART ITEM DISPLAY PROPS INTERFACE
- */
 export interface CartItemDisplayProps {
 	item: CartItem
+	cartItemText: CartItemText
 }
 
-/**
- * CART CALCULATED RESULTS PROPS INTERFACE
- */
 export interface CartPanelProps {
 	cart: Cart
+	cartPanelText: CartPanelText
 	performCheckout: PerformCheckout
+}
+
+export interface CartManipulatorProps {
+	cart: Cart
+	cartItemText: CartItemText
 }

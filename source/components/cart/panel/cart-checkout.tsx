@@ -17,16 +17,17 @@ export class CartCheckout extends Component<CartCheckoutProps, any> {
 
 	render() {
 		const {handleCheckout} = this
-		const {cart, buttonText} = this.props
+		const {cart, cartCheckoutText} = this.props
 		return (
 			<div className="cart-checkout">{
 				cart.activeItems.length
 					? (
 						<a className="checkout-button"
+							title={cartCheckoutText.title}
 							href="#"
 							onClick={handleCheckout}
 							target="_blank">
-								{buttonText}
+								{cartCheckoutText.content}
 						</a>
 					)
 					: null

@@ -1,20 +1,17 @@
 
 import {h} from "preact"
-
 import * as crnc from "crnc"
 import * as mobx from "mobx"
+import * as shopperman from "."
 import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
-
-import * as shopperman from "."
 
 window["crnc"] = crnc
 window["mobx"] = mobx
 window["preact"] = preact
 window["commotion"] = commotion
 window["mobxPreact"] = mobxPreact
-
 window["shopperman"] = shopperman
 
 //

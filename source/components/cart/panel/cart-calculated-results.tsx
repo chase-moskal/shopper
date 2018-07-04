@@ -10,14 +10,14 @@ import {CartCalculatedResultsProps} from "./interfaces"
 export class CartCalculatedResults extends Component<CartCalculatedResultsProps, any> {
 
 	render() {
-		const {cart} = this.props
+		const {cart, cartCalculatedText} = this.props
 		return (
 			<ol className="cart-calculated-results">
 				{
 					cart.activeItems.length
 						? (
 							<li>
-								<span>Subtotal:</span>
+								<span>{cartCalculatedText.subtotal.content}</span>
 								&nbsp;
 								<strong>{cart.price}</strong>
 							</li>
