@@ -49,7 +49,7 @@ export class CartPanel extends Component<CartPanelProps, any> {
 	 */
 	private renderCartCloseButton() {
 		return (
-			<a onClick={this.handleCartClose}>Close</a>
+			<button onClick={this.handleCartClose}>Close</button>
 		)
 	}
 

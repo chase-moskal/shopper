@@ -22,11 +22,11 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 		const {product} = item
 		return (
 			<li className="cart-item-display">
-				<a className="remove-button"
+				<button className="remove-button"
 					onClick={this.handleRemoval}
 					title={cartItemText.remove.title}>
 						{cartItemText.remove.content}
-				</a>
+				</button>
 				<span>
 					<input type="number"
 						value={item.quantity.toString()}

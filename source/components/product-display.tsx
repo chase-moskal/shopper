@@ -43,9 +43,11 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 				<h3 className="title">{product.title}</h3>
 				<div className="box">
 					<p className="price">{product.price}</p>
-					<a className="button" onClick={this.handleButtonClick}>
-						{inCart ? buttonText2 : buttonText1}
-					</a>
+					<button className="button"
+						onClick={this.handleButtonClick}
+						disabled={inCart}>
+							{inCart ? buttonText2 : buttonText1}
+					</button>
 				</div>
 				<p className="description"
 					dangerouslySetInnerHTML={{__html: product.description}}>

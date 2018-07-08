@@ -11,13 +11,13 @@ export class CartButton extends Component<CartButtonProps, any> {
 			? cartButtonText.open.title
 			: cartButtonText.closed.title
 		return (
-			<a className="cart-button" {...{onClick, title}}>
+			<button className="cart-button" tabIndex={0} {...{onClick, title}}>
 				{
 					cart.panelOpen
 						? <span className="cart-close">{cartButtonText.open.content}</span>
 						: <span className="cart-numeral">{cart.activeItems.length}</span>
 				}
-			</a>
+			</button>
 		)
 	}
 }

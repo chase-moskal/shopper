@@ -10,12 +10,27 @@
 	$panelspacing: 1em;
 	$bradius: 2px;
 
+	.reset-and-normalize {
+		&, & * {
+			margin: 0;
+			padding: 0;
+		}
+		ol, ul {
+			list-style: none;
+		}
+		button {
+			font-size: 1em;
+			border: none;
+		}
+	}
+
 	//
 	// Product area
 	// - product display anywhere on a web store
 	//
 
 	.product-area {
+		@extend .reset-and-normalize;
 		.product-display {
 			.button {
 				cursor: default;
@@ -40,19 +55,11 @@
 	}
 
 	.cart-system {
+		@extend .reset-and-normalize;
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
-
-		&, & * {
-			margin: 0;
-			padding: 0;
-		}
-
-		ol, ul {
-			list-style: none;
-		}
 	}
 
 	.cart-button {
@@ -228,8 +235,9 @@ html.shopperman-demo {
 		.button {
 			display: inline-block;
 			width: 8em;
-			background: rgba(255,255,255, 0.1);
 			padding: 0.32em 1em;
+			background: rgba(255,255,255, 0.1);
+			color: white;
 		}
 	}
 }
