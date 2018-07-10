@@ -43,7 +43,7 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 				<h3 className="title">{product.title}</h3>
 				<div className="box">
 					<p className="price">{product.price}</p>
-					<button className="button"
+					<button className="add-to-cart-button"
 						onClick={this.handleButtonClick}
 						disabled={inCart}>
 							{inCart ? buttonText2 : buttonText1}

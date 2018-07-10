@@ -9,10 +9,6 @@ export class ScrollTracker {
 	@observable scroll: number = 0
 	@observable tracking: boolean = false
 
-	private handleScrollUpdate = () => {
-		this.updateScroll()
-	}
-
 	updateScroll() {
 		if (this.tracking) {
 			const scroll = getScrollTop()
@@ -26,6 +22,10 @@ export class ScrollTracker {
 
 	@action setTracking(tracking: boolean) {
 		this.tracking = tracking
+		this.updateScroll()
+	}
+
+	private handleScrollUpdate = () => {
 		this.updateScroll()
 	}
 

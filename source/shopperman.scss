@@ -15,9 +15,11 @@
 			margin: 0;
 			padding: 0;
 		}
+
 		ol, ul {
 			list-style: none;
 		}
+
 		button {
 			font-size: 1em;
 			border: none;
@@ -31,12 +33,14 @@
 
 	.product-area {
 		@extend .reset-and-normalize;
+
 		.product-display {
-			.button {
+			.add-to-cart-button {
 				cursor: default;
 			}
+
 			&[data-in-cart="false"] {
-				.button {
+				.add-to-cart-button {
 					cursor: pointer;
 				}
 			}
@@ -61,6 +65,10 @@
 		left: 0;
 		width: 100%;
 		transition: top 400ms ease;
+
+		h1 {
+			text-align: left;
+		}
 	}
 
 	.cart-button {
@@ -116,6 +124,7 @@
 	}
 
 	.cart-checkout {
+		text-align: right;
 		margin-top: $panelspacing;
 
 		.checkout-button {
@@ -127,6 +136,22 @@
 			text-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
 			border-radius: $bradius;
 			cursor: pointer;
+
+			&[disabled] {
+				opacity: 0.6;
+				background: #888;
+			}
+		}
+	}
+
+	@media (max-width: 800px) {
+		.cart-button {
+			left: auto;
+			right: 0;
+			border-radius: $bradius 0 0 $bradius;
+		}
+		.cart-panel {
+			padding-right: 3em;
 		}
 	}
 
@@ -139,8 +164,8 @@
 	&[data-theme="base"] {
 		.cart-system {
 			color: #444;
+
 			h1 {
-				text-align: left;
 				text-transform: uppercase;
 				opacity: 0.8;
 				font-style: italic;
@@ -163,21 +188,6 @@
 				rgba(255,255,255, 0.60)
 			);
 			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-		}
-
-		.cart-checkout {
-			text-align: right;
-		}
-
-		@media (max-width: 800px) {
-			.cart-button {
-				left: auto;
-				right: 0;
-				border-radius: $bradius 0 0 $bradius;
-			}
-			.cart-panel {
-				padding-right: 3em;
-			}
 		}
 	}
 }
@@ -217,6 +227,10 @@ html.shopperman-demo {
 		}
 	}
 
+	*:focus {
+		outline: 4px solid cyan;
+	}
+
 	.slice {
 		@include slice();
 		background: rgba(0,0,0, 0.1);
@@ -233,12 +247,16 @@ html.shopperman-demo {
 	.product-display {
 		margin-top: 3em;
 
-		.button {
+		.add-to-cart-button {
 			display: inline-block;
 			width: 8em;
 			padding: 0.32em 1em;
-			background: rgba(255,255,255, 0.1);
+			background: #13af4b;
 			color: white;
+
+			&[disabled] {
+				background: rgba(255,255,255, 0.1);
+			}
 		}
 	}
 }
