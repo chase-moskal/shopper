@@ -1,7 +1,8 @@
 
 import {Cart} from "../../stores/cart"
-import {CheckoutMachineBase} from "../../interfaces"
 import {CartPanelText} from "./panel/interfaces"
+import {CheckoutMachineBase} from "../../interfaces"
+import {ScrollTracker} from "../../stores/scroll-tracker"
 
 export interface CartButtonText {
 	open: {
@@ -40,6 +41,9 @@ export interface CartSystemProps {
 
 	/** Whether to open the checkout url in a new window */
 	checkoutInNewWindow: boolean
+
+	/** Keeps track of a scroll observable */
+	scrollTracker?: ScrollTracker
 
 	/** Display text to show throughout the cart */
 	cartText?: CartText

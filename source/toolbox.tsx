@@ -21,3 +21,11 @@ export function convertNewlinesToReactBreaks(text: string) {
 		)
 	})
 }
+
+export function getScrollTop(doc: Document = window.document): number {
+	return doc.documentElement.scrollTop || doc.body.scrollTop
+}
+
+export function setScrollTop(value: number, doc: Document = window.document): void {
+	doc.documentElement.scrollTop = document.body.scrollTop = value
+}
