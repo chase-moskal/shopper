@@ -38,7 +38,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 					onBlur={this.handleQuantityInputChange}
 					/>
 				<span className="item-title">"{product.title}"</span>
-				<strong className="item-price">{item.price}</strong>
+				<span className="item-price pricevalue">{item.price}</span>
 			</li>
 		)
 	}

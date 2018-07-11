@@ -12,13 +12,13 @@ export class CartCalculatedResults extends Component<CartCalculatedResultsProps,
 	render() {
 		const {cart, cartCalculatedText} = this.props
 		return (
-			<ol className="cart-calculated-results">
+			<ol className="cart-calculated-results cart-grid">
 				{
 					cart.activeItems.length
 						? (
-							<li>
+							<li className="cart-subtotal">
 								<span>{cartCalculatedText.subtotal.content}</span>
-								<strong>{cart.price}</strong>
+								<strong className="pricevalue">{cart.price}</strong>
 							</li>
 						)
 						: null

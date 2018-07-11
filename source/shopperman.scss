@@ -9,6 +9,7 @@
 .shopperman {
 	$buttonheight: 3rem;
 	$panelspacing: 1rem;
+	$priceleeway: 2em;
 	$bradius: 2px;
 
 	.reset-and-normalize {
@@ -78,7 +79,7 @@
 		width: 3em;
 		height: $buttonheight;
 		padding: 0.5em;
-		background: rgba(0,0,0, 0.2);
+		background: rgba(255,255,255, 0.2);
 		border-radius: 0 $bradius $bradius 0;
 		user-select: none;
 		cursor: pointer;
@@ -92,21 +93,23 @@
 		width: 96%;
 		max-width: 40em;
 		min-height: 6em;
-		background: rgba(0,0,0, 0.2);
+		background: rgba(255,255,255, 0.2);
 		border-radius: $bradius 0 $bradius $bradius;
-
-		& > * {
-			padding: $panelspacing;
-
-			& + * {
-				padding-top: 0;
-			}
-		}
 
 		h1 {
 			text-align: left;
 			font-size: 1.2em;
 			height: $buttonheight;
+			padding: $panelspacing;
+		}
+
+		.cart-panel-content {
+			padding: $panelspacing;
+			padding-top: 0;
+
+			& > * + * {
+				margin-top: $panelspacing;
+			}
 		}
 	}
 
@@ -115,7 +118,7 @@
 		flex-direction: column;
 	}
 
-	@mixin cart-grid() {
+	.cart-grid {
 		text-align: right;
 
 		li {
@@ -124,9 +127,9 @@
 			margin-top: 0.2em;
 
 			& > * {
-				align-self: center;
-				background: white;
+				align-self: stretch;
 				padding: 0.5em;
+				text-align: center;
 
 				& + * {
 					margin-left: 0.25em;
@@ -137,30 +140,35 @@
 
 	.cart-manipulator {
 		.cart-item-list {
-			@include cart-grid();
-
 			.cart-item-display {
 				.item-remove-button {
 					cursor: pointer;
 					padding: 0.5em 1em;
 				}
-		
+
 				.item-quantity {
 					border: none;
 					font-size: 1em;
 				}
-		
+
+				.item-title {
+					flex-grow: 2;
+					text-align: left;
+				}
+
 				.item-price {
 					flex-grow: 3;
 					text-align: right;
-					background: rgba(255,255,255, 0.5);
 				}
 			}
 		}
 	}
 
+	.pricevalue {
+		text-align: right;
+	}
+
 	.cart-calculated-results {
-		@include cart-grid();
 		padding-top: 0;
 	}
 
@@ -171,16 +179,8 @@
 			display: inline-block;
 			font-weight: bold;
 			padding: 1em 2em;
-			color: #fff;
-			background: #1e9b2a;
-			text-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
 			border-radius: $bradius;
 			cursor: pointer;
-
-			&[disabled] {
-				opacity: 0.6;
-				background: #888;
-			}
 		}
 	}
 
@@ -192,6 +192,9 @@
 		}
 		.cart-panel {
 			padding-right: 3em;
+			.cart-panel-content {
+				padding-right: 0;
+			}
 		}
 	}
 
@@ -219,20 +222,41 @@
 			background: rgba(255,255,255, 0.9);
 		}
 
+		// .cart-grid {
+		// 	li > * {
+		// 		border: 1px solid rgba(0,0,0, 0.1) !important;
+		// 	}
+		// }
+
 		.cart-panel {
 			background: rgba(255,255,255, 0.96);
 			background: linear-gradient(
 				to bottom right,
-				rgba(255,255,255, 0.96),
-				rgba(255,255,255, 0.88),
-				rgba(255,255,255, 0.60)
+				rgba(255,255,255, 1),
+				rgba(196, 196, 196, 0.9)
 			);
 			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
 		}
 
+		.cart-item-list, .cart-calculated-results {
+			li * {
+				background: rgba(255,255,255, 0.9);
+				&.pricevalue {
+					background: rgba(255,255,255, 0.6);
+				}
+			}
+		}
+
 		.cart-checkout {
 			.checkout-button {
-				text-transform: normal;
+				color: #fff;
+				background: #1e9b2a;
+				text-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
+
+				&[disabled] {
+					opacity: 0.6;
+					background: #888;
+				}
 			}
 		}
 	}

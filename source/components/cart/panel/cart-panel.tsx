@@ -62,9 +62,11 @@ export class CartPanel extends Component<CartPanelProps, any> {
 		return (
 			<div className="cart-panel">
 				{this.renderCartTitle()}
-				<CartManipulator {...{cart, cartItemText}}/>
-				<CartCalculatedResults {...{cart, cartCalculatedText}}/>
-				<CartCheckout {...{cart, performCheckout, cartCheckoutText}}/>
+				<div className="cart-panel-content">
+					<CartManipulator {...{cart, cartItemText}}/>
+					<CartCalculatedResults {...{cart, cartCalculatedText}}/>
+					<CartCheckout {...{cart, performCheckout, cartCheckoutText}}/>
+				</div>
 			</div>
 		)
 	}
