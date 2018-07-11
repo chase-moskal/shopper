@@ -124,10 +124,11 @@
 		li {
 			display: flex;
 			justify-content: flex-end;
+			align-items: stretch;
 			margin-top: 0.2em;
 
 			& > * {
-				align-self: stretch;
+				flex: 0 1 auto;
 				padding: 0.5em;
 				text-align: center;
 
@@ -147,17 +148,19 @@
 				}
 
 				.item-quantity {
+					display: inline-block;
+					width: 4em;
 					border: none;
 					font-size: 1em;
 				}
 
 				.item-title {
-					flex-grow: 2;
+					flex: 2;
 					text-align: left;
 				}
 
 				.item-price {
-					flex-grow: 3;
+					flex: 1;
 					text-align: right;
 				}
 			}
@@ -169,7 +172,14 @@
 	}
 
 	.cart-calculated-results {
+		width: 60%;
+		margin-left: auto;
 		padding-top: 0;
+
+		.pricevalue {
+			flex: 1;
+			text-align: right;
+		}
 	}
 
 	.cart-checkout {

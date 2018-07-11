@@ -27,7 +27,24 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 					title={cartItemText.remove.title}>
 						{cartItemText.remove.content}
 				</button>
-				<input className="item-quantity" type="number"
+
+				{/* <div className="item-quantity">
+					<input
+						type="number"
+						value={item.quantity.toString()}
+						min={item.quantityMin}
+						max={item.quantityMax}
+						onChange={this.handleQuantityInputChange}
+						onKeyUp={this.handleQuantityInputChange}
+						onMouseUp={this.handleQuantityInputChange}
+						onClick={this.handleQuantityInputChange}
+						onBlur={this.handleQuantityInputChange}
+						/>
+				</div> */}
+
+				<input
+					className="item-quantity"
+					type="number"
 					value={item.quantity.toString()}
 					min={item.quantityMin}
 					max={item.quantityMax}
@@ -37,8 +54,9 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 					onClick={this.handleQuantityInputChange}
 					onBlur={this.handleQuantityInputChange}
 					/>
-				<span className="item-title">"{product.title}"</span>
-				<span className="item-price pricevalue">{item.price}</span>
+
+				<div className="item-title">{product.title}</div>
+				<div className="item-price pricevalue">{item.price}</div>
 			</li>
 		)
 	}
