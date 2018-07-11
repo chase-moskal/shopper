@@ -31,7 +31,7 @@ export const makeDefaultCartText = (): CartText => ({
 		},
 		cartCalculatedText: {
 			subtotal: {
-				content: "Subtotal"
+				content: "Subtotal (approximate)"
 			}
 		},
 		cartCheckoutText: {

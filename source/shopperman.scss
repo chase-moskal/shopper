@@ -7,11 +7,13 @@
 //
 
 .shopperman {
-	$panelspacing: 1em;
+	$buttonheight: 3rem;
+	$panelspacing: 1rem;
 	$bradius: 2px;
 
 	.reset-and-normalize {
 		&, & * {
+			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
 		}
@@ -65,10 +67,6 @@
 		left: 0;
 		width: 100%;
 		transition: top 400ms ease;
-
-		h1 {
-			text-align: left;
-		}
 	}
 
 	.cart-button {
@@ -78,6 +76,7 @@
 		top: 2em;
 		left: 100%;
 		width: 3em;
+		height: $buttonheight;
 		padding: 0.5em;
 		background: rgba(0,0,0, 0.2);
 		border-radius: 0 $bradius $bradius 0;
@@ -95,37 +94,78 @@
 		min-height: 6em;
 		background: rgba(0,0,0, 0.2);
 		border-radius: $bradius 0 $bradius $bradius;
-		padding: $panelspacing;
+
+		& > * {
+			padding: $panelspacing;
+
+			& + * {
+				padding-top: 0;
+			}
+		}
+
+		h1 {
+			text-align: left;
+			font-size: 1.2em;
+			height: $buttonheight;
+		}
 	}
 
 	.cart-system[data-panel-open="true"] .cart-panel {
-		display: block;
+		display: flex;
+		flex-direction: column;
+	}
+
+	@mixin cart-grid() {
+		text-align: right;
+
+		li {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 0.2em;
+
+			& > * {
+				align-self: center;
+				background: white;
+				padding: 0.5em;
+
+				& + * {
+					margin-left: 0.25em;
+				}
+			}
+		}
 	}
 
 	.cart-manipulator {
-		.cart-list-items {
-			li {
-				display: flex;
-				padding: 0.1em 0;
+		.cart-item-list {
+			@include cart-grid();
+
+			.cart-item-display {
+				.item-remove-button {
+					cursor: pointer;
+					padding: 0.5em 1em;
+				}
+		
+				.item-quantity {
+					border: none;
+					font-size: 1em;
+				}
+		
+				.item-price {
+					flex-grow: 3;
+					text-align: right;
+					background: rgba(255,255,255, 0.5);
+				}
 			}
 		}
 	}
 
 	.cart-calculated-results {
-		text-align: right;
-	}
-
-	.cart-item-display {
-		display: flex;
-
-		.remove-button {
-			cursor: pointer;
-		}
+		@include cart-grid();
+		padding-top: 0;
 	}
 
 	.cart-checkout {
 		text-align: right;
-		margin-top: $panelspacing;
 
 		.checkout-button {
 			display: inline-block;
@@ -168,7 +208,7 @@
 			h1 {
 				text-transform: uppercase;
 				opacity: 0.8;
-				font-style: italic;
+
 				& > span:nth-of-type(2) {
 					font-weight: normal;
 				}
@@ -188,6 +228,12 @@
 				rgba(255,255,255, 0.60)
 			);
 			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
+		}
+
+		.cart-checkout {
+			.checkout-button {
+				text-transform: normal;
+			}
 		}
 	}
 }

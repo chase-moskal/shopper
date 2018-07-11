@@ -7,4 +7,5 @@ export interface ProductDisplayProps {
 	product: Product
 	buttonText1?: string
 	buttonText2?: string
+	buttonTitle?: string
 }

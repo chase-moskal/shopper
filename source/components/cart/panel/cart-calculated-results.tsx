@@ -18,7 +18,6 @@ export class CartCalculatedResults extends Component<CartCalculatedResultsProps,
 						? (
 							<li>
 								<span>{cartCalculatedText.subtotal.content}</span>
-								&nbsp;
 								<strong>{cart.price}</strong>
 							</li>
 						)

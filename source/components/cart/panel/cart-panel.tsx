@@ -14,13 +14,13 @@ import {CartCalculatedResults} from "./cart-calculated-results"
 export class CartPanel extends Component<CartPanelProps, any> {
 
 	/**
-	 * Render cart title bar
+	 * Render cart title
 	 * - displays number of cart items
 	 */
-	private renderCartTitleBar() {
+	private renderCartTitle() {
 		const {cart, cartPanelText} = this.props
 		return (
-			<h1>
+			<h1 className="cart-panel-title">
 				<span>{cartPanelText.heading}</span>
 				&nbsp;
 				<span>– {
@@ -61,7 +61,7 @@ export class CartPanel extends Component<CartPanelProps, any> {
 		const {cartItemText, cartCalculatedText, cartCheckoutText} = cartPanelText
 		return (
 			<div className="cart-panel">
-				{this.renderCartTitleBar()}
+				{this.renderCartTitle()}
 				<CartManipulator {...{cart, cartItemText}}/>
 				<CartCalculatedResults {...{cart, cartCalculatedText}}/>
 				<CartCheckout {...{cart, performCheckout, cartCheckoutText}}/>

@@ -35,7 +35,8 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 		const {
 			product,
 			buttonText1 = "Add to Cart",
-			buttonText2 = "In Cart"
+			buttonText2 = "In Cart",
+			buttonTitle = undefined
 		} = this.props
 
 		return (
@@ -43,7 +44,9 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 				<h3 className="title">{product.title}</h3>
 				<div className="box">
 					<p className="price">{product.price}</p>
-					<button className="add-to-cart-button"
+					<button
+						className="add-to-cart-button"
+						title={inCart ? undefined : buttonTitle}
 						onClick={this.handleButtonClick}
 						disabled={inCart}>
 							{inCart ? buttonText2 : buttonText1}

@@ -22,26 +22,23 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 		const {product} = item
 		return (
 			<li className="cart-item-display">
-				<button className="remove-button"
+				<button className="item-remove-button"
 					onClick={this.handleRemoval}
 					title={cartItemText.remove.title}>
 						{cartItemText.remove.content}
 				</button>
-				<span>
-					<input type="number"
-						value={item.quantity.toString()}
-						min={item.quantityMin}
-						max={item.quantityMax}
-						onChange={this.handleQuantityInputChange}
-						onKeyUp={this.handleQuantityInputChange}
-						onMouseUp={this.handleQuantityInputChange}
-						onClick={this.handleQuantityInputChange}
-						onBlur={this.handleQuantityInputChange}
-						/>
-				</span>
-				<span>#{product.id.substr(0, 7)}</span>
-				<span>"{product.title}"</span>
-				<strong>{item.price}</strong>
+				<input className="item-quantity" type="number"
+					value={item.quantity.toString()}
+					min={item.quantityMin}
+					max={item.quantityMax}
+					onChange={this.handleQuantityInputChange}
+					onKeyUp={this.handleQuantityInputChange}
+					onMouseUp={this.handleQuantityInputChange}
+					onClick={this.handleQuantityInputChange}
+					onBlur={this.handleQuantityInputChange}
+					/>
+				<span className="item-title">"{product.title}"</span>
+				<strong className="item-price">{item.price}</strong>
 			</li>
 		)
 	}

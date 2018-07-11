@@ -12,7 +12,7 @@ export class CartManipulator extends Component<CartManipulatorProps, any> {
 		const {cart, cartItemText} = this.props
 		return (
 			<div className="cart-manipulator">
-				<ol className="cart-list-items">
+				<ol className="cart-item-list">
 					{cart.activeItems.map(item => <CartItemDisplay {...{item, cartItemText}}/>)}
 				</ol>
 			</div>
