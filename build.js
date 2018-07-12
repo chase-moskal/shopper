@@ -72,7 +72,7 @@ async function build({debug, paths, sassWatch}) {
 
 	if (sassWatch) {
 		await axx(
-			`${nb}node-sass --watch --source-map true ${styleSource} ${styleOutput}`,
+			`${nb}sass --watch --source-map ${styleSource} ${styleOutput}`,
 			caxx(),
 			{combineStderr: true}
 		)
@@ -95,7 +95,7 @@ async function build({debug, paths, sassWatch}) {
 			? axx(`${nb}tsc --sourceMap false --inlineSourceMap true`, caxx())
 			: axx(`${nb}tsc`, caxx()),
 		axx(
-			`${nb}node-sass --source-map true ${styleSource} ${styleOutput}`,
+			`${nb}sass --source-map ${styleSource} ${styleOutput}`,
 			caxx(),
 			{combineStderr: true}
 		)
