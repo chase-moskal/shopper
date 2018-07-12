@@ -18,7 +18,7 @@ export class Cart {
 	@observable panelOpen: boolean = false
 
 	constructor(options: CartOptions) {
-		this.itemCatalog = options.items
+		this.itemCatalog = options.itemCatalog
 		this.currencyControl = options.currencyControl
 	}
 

@@ -8,7 +8,7 @@ import {CurrencyExchangeRates} from "crnc/dist/interfaces"
  * CART OPTIONS INTERFACE
  */
 export interface CartOptions {
-	items: CartItem[]
+	itemCatalog: CartItem[]
 	currencyControl: CurrencyControl
 }
 

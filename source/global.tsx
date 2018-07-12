@@ -25,50 +25,44 @@ window["shoppermanDemo"] = async function() {
 	//
 
 	mobx.configure({enforceActions: true})
-	const baseCurrency = "CAD"
-	const displayCurrency = "EUR"
-	const collectionId = "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="
-	const settings: shopperman.ShopifySettings = {
-		domain: "dev-bakery.myshopify.com",
-		storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
+
+	const options = {
+		currency: {
+			baseCurrency: "CAD",
+			displayCurrency: "EUR",
+			rates: (await crnc.downloadRates()).rates
+		},
+		shopify: {
+			domain: "dev-bakery.myshopify.com",
+			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
+		},
+		collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
+		checkoutInNewWindow: false
 	}
 
-	const {rates} = await crnc.downloadRates()
-
 	//
-	// currency control instance
+	// instances
 	//
 
-	const currencyControl = window["currencyControl"] = new shopperman.CurrencyControl({
-		displayCurrency,
-		baseCurrency,
-		rates
-	})
-
-	//
-	// shopify adapter allows us to fetch products
-	//
-
+	const currencyControl = new shopperman.CurrencyControl(options.currency)
 	const shopifyAdapter = new shopperman.ShopifyAdapter({
-		settings,
+		settings: options.shopify,
 		currencyControl
 	})
-
-	const {checkoutMachine} = shopifyAdapter
 
 	//
 	// fetch products from shopify
 	//
 
-	const products = await shopifyAdapter.getProductsInCollection(collectionId)
+	const products = await shopifyAdapter.getProductsInCollection(options.collectionId)
 
 	//
 	// create cart model
 	//
 
-	const cart = window["cart"] = new shopperman.Cart({
+	const cart = new shopperman.Cart({
 		currencyControl,
-		items: products.map(product =>
+		itemCatalog: products.map(product =>
 			new shopperman.CartItem({
 				product,
 				currencyControl,
@@ -78,7 +72,7 @@ window["shoppermanDemo"] = async function() {
 	})
 
 	//
-	// render product list
+	// render components
 	//
 
 	preact.render(
@@ -90,12 +84,12 @@ window["shoppermanDemo"] = async function() {
 		document.querySelector(".shopperman .product-area")
 	)
 
-	//
-	// render cart system
-	//
-
 	preact.render(
-		<shopperman.CartSystem {...{cart, checkoutMachine, checkoutInNewWindow: false}}/>,
+		<shopperman.CartSystem {...{
+			cart,
+			checkoutMachine: shopifyAdapter.checkoutMachine,
+			checkoutInNewWindow: options.checkoutInNewWindow
+		}}/>,
 		document.querySelector(".shopperman .cart-area")
 	)
 }
