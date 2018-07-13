@@ -18,6 +18,10 @@ export interface Shopperman1Options {
 		productsArea: HTMLElement
 		cartArea: HTMLElement
 	}
+	quantifier: (product: shopperman.Product) => {
+		quantityMin: number
+		quantityMax: number
+	}
 }
 
 //
@@ -54,13 +58,14 @@ export async function shopperman1(options: Shopperman1Options) {
 
 	const cart = new shopperman.Cart({
 		currencyControl,
-		itemCatalog: products.map(product =>
-			new shopperman.CartItem({
+		itemCatalog: products.map(product => {
+			const quantification = options.quantifier(product)
+			return new shopperman.CartItem({
 				product,
 				currencyControl,
-				quantityMin: 1,
-				quantityMax: 5
-			}))
+				...quantification
+			})
+		})
 	})
 
 	//

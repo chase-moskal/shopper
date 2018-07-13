@@ -7,6 +7,8 @@ import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 
+import {shopperman1} from "./fancy"
+
 window["crnc"] = crnc
 window["mobx"] = mobx
 window["preact"] = preact
@@ -26,7 +28,7 @@ window["shoppermanDemo"] = async function() {
 
 	mobx.configure({enforceActions: true})
 
-	const options = {
+	shopperman1({
 		currency: {
 			baseCurrency: "CAD",
 			displayCurrency: "EUR",
@@ -37,61 +39,18 @@ window["shoppermanDemo"] = async function() {
 			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 		},
 		collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
-		checkoutInNewWindow: false
-	}
-
-	//
-	// instances
-	//
-
-	const currencyControl = new shopperman.CurrencyControl(options.currency)
-	const shopifyAdapter = new shopperman.ShopifyAdapter({
-		settings: options.shopify,
-		currencyControl
+		cartSystem: {
+			checkoutInNewWindow: false
+		},
+		quantifier: (product) => ({
+			quantityMin: 1,
+			quantityMax: 6
+		}),
+		renderTargets: {
+			cartArea: document.querySelector<HTMLElement>(".shopperman .cart-area"),
+			productsArea: document.querySelector<HTMLElement>(".shopperman .products-area")
+		}
 	})
-
-	//
-	// fetch products from shopify
-	//
-
-	const products = await shopifyAdapter.getProductsInCollection(options.collectionId)
-
-	//
-	// create cart model
-	//
-
-	const cart = new shopperman.Cart({
-		currencyControl,
-		itemCatalog: products.map(product =>
-			new shopperman.CartItem({
-				product,
-				currencyControl,
-				quantityMin: 1,
-				quantityMax: 5
-			}))
-	})
-
-	//
-	// render components
-	//
-
-	preact.render(
-		<div className="product-list">
-			{products.map(product =>
-				<shopperman.ProductDisplay {...{cart, product}}/>
-			)}
-		</div>,
-		document.querySelector(".shopperman .product-area")
-	)
-
-	preact.render(
-		<shopperman.CartSystem {...{
-			cart,
-			checkoutMachine: shopifyAdapter.checkoutMachine,
-			checkoutInNewWindow: options.checkoutInNewWindow
-		}}/>,
-		document.querySelector(".shopperman .cart-area")
-	)
 }
 
 //
