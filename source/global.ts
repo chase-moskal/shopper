@@ -6,7 +6,7 @@ import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 
-import {installShopifyCollectionCartSystem} from "./ecommerce/shopify-collection"
+import {ecommerceShopifyCollection} from "./ecommerce/shopify-collection"
 
 window["crnc"] = crnc
 window["mobx"] = mobx
@@ -27,7 +27,7 @@ window["shoppermanDemo"] = async function() {
 
 	mobx.configure({enforceActions: true})
 
-	installShopifyCollectionCartSystem({
+	await ecommerceShopifyCollection({
 		currency: {
 			baseCurrency: "CAD",
 			displayCurrency: "EUR",

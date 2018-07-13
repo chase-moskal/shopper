@@ -6,19 +6,14 @@ import * as preact from "preact"
 import {ShopifyAdapter} from "../shopify"
 import {ProductDisplay, CartSystem} from "../components"
 import {CurrencyControl, Cart, CartItem} from "../stores"
-import {InstallShopifyCollectionCartSystemOptions} from "./interfaces"
+import {EcommerceShopifyCollectionOptions} from "./interfaces"
 
 /**
- * Install shopify collection cart system
- *  - installs frontend components and stores to provide an ecommerce experience
+ * Ecommerce shopify collection options
+ * - load products from shopify and install a
+ *   fully featured cart system and ecommerce experience
  */
-export async function installShopifyCollectionCartSystem(options: InstallShopifyCollectionCartSystemOptions) {
-
-	//
-	// basic settings
-	//
-
-	mobx.configure({enforceActions: true})
+export async function ecommerceShopifyCollection(options: EcommerceShopifyCollectionOptions) {
 
 	//
 	// instances
