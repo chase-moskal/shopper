@@ -62,9 +62,9 @@ export async function ecommerceShopifyCollection(options: EcommerceShopifyCollec
 
 	preact.render(
 		<CartSystem {...{
+			...options.cartSystem,
 			cart,
-			checkoutMachine: shopifyAdapter.checkoutMachine,
-			checkoutInNewWindow: options.cartSystem.checkoutInNewWindow
+			checkoutMachine: shopifyAdapter.checkoutMachine
 		}}/>,
 		options.renderTargets.cartArea
 	)

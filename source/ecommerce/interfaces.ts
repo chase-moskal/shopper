@@ -2,6 +2,7 @@
 import {Product} from "../stores/product"
 import {ShopifySettings} from "../shopify"
 import {CurrencyControlOptions} from "../stores"
+import {CartText} from "../components/cart/interfaces"
 
 /**
  * Ecommerce shopify collection options
@@ -23,6 +24,9 @@ export interface EcommerceShopifyCollectionOptions {
 
 		/** Whether or not to open the checkout url in a new window */
 		checkoutInNewWindow: boolean
+
+		/** Text labels throughout the cart system display */
+		cartText?: CartText
 	}
 
 	/** Function which decides the quantity allowances for each product */

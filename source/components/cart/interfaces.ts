@@ -14,13 +14,16 @@ export interface CartButtonText {
 	}
 }
 
+/**
+ * Text labels to display throughout the system
+ */
 export interface CartText {
 	cartButtonText: CartButtonText
 	cartPanelText: CartPanelText
 }
 
 /**
- * CART BUTTON PROPS INTERFACE
+ * Props for the cart button component
  */
 export interface CartButtonProps {
 	cartButtonText: CartButtonText
@@ -29,7 +32,7 @@ export interface CartButtonProps {
 }
 
 /**
- * CART SYSTEM PROPS INTERFACE
+ * Props for the cart system component
  */
 export interface CartSystemProps {
 
