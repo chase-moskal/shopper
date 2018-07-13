@@ -1,34 +1,18 @@
 
 import {h} from "preact"
-import * as crnc from "crnc"
 import * as mobx from "mobx"
-import * as shopperman from "."
 import * as preact from "preact"
-import { CurrencyControlOptions } from "./stores"
-import { ShopifySettings } from "./shopify"
 
-export interface Shopperman1Options {
-	currency: CurrencyControlOptions
-	shopify: ShopifySettings
-	collectionId: string
-	cartSystem: {
-		checkoutInNewWindow: boolean
-	}
-	renderTargets: {
-		productsArea: HTMLElement
-		cartArea: HTMLElement
-	}
-	quantifier: (product: shopperman.Product) => {
-		quantityMin: number
-		quantityMax: number
-	}
-}
+import {ShopifyAdapter} from "../shopify"
+import {ProductDisplay, CartSystem} from "../components"
+import {CurrencyControl, Cart, CartItem} from "../stores"
+import {InstallShopifyCollectionCartSystemOptions} from "./interfaces"
 
-//
-// SHOPPERMAN DEMO FUNCTION
-//
-
-export async function shopperman1(options: Shopperman1Options) {
+/**
+ * Install shopify collection cart system
+ *  - installs frontend components and stores to provide an ecommerce experience
+ */
+export async function installShopifyCollectionCartSystem(options: InstallShopifyCollectionCartSystemOptions) {
 
 	//
 	// basic settings
@@ -40,8 +24,8 @@ export async function shopperman1(options: Shopperman1Options) {
 	// instances
 	//
 
-	const currencyControl = new shopperman.CurrencyControl(options.currency)
-	const shopifyAdapter = new shopperman.ShopifyAdapter({
+	const currencyControl = new CurrencyControl(options.currency)
+	const shopifyAdapter = new ShopifyAdapter({
 		settings: options.shopify,
 		currencyControl
 	})
@@ -56,11 +40,11 @@ export async function shopperman1(options: Shopperman1Options) {
 	// create cart model
 	//
 
-	const cart = new shopperman.Cart({
+	const cart = new Cart({
 		currencyControl,
 		itemCatalog: products.map(product => {
 			const quantification = options.quantifier(product)
-			return new shopperman.CartItem({
+			return new CartItem({
 				product,
 				currencyControl,
 				...quantification
@@ -75,14 +59,14 @@ export async function shopperman1(options: Shopperman1Options) {
 	preact.render(
 		<div className="product-list">
 			{products.map(product =>
-				<shopperman.ProductDisplay {...{cart, product}}/>
+				<ProductDisplay {...{cart, product}}/>
 			)}
 		</div>,
 		options.renderTargets.productsArea
 	)
 
 	preact.render(
-		<shopperman.CartSystem {...{
+		<CartSystem {...{
 			cart,
 			checkoutMachine: shopifyAdapter.checkoutMachine,
 			checkoutInNewWindow: options.cartSystem.checkoutInNewWindow

@@ -1,5 +1,4 @@
 
-import {h} from "preact"
 import * as crnc from "crnc"
 import * as mobx from "mobx"
 import * as shopperman from "."
@@ -7,7 +6,7 @@ import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 
-import {shopperman1} from "./fancy"
+import {installShopifyCollectionCartSystem} from "./ecommerce/shopify-collection"
 
 window["crnc"] = crnc
 window["mobx"] = mobx
@@ -28,7 +27,7 @@ window["shoppermanDemo"] = async function() {
 
 	mobx.configure({enforceActions: true})
 
-	shopperman1({
+	installShopifyCollectionCartSystem({
 		currency: {
 			baseCurrency: "CAD",
 			displayCurrency: "EUR",

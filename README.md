@@ -28,7 +28,7 @@
 	- if you have multiple tabs open, all cart instances should auto-synchronize
 		in realtime
 
-## see ["global.tsx"](./source/global.tsx) for usage example
+## see ["global.ts"](./source/global.ts) for usage example
 
 ## security notes
 

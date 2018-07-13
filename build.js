@@ -37,7 +37,7 @@ const buildOptions = {
 	sassWatch: commander.sassWatch,
 	paths: {
 		nb: "$(npm bin)/",
-		scriptSource: "source/global.tsx",
+		scriptSource: "source/global.ts",
 		scriptBundle: "dist/global.bundle.js",
 		styleSource: "source/shopperman.scss",
 		styleOutput: "dist/shopperman.css",
@@ -134,6 +134,10 @@ async function build({debug, paths, sassWatch}) {
 			].join(" ")}`,
 			axx(`${nb}uglifyjs --compress --mangle`, waxx(scriptBundle))
 		)
+
+		// documentation generation
+		await axx(`${nb}typedoc --name "shopperman api docs" --readme README.docs.md --mode file --excludeExternals --excludePrivate --out dist/docs/ source/`, caxx())
+
 		console.log("✔ done production build")
 	}
 }
