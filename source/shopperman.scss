@@ -321,9 +321,12 @@ html.shopperman-demo {
 			padding: 0.32em 1em;
 			background: #13af4b;
 			color: white;
+			border: none;
+			cursor: pointer;
 
 			&[disabled] {
 				background: rgba(255,255,255, 0.1);
+				cursor: default;
 			}
 		}
 	}
