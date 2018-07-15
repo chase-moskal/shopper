@@ -10,8 +10,8 @@ import {EcommerceShopifyCollectionOptions} from "./interfaces"
 
 /**
  * Ecommerce shopify collection options
- * - load products from shopify and install a
- *   fully featured cart system and ecommerce experience
+ * - load products from shopify
+ * - install a fully featured cart system and ecommerce experience
  */
 export async function ecommerceShopifyCollection(options: EcommerceShopifyCollectionOptions) {
 
