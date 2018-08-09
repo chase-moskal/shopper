@@ -1,3 +1,3 @@
 
 export * from "./interfaces"
-export * from "./shopify-collection"
+export * from "./shopify-store"

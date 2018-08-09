@@ -6,7 +6,8 @@ import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 
-import {ecommerceShopifyCollection} from "./ecommerce/shopify-collection"
+// import {ecommerceShopifyCollection} from "./ecommerce/shopify-collection"
+import {ecommerceShopifyStore} from "./ecommerce/shopify-store"
 
 window["crnc"] = crnc
 window["mobx"] = mobx
@@ -27,7 +28,7 @@ window["shoppermanDemo"] = async function() {
 
 	mobx.configure({enforceActions: true})
 
-	await ecommerceShopifyCollection({
+	await ecommerceShopifyStore({
 		currency: {
 			baseCurrency: "CAD",
 			displayCurrency: "EUR",
@@ -37,18 +38,18 @@ window["shoppermanDemo"] = async function() {
 			domain: "dev-bakery.myshopify.com",
 			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 		},
-		collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
+		collections: [{
+			collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
+			productsArea: document.querySelector<HTMLElement>(".shopperman .products-area")
+		}],
+		cartArea: document.querySelector<HTMLElement>(".shopperman .cart-area"),
 		cartSystem: {
 			checkoutInNewWindow: false
 		},
 		quantifier: (product) => ({
 			quantityMin: 1,
 			quantityMax: 6
-		}),
-		renderTargets: {
-			cartArea: document.querySelector<HTMLElement>(".shopperman .cart-area"),
-			productsArea: document.querySelector<HTMLElement>(".shopperman .products-area")
-		}
+		})
 	})
 }
 
