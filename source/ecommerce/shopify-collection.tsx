@@ -1,6 +1,5 @@
 
 import {h} from "preact"
-import * as mobx from "mobx"
 import * as preact from "preact"
 
 import {ShopifyAdapter} from "../shopify"
@@ -12,6 +11,7 @@ import {EcommerceShopifyCollectionOptions} from "./interfaces"
  * Ecommerce shopify collection options
  * - load products from shopify
  * - install a fully featured cart system and ecommerce experience
+ * - place products into specific dom elements
  */
 export async function ecommerceShopifyCollection(options: EcommerceShopifyCollectionOptions) {
 

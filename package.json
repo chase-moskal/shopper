@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.38",
+	"version": "0.0.0-dev.39",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -18,13 +18,17 @@
 		"prepare": "node build && npm test -s",
 		"build-debug": "node build --debug",
 		"start": "http-server",
-		"test": "jest --verbose"
+		"test": "jest"
 	},
 	"files": [
 		"dist",
 		"source",
 		"index.html"
 	],
+	"jest": {
+		"verbose": true,
+		"testURL": "http://localhost/"
+	},
 	"peerDependencies": {
 		"mobx": "5.*",
 		"mobx-preact": "3.*",
@@ -33,19 +37,19 @@
 	"dependencies": {
 		"commotion": "0.0.0-dev.0",
 		"crnc": "0.0.0-dev.4",
-		"sass": "1.9.1",
-		"shopify-buy": "1.6.0"
+		"sass": "1.10.3",
+		"shopify-buy": "1.7.0"
 	},
 	"devDependencies": {
-		"@types/jest": "23.1.5",
+		"@types/jest": "23.3.1",
 		"array.find": "1.0.7",
 		"axx": "0.2.0",
 		"browserify": "16.2.2",
-		"commander": "2.16.0",
+		"commander": "2.17.1",
 		"envify": "4.1.0",
 		"es6-promise": "4.2.4",
 		"http-server": "0.11.1",
-		"jest": "23.4.0",
+		"jest": "23.4.2",
 		"mkdirp": "0.5.1",
 		"mobx": "5.0.3",
 		"mobx-preact": "3.0.0",
@@ -55,7 +59,7 @@
 		"shelljs": "0.8.2",
 		"tsify": "4.0.0",
 		"typedoc": "0.11.1",
-		"typescript": "2.9.2",
+		"typescript": "3.0.1",
 		"uglify-es": "3.3.9",
 		"uglifyify": "5.0.1",
 		"whatwg-fetch": "2.0.4"
