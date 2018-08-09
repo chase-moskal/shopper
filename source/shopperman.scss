@@ -203,12 +203,12 @@
 	}
 
 	//
-	// Base theme style
+	// Basic theme style
 	// - opt-in aesthetics
 	// - simple light greyscale shades
 	//
 
-	&[data-theme="base"] {
+	&.shopperman-theme-basic {
 		.cart-system {
 			color: #444;
 
@@ -231,7 +231,7 @@
 			background: linear-gradient(
 				to bottom right,
 				rgba(255,255,255, 1),
-				rgba(196, 196, 196, 0.9)
+				rgba(220, 220, 220, 0.9)
 			);
 			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
 		}
@@ -265,7 +265,7 @@
 // - these are some opinionated idiosyncratic styles are for the demo page
 //
 
-html.shopperman-demo {
+.shopperman-demo {
 	$bgcolor: #186d63;
 	$fgcolor: #bbfff7;
 
