@@ -1,8 +1,10 @@
 
+import {OmniStorage} from "omnistorage"
+import {CurrencyExchangeRates} from "crnc/dist/interfaces"
+
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
 import {CurrencyControl} from "./currency-control"
-import {CurrencyExchangeRates} from "crnc/dist/interfaces"
 
 /**
  * CART OPTIONS INTERFACE
@@ -10,6 +12,7 @@ import {CurrencyExchangeRates} from "crnc/dist/interfaces"
 export interface CartOptions {
 	itemCatalog: CartItem[]
 	currencyControl: CurrencyControl
+	omniStorage: OmniStorage
 }
 
 /**

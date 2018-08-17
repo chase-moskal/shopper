@@ -61,6 +61,7 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 	//
 
 	const cart = new Cart({
+		omniStorage: options.omniStorage,
 		currencyControl,
 		itemCatalog: products.map(product => {
 			const quantification = options.quantifier(product)

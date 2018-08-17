@@ -1,4 +1,6 @@
 
+import {OmniStorage} from "omnistorage"
+
 import {Product} from "../stores/product"
 import {ShopifySettings} from "../shopify"
 import {CurrencyControlOptions} from "../stores"
@@ -9,6 +11,9 @@ import {CartText} from "../components/cart/interfaces"
  * - display multiple collections on a single page
  */
 export interface EcommerceShopifyStoreOptions {
+
+	/** Storage facility for cart items */
+	omniStorage: OmniStorage
 
 	/** Currency conversion control options */
 	currency: CurrencyControlOptions

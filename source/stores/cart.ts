@@ -1,8 +1,9 @@
 
+import {observable, action, computed} from "mobx"
+
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
 import {CartOptions} from "./interfaces"
-import {observable, action, computed} from "mobx"
 import {CurrencyControl} from "./currency-control"
 
 /**
@@ -12,10 +13,10 @@ import {CurrencyControl} from "./currency-control"
  * - items with quantity 0 are considered "not in the cart"
  */
 export class Cart {
-	private readonly currencyControl: CurrencyControl
-
 	@observable itemCatalog: CartItem[] = []
 	@observable panelOpen: boolean = false
+
+	private readonly currencyControl: CurrencyControl
 
 	constructor(options: CartOptions) {
 		this.itemCatalog = options.itemCatalog

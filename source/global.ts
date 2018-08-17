@@ -1,12 +1,12 @@
 
 import * as crnc from "crnc"
 import * as mobx from "mobx"
-import * as shopperman from "."
 import * as preact from "preact"
 import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
+import * as omnistorage from "omnistorage"
 
-// import {ecommerceShopifyCollection} from "./ecommerce/shopify-collection"
+import * as shopperman from "."
 import {ecommerceShopifyStore} from "./ecommerce/shopify-store"
 
 window["crnc"] = crnc
@@ -29,6 +29,7 @@ window["shoppermanDemo"] = async function() {
 	mobx.configure({enforceActions: true})
 
 	await ecommerceShopifyStore({
+		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
 		currency: {
 			baseCurrency: "CAD",
 			displayCurrency: "EUR",
@@ -46,7 +47,7 @@ window["shoppermanDemo"] = async function() {
 		cartSystem: {
 			checkoutInNewWindow: false
 		},
-		quantifier: (product) => ({
+		quantifier: product => ({
 			quantityMin: 1,
 			quantityMax: 6
 		})
