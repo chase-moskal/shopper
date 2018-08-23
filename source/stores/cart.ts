@@ -1,10 +1,19 @@
 
+import {OmniStorage, LocalClient} from "omnistorage"
 import {observable, action, computed} from "mobx"
 
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
-import {CartOptions} from "./interfaces"
 import {CurrencyControl} from "./currency-control"
+import {CartOptions, CartStorageData} from "./interfaces"
+
+/**
+ * DEFAULT CART OPTIONS
+ */
+export const defaultCartOptions: Partial<CartOptions> = {
+	storageKey: "shopperman",
+	omniStorage: new LocalClient({storage: window.localStorage})
+}
 
 /**
  * CART CLASS
@@ -16,11 +25,55 @@ export class Cart {
 	@observable itemCatalog: CartItem[] = []
 	@observable panelOpen: boolean = false
 
+	private readonly storageKey: string
+	private readonly omniStorage: OmniStorage
 	private readonly currencyControl: CurrencyControl
 
-	constructor(options: CartOptions) {
+	/**
+	 * Cart constructor
+	 */
+	constructor(opts: CartOptions) {
+		const options = {...defaultCartOptions, ...opts}
+
+		this.storageKey = options.storageKey
+		this.omniStorage = options.omniStorage
 		this.itemCatalog = options.itemCatalog
 		this.currencyControl = options.currencyControl
+	}
+
+	/**
+	 * Load from storage
+	 * - rehydrate the item catalog details from storage
+	 */
+	private async loadFromStorage() {
+		const {omniStorage, storageKey} = this
+		try {
+			const data: CartStorageData = JSON.parse(await omniStorage.getItem(storageKey))
+			for (const productId of Object.keys(data)) {
+				const cartStorage = data[productId]
+				const cartItem = this.itemCatalog.find(cartItem => cartItem.product.id === productId)
+				cartItem.setQuantity(cartStorage.quantity)
+			}
+		}
+		catch (error) {
+			console.error(`shopperman cart load from storage error: ${error.message}`)
+		}
+	}
+
+	/**
+	 * Save to storage
+	 * - save item catalog details to storage
+	 */
+	private saveToStorage() {
+		const {omniStorage, storageKey} = this
+
+		const data: CartStorageData = {}
+		for (const {product, quantity} of this.itemCatalog) {
+			const productId = product.id
+			data[productId] = {quantity}
+		}
+
+		omniStorage.setItem(storageKey, JSON.stringify(data))
 	}
 
 	/**
@@ -34,8 +87,7 @@ export class Cart {
 
 	/**
 	 * Value
-	 * - sum up the value of every product in the cart
-	 * - return the sum
+	 * - return whole cart sum
 	 */
 	@computed get value(): number {
 		const reducer = (subtotal, item: CartItem) => subtotal + item.value
@@ -44,6 +96,7 @@ export class Cart {
 
 	/**
 	 * Price
+	 * - whole cart
 	 * - return the whole cart's formatted subtotal price tag
 	 */
 	@computed get price(): string {
@@ -61,14 +114,6 @@ export class Cart {
 			? !this.panelOpen
 			: open
 		return this.panelOpen
-	}
-
-	/**
-	 * Remove
-	 * - take a product out of the cart
-	 */
-	@action remove(product: Product): void {
-		this.itemCatalog = this.itemCatalog.filter(item => item.product !== product)
 	}
 
 	/**

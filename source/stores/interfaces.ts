@@ -12,7 +12,19 @@ import {CurrencyControl} from "./currency-control"
 export interface CartOptions {
 	itemCatalog: CartItem[]
 	currencyControl: CurrencyControl
-	omniStorage: OmniStorage
+	storageKey?: string
+	omniStorage?: OmniStorage
+}
+
+/**
+ * CART STORAGE DATA
+ * - information to persist the cart item quantities
+ * - should eventually store other info, such as product variant customizations
+ */
+export interface CartStorageData {
+	[productId: string]: {
+		quantity: number
+	}
 }
 
 /**
@@ -24,7 +36,6 @@ export interface CartItemOptions {
 	quantityMin: number
 	quantityMax: number
 }
-
 
 /**
  * CURRENCY CONTROL OPTIONS

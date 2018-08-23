@@ -10,13 +10,11 @@ import {CurrencyControl} from "./currency-control"
  * - keeps track of quantity in the cart
  */
 export class CartItem {
-	private readonly currencyControl: CurrencyControl
-
+	@observable quantity: number = 0
 	readonly product: Product
 	readonly quantityMin: number
 	readonly quantityMax: number
-
-	@observable quantity: number = 0
+	private readonly currencyControl: CurrencyControl
 
 	constructor(options: CartItemOptions) {
 		Object.assign(this, options)
