@@ -108,10 +108,10 @@ async function build({debug, paths, sassWatch}) {
 	//
 
 	if (debug) {
-		await (axx(
+		await axx(
 			`${nb}browserify ${scriptSource} --debug -p [ tsify ]`,
 			waxx(scriptBundle)
-		))
+		)
 		console.log("✔ done debug build")
 	}
 
@@ -122,9 +122,9 @@ async function build({debug, paths, sassWatch}) {
 	//
 
 	else {
+		process.env.NODE_ENV = "production"
 		await axx(
-			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV `
-				+ `production ] -g uglifyify`,
+			`${nb}browserify ${scriptSource} -p [ tsify ] -g [ envify --NODE_ENV production ] -t uglifyify`,
 			waxx(`${scriptBundle}.temp`)
 		)
 		await axx(
@@ -132,6 +132,7 @@ async function build({debug, paths, sassWatch}) {
 				...polyfills,
 				`${scriptBundle}.temp`
 			].join(" ")}`,
+			// waxx(scriptBundle)
 			axx(`${nb}uglifyjs --compress --mangle`, waxx(scriptBundle))
 		)
 
