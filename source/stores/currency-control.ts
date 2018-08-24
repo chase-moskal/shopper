@@ -37,19 +37,19 @@ export class CurrencyControl {
 	 */
 	convertAndFormat(value): string {
 		const {
-			displayCurrency: output,
-			baseCurrency: input,
 			rates,
+			locale,
 			precision,
-			locale
+			baseCurrency: input,
+			displayCurrency: output
 		} = this
 		return convertAndFormatCurrency({
 			value,
 			input,
-			output,
 			rates,
-			precision,
-			locale
+			output,
+			locale,
+			precision
 		})
 	}
 }

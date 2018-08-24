@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.42",
+	"version": "0.0.0-dev.44",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -36,8 +36,8 @@
 	},
 	"dependencies": {
 		"commotion": "0.0.0-dev.0",
-		"crnc": "0.0.0-dev.4",
-		"omnistorage": "file:../omnistorage/omnistorage-0.0.0-dev.9.tgz",
+		"crnc": "file:/home/brim/Desktop/work/crnc/crnc-0.0.0-dev.8.tgz",
+		"omnistorage": "file:/home/brim/Desktop/work/omnistorage/omnistorage-0.0.0-dev.9.tgz",
 		"sass": "1.10.3",
 		"shopify-buy": "1.7.0"
 	},

@@ -6,6 +6,12 @@ import {ShopifySettings} from "../shopify"
 import {CurrencyControlOptions} from "../stores"
 import {CartText} from "../components/cart/interfaces"
 
+export interface AscertainCurrencyDetailsParams {
+	baseCurrency: string
+	locale?: string
+	ratesLink?: string
+}
+
 /**
  * Ecommerce shopify store options
  * - display multiple collections on a single page
