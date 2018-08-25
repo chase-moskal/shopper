@@ -44,20 +44,3 @@ window["shoppermanDemo"] = async function() {
 		})
 	})
 }
-
-//
-// TEST CURRENCY EXCHANGE FUNCTION
-//
-
-window["shoppermanTestCurrencyExchange"] = async function() {
-	const {rates} = await crnc.downloadRates()
-	const converto = (value: number = 10.82) => {
-		const input = "CAD"
-		const outputs = ["CAD", "USD", "EUR", "GBP"]
-		for (const output of outputs) console.log(
-			crnc.convertAndFormatCurrency({value, input, output, rates})
-		)
-	}
-	converto()
-	return {converto}
-}

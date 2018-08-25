@@ -1,6 +1,6 @@
 
 import {OmniStorage} from "omnistorage"
-import {CurrencyExchangeRates} from "crnc/dist/interfaces"
+import {CurrencyExchangeRates} from "crnc"
 
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
@@ -49,7 +49,7 @@ export interface CurrencyControlOptions {
 	baseCurrency: string
 
 	/** Currency exchange rates used in currency conversions */
-	rates: CurrencyExchangeRates
+	exchangeRates: CurrencyExchangeRates
 
 	/** Digits of precision after the decimal point (default 2) */
 	precision?: number

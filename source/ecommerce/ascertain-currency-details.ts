@@ -29,19 +29,19 @@ export async function ascertainCurrencyDetails({
 	locale = getLocale()
 }: AscertainCurrencyDetailsParams): Promise<CurrencyControlOptions> {
 	try {
-		const rates = (await crnc.downloadRates({link: ratesLink})).rates
+		const {exchangeRates} = await crnc.downloadExchangeRates({link: ratesLink})
 		return {
 			baseCurrency,
-			displayCurrency: getLocalCurrency(locale, baseCurrency),
-			rates
+			exchangeRates,
+			displayCurrency: getLocalCurrency(locale, baseCurrency)
 		}
 	}
 	catch (error) {
 		console.warn(`error loading currency exchange rates, now only using "${baseCurrency}"`)
 		return {
 			baseCurrency,
-			rates: {[baseCurrency]: 1.0},
-			displayCurrency: baseCurrency
+			displayCurrency: baseCurrency,
+			exchangeRates: {[baseCurrency]: 1.0}
 		}
 	}
 }

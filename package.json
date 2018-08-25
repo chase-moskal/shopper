@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.46",
+	"version": "0.0.0-dev.47",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"commotion": "0.0.0-dev.2",
-		"crnc": "0.0.0-dev.9",
+		"crnc": "0.0.0-dev.10",
 		"omnistorage": "0.0.0-dev.9",
 		"sass": "1.10.3",
 		"shopify-buy": "1.7.0"

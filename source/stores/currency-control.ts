@@ -1,8 +1,7 @@
 
 import {observable, action} from "mobx"
-import {convertAndFormatCurrency} from "crnc"
 import {CurrencyControlOptions} from "./interfaces"
-import {CurrencyExchangeRates} from "crnc/dist/interfaces"
+import {convertAndFormatCurrency, CurrencyExchangeRates} from "crnc"
 
 /**
  * CURRENCY CONTROL CLASS
@@ -14,10 +13,10 @@ export class CurrencyControl {
 	/** Currency in which to display monetary values */
 	@observable displayCurrency: string
 
-	private readonly baseCurrency: string
-	private readonly rates: CurrencyExchangeRates
-	private readonly precision: number
 	private readonly locale: string
+	private readonly precision: number
+	private readonly baseCurrency: string
+	private readonly exchangeRates: CurrencyExchangeRates
 
 	constructor(options: CurrencyControlOptions) {
 		Object.assign(this, options)
@@ -37,19 +36,19 @@ export class CurrencyControl {
 	 */
 	convertAndFormat(value): string {
 		const {
-			rates,
 			locale,
 			precision,
-			baseCurrency: input,
-			displayCurrency: output
+			exchangeRates,
+			baseCurrency: inputCurrency,
+			displayCurrency: outputCurrency
 		} = this
 		return convertAndFormatCurrency({
 			value,
-			input,
-			rates,
-			output,
 			locale,
-			precision
+			precision,
+			inputCurrency,
+			exchangeRates,
+			outputCurrency
 		})
 	}
 }
