@@ -8,7 +8,6 @@ import * as omnistorage from "omnistorage"
 
 import * as shopperman from "."
 import {ecommerceShopifyStore} from "./ecommerce/shopify-store"
-import {ascertainCurrencyDetails} from "./ecommerce/ascertain-currency-details"
 
 window["crnc"] = crnc
 window["mobx"] = mobx
@@ -25,7 +24,10 @@ window["shoppermanDemo"] = async function() {
 	mobx.configure({enforceActions: true})
 	await ecommerceShopifyStore({
 		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
-		currency: await ascertainCurrencyDetails({baseCurrency: "CAD"}),
+		currency: await crnc.ascertainEcommerceDetails({
+			storeBaseCurrency: "CAD",
+			userDisplayCurrency: crnc.assumeUserCurrency({fallback: "CAD"})
+		}),
 		shopify: {
 			domain: "dev-bakery.myshopify.com",
 			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"

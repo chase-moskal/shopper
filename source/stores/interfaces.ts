@@ -43,20 +43,20 @@ export interface CartItemOptions {
 export interface CurrencyControlOptions {
 
 	/** Currency in which to display monetary values */
-	displayCurrency: string
+	storeBaseCurrency: string
 
 	/** Ecommerce system base currency with which product values are expressed */
-	baseCurrency: string
+	userDisplayCurrency: string
 
 	/** Currency exchange rates used in currency conversions */
 	exchangeRates: CurrencyExchangeRates
 
-	/** Digits of precision after the decimal point (default 2) */
-	precision?: number
-
 	/** Locale with which to display monetary values (defaults to browser user
 		preference) */
 	locale?: string
+
+	/** Digits of precision after the decimal point (default 2) */
+	precision?: number
 }
 
 /**

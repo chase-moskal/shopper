@@ -11,11 +11,11 @@ import {convertAndFormatCurrency, CurrencyExchangeRates} from "crnc"
 export class CurrencyControl {
 
 	/** Currency in which to display monetary values */
-	@observable displayCurrency: string
+	@observable userDisplayCurrency: string
 
 	private readonly locale: string
 	private readonly precision: number
-	private readonly baseCurrency: string
+	private readonly storeBaseCurrency: string
 	private readonly exchangeRates: CurrencyExchangeRates
 
 	constructor(options: CurrencyControlOptions) {
@@ -25,8 +25,8 @@ export class CurrencyControl {
 	/**
 	 * Set display currency
 	 */
-	@action setDisplayCurrency(currency: string) {
-		this.displayCurrency = currency
+	@action setUserDisplayCurrency(currency: string) {
+		this.userDisplayCurrency = currency
 	}
 
 	/**
@@ -39,8 +39,8 @@ export class CurrencyControl {
 			locale,
 			precision,
 			exchangeRates,
-			baseCurrency: inputCurrency,
-			displayCurrency: outputCurrency
+			storeBaseCurrency: inputCurrency,
+			userDisplayCurrency: outputCurrency
 		} = this
 		return convertAndFormatCurrency({
 			value,
