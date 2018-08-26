@@ -1,5 +1,5 @@
 
-import {computed} from "mobx"
+import {observable, computed, action} from "mobx"
 import {ProductOptions} from "./interfaces"
 import {CurrencyControl} from "./currency-control"
 
@@ -15,12 +15,18 @@ export class Product {
 	readonly description: string
 	private readonly currencyControl: CurrencyControl
 
+	@observable precision: number = null
+
 	constructor(options: ProductOptions) {
 		Object.assign(this, options)
 	}
 
 	@computed get price(): string {
-		const {currencyControl, value} = this
-		return currencyControl.convertAndFormat(value)
+		const {currencyControl, value, precision} = this
+		return currencyControl.convertAndFormat(value, precision)
+	}
+
+	@action setPrecision(precision: number) {
+		this.precision = precision
 	}
 }

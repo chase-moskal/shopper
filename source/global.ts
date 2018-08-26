@@ -24,10 +24,13 @@ window["shoppermanDemo"] = async function() {
 	mobx.configure({enforceActions: true})
 	await ecommerceShopifyStore({
 		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
-		currency: await crnc.ascertainEcommerceDetails({
-			storeBaseCurrency: "CAD",
-			userDisplayCurrency: crnc.assumeUserCurrency({fallback: "CAD"})
-		}),
+		currency: {
+			...await crnc.ascertainEcommerceDetails({
+				storeBaseCurrency: "CAD",
+				userDisplayCurrency: crnc.assumeUserCurrency({fallback: "CAD"})
+			}),
+			precision: 2
+		},
 		shopify: {
 			domain: "dev-bakery.myshopify.com",
 			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
@@ -40,9 +43,10 @@ window["shoppermanDemo"] = async function() {
 		cartSystem: {
 			checkoutInNewWindow: false
 		},
-		quantifier: product => ({
+		evaluator: product => ({
 			quantityMin: 1,
-			quantityMax: 5
+			quantityMax: 5,
+			precision: 2
 		})
 	})
 }

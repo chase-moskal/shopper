@@ -64,11 +64,13 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 		omniStorage: options.omniStorage,
 		currencyControl,
 		itemCatalog: products.map(product => {
-			const quantification = options.quantifier(product)
+			const {quantityMin, quantityMax, precision} = options.evaluator(product)
+			product.setPrecision(precision)
 			return new CartItem({
 				product,
 				currencyControl,
-				...quantification
+				quantityMin,
+				quantityMax
 			})
 		})
 	})

@@ -33,15 +33,19 @@ export class CurrencyControl {
 	 * Convert and format
 	 * - perform currency conversion
 	 * - format number into user-facing price tag
+	 * - optionally provide a precision override
 	 */
-	convertAndFormat(value): string {
+	convertAndFormat(value, precisionOverride?: number): string {
 		const {
 			locale,
-			precision,
+			precision: standardPrecision,
 			exchangeRates,
 			storeBaseCurrency: inputCurrency,
 			userDisplayCurrency: outputCurrency
 		} = this
+		const precision = (precisionOverride !== null && precisionOverride !== undefined)
+			? precisionOverride
+			: standardPrecision
 		return convertAndFormatCurrency({
 			value,
 			locale,

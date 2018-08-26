@@ -7,6 +7,18 @@ import {CurrencyControlOptions} from "../stores"
 import {CartText} from "../components/cart/interfaces"
 
 /**
+ * Product details that are not related to shopify
+ */
+export interface ProductEvaluation {
+	quantityMin: number
+	quantityMax: number
+	precision?: number
+}
+
+/** Function to evaluate non-shopify product details */
+export type ProductEvaluator = (product: Product) => ProductEvaluation
+
+/**
  * Ecommerce shopify store options
  * - display multiple collections on a single page
  */
@@ -44,10 +56,6 @@ export interface EcommerceShopifyStoreOptions {
 		cartText?: CartText
 	}
 
-	/** Function which decides the quantity allowances for each product */
-	quantifier: (product: Product) => {
-		quantityMin: number
-		quantityMax: number
-	}
+	/** Function to evaluate non-shopify properties for each product */
+	evaluator: ProductEvaluator
 }
-

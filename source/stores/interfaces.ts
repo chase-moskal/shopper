@@ -65,7 +65,8 @@ export interface CurrencyControlOptions {
 export interface ProductOptions {
 	id: string
 	title: string
-	description: string
 	value: number
+	description: string
 	currencyControl: CurrencyControl
+	precision?: number
 }

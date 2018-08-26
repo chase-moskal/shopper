@@ -27,8 +27,8 @@ export class CartItem {
 	}
 
 	@computed get price(): string {
-		const {value, currencyControl} = this
-		return currencyControl.convertAndFormat(value)
+		const {value, currencyControl, product} = this
+		return currencyControl.convertAndFormat(value, product.precision)
 	}
 
 	@action setQuantity(quantity: number): void {
