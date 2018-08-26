@@ -58,16 +58,16 @@
 	//
 
 	.cart-area {
+		@extend .reset-and-normalize;
 		position: relative;
 	}
 
 	.cart-system {
-		@extend .reset-and-normalize;
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
-		transition: top 400ms ease;
+		// transition: top 400ms ease;
 	}
 
 	.cart-button {
@@ -132,11 +132,15 @@
 				padding: 0.5em;
 				text-align: center;
 
-				& + * {
-					margin-left: 0.25em;
-				}
+				display: flex;
+				align-items: center;
 			}
 		}
+	}
+
+	.pricevalue {
+		text-align: right;
+		justify-content: flex-end;
 	}
 
 	.cart-manipulator {
@@ -167,18 +171,19 @@
 		}
 	}
 
-	.pricevalue {
-		text-align: right;
-	}
-
 	.cart-calculated-results {
 		width: 60%;
 		margin-left: auto;
 		padding-top: 0;
 
-		.pricevalue {
-			flex: 1;
-			text-align: right;
+		.cart-subtotal {
+			span {
+				flex: 2;
+				justify-content: flex-end;
+			}
+			.pricevalue {
+				flex: 1;
+			}
 		}
 	}
 
