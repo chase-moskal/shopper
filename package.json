@@ -1,6 +1,6 @@
 {
 	"name": "shopperman",
-	"version": "0.0.0-dev.50",
+	"version": "0.0.0-dev.51",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -21,6 +21,7 @@
 		"test": "jest"
 	},
 	"files": [
+		"assets",
 		"dist",
 		"source",
 		"index.html"

@@ -141,6 +141,7 @@ export class CartSystem extends Component<CartSystemProps, any> {
 			<section
 				className="cart-system"
 				data-panel-open={cart.panelOpen ? "true" : "false"}
+				data-items-in-cart={cart.activeItems.length}
 				style={{top: scrollTracker.scroll}}>
 					<CartButton {...{cart, onClick, cartButtonText}}/>
 					<CartPanel {...{cart, performCheckout, cartPanelText}}/>
