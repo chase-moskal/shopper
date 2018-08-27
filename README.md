@@ -3,8 +3,6 @@
 
 **cart ui for custom shopify frontends**
 
-## rundown
-
 - frontend tech to implement custom shopify stores
 - preact components, mobx stores, some scss
 

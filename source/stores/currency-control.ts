@@ -1,12 +1,11 @@
 
 import {observable, action} from "mobx"
-import {CurrencyControlOptions} from "./interfaces"
+import {CurrencyControlOptions} from "./stores-interfaces"
 import {convertAndFormatCurrency, CurrencyExchangeRates} from "crnc"
 
 /**
- * CURRENCY CONTROL CLASS
- * - contains observable currency property
- * - setter method can change the observable currency property
+ * Facility for exchanging and displaying monetary values
+ * - observable user display currency can be changed
  */
 export class CurrencyControl {
 
@@ -23,16 +22,14 @@ export class CurrencyControl {
 	}
 
 	/**
-	 * Set display currency
+	 * Switch the current currency being displayed to the user
 	 */
 	@action setUserDisplayCurrency(currency: string) {
 		this.userDisplayCurrency = currency
 	}
 
 	/**
-	 * Convert and format
-	 * - perform currency conversion
-	 * - format number into user-facing price tag
+	 * Perform currency conversion and format into a nice price tag
 	 * - optionally provide a precision override
 	 */
 	convertAndFormat(value, precisionOverride?: number): string {

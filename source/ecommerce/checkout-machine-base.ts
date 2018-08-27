@@ -1,5 +1,5 @@
 
-import {CartItem} from "./stores/cart-item"
+import {CartItem} from "../stores/cart-item"
 
 /**
  * CHECKOUT MACHINE ABSTRACT CLASS

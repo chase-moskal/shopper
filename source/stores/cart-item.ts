@@ -1,11 +1,11 @@
 
 import {Product} from "./product"
-import {CartItemOptions} from "./interfaces"
+import {CartItemOptions} from "./stores-interfaces"
 import {observable, action, computed} from "mobx"
 import {CurrencyControl} from "./currency-control"
 
 /**
- * CART ITEM CLASS
+ * Cart item tracks meta-details about a product
  * - wraps a product instance
  * - keeps track of quantity in the cart
  */

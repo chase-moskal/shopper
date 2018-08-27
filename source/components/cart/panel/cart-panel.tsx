@@ -2,14 +2,11 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {CartPanelProps} from "./interfaces"
+import {CartPanelProps} from "./panel-interfaces"
 import {CartCheckout} from "./cart-checkout"
 import {CartManipulator} from "./cart-manipulator"
 import {CartCalculatedResults} from "./cart-calculated-results"
 
-/**
- * CART CALCULATED RESULTS CLASS
- */
 @observer
 export class CartPanel extends Component<CartPanelProps, any> {
 
@@ -37,24 +34,7 @@ export class CartPanel extends Component<CartPanelProps, any> {
 	}
 
 	/**
-	 * Handle cart close
-	 */
-	private readonly handleCartClose = (event: MouseEvent) => {
-		this.props.cart.togglePanelOpen(false)
-	}
-
-	/**
-	 * Render cart close button
-	 * - click to close the cart
-	 */
-	private renderCartCloseButton() {
-		return (
-			<button onClick={this.handleCartClose}>Close</button>
-		)
-	}
-
-	/**
-	 * Render the cart component
+	 * Render the cart panel
 	 */
 	render() {
 		const {cart, performCheckout, cartPanelText} = this.props

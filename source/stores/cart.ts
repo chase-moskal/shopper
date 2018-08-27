@@ -5,10 +5,10 @@ import {observable, action, computed} from "mobx"
 import {Product} from "./product"
 import {CartItem} from "./cart-item"
 import {CurrencyControl} from "./currency-control"
-import {CartOptions, CartStorageData} from "./interfaces"
+import {CartOptions, CartStorageData} from "./stores-interfaces"
 
 /**
- * DEFAULT CART OPTIONS
+ * Default cart options
  */
 export const defaultCartOptions: Partial<CartOptions> = {
 	storageKey: "shopperman",
@@ -16,7 +16,7 @@ export const defaultCartOptions: Partial<CartOptions> = {
 }
 
 /**
- * CART CLASS
+ * Shopping cart which tracks products and maintains a subtotal
  * - maintain a cart containing products and keeping track of quantities etc
  * - you must provide a catalog of all available items
  * - items with quantity 0 are considered "not in the cart"
@@ -29,9 +29,6 @@ export class Cart {
 	private readonly omniStorage: OmniStorage
 	private readonly currencyControl: CurrencyControl
 
-	/**
-	 * Cart constructor
-	 */
 	constructor(opts: CartOptions) {
 		const options = {...defaultCartOptions, ...opts}
 
@@ -42,8 +39,7 @@ export class Cart {
 	}
 
 	/**
-	 * Load from storage
-	 * - rehydrate the item catalog details from storage
+	 * Rehydrate the item catalog details from storage
 	 */
 	private async loadFromStorage() {
 		const {omniStorage, storageKey} = this
@@ -61,8 +57,7 @@ export class Cart {
 	}
 
 	/**
-	 * Save to storage
-	 * - save item catalog details to storage
+	 * Save item catalog details to storage
 	 */
 	private saveToStorage() {
 		const {omniStorage, storageKey} = this
@@ -77,17 +72,15 @@ export class Cart {
 	}
 
 	/**
-	 * Active items
-	 * - getter for items which are "in the cart"
-	 * - active items have cart quantity greater than zero
+	 * Getter for items which are "in the cart"
+	 * - active items are cart items with quantity greater than zero
 	 */
 	@computed get activeItems(): CartItem[] {
 		return this.itemCatalog.filter(item => item.quantity > 0)
 	}
 
 	/**
-	 * Value
-	 * - return whole cart sum
+	 * Sum of cart item value
 	 */
 	@computed get value(): number {
 		const reducer = (subtotal, item: CartItem) => subtotal + item.value
@@ -95,9 +88,7 @@ export class Cart {
 	}
 
 	/**
-	 * Price
-	 * - whole cart
-	 * - return the whole cart's formatted subtotal price tag
+	 * Formatter price tag for the whole cart's value
 	 */
 	@computed get price(): string {
 		const {value, currencyControl} = this
@@ -105,9 +96,7 @@ export class Cart {
 	}
 
 	/**
-	 * Toggle panel open
-	 * - toggle the panel open status
-	 * - provide a boolean to just set it
+	 * Toggle the cart panel open or closed
 	 */
 	@action togglePanelOpen(open: boolean = null): boolean {
 		this.panelOpen = open === null
@@ -117,8 +106,7 @@ export class Cart {
 	}
 
 	/**
-	 * Clear
-	 * - remove all products from the cart
+	 * Remove all products from the cart
 	 */
 	clear(): void {
 		for (const item of this.itemCatalog) {
@@ -127,8 +115,7 @@ export class Cart {
 	}
 
 	/**
-	 * Get product item
-	 * - get a cart item by providing the product inside
+	 * Get a cart item by providing the product inside
 	 */
 	getProductItem(product: Product): CartItem {
 		return this.itemCatalog.find(i => i.product === product)

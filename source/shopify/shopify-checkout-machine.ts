@@ -1,7 +1,8 @@
 
-import {ShopifyClient} from "./interfaces"
 import {CartItem} from "../stores/cart-item"
-import {CheckoutMachineBase} from "../interfaces"
+import {CheckoutMachineBase} from "../ecommerce/checkout-machine-base"
+
+import {ShopifyClient} from "./shopify-interfaces"
 
 export class ShopifyCheckoutMachine extends CheckoutMachineBase {
 	private readonly shopifyClient: ShopifyClient

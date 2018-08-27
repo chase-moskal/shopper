@@ -5,8 +5,8 @@ import {reaction, IReactionDisposer} from "mobx"
 
 import {CartButton} from "./cart-button"
 import {CartPanel} from "./panel/cart-panel"
-import {PerformCheckout} from "./panel/interfaces"
-import {CartSystemProps, CartText} from "./interfaces"
+import {PerformCheckout} from "./panel/panel-interfaces"
+import {CartSystemProps, CartText} from "./cart-interfaces"
 import {ScrollTracker} from "../../stores/scroll-tracker"
 
 export const makeDefaultScrollTracker = () => new ScrollTracker()

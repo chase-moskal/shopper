@@ -1,8 +1,9 @@
 
 import {Cart} from "../../stores/cart"
-import {CartPanelText} from "./panel/interfaces"
-import {CheckoutMachineBase} from "../../interfaces"
 import {ScrollTracker} from "../../stores/scroll-tracker"
+import {CheckoutMachineBase} from "../../ecommerce/checkout-machine-base"
+
+import {CartPanelText} from "./panel/panel-interfaces"
 
 export interface CartButtonText {
 	open: {

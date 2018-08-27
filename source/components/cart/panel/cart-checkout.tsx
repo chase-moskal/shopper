@@ -2,11 +2,8 @@
 import {reaction} from "mobx"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {CartCheckoutProps} from "./interfaces"
+import {CartCheckoutProps} from "./panel-interfaces"
 
-/**
- * CART CHECKOUT CLASS
- */
 @observer
 export class CartCheckout extends Component<CartCheckoutProps, any> {
 

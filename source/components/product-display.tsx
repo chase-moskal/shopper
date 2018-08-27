@@ -4,7 +4,7 @@ import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
 import {CartItem} from "../stores/cart-item"
-import {ProductDisplayProps} from "./interfaces"
+import {ProductDisplayProps} from "./components-interfaces"
 
 @observer
 export class ProductDisplay extends Component<ProductDisplayProps> {

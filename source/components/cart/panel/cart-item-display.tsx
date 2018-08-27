@@ -1,7 +1,7 @@
 
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
-import {CartItemDisplayProps} from "./interfaces"
+import {CartItemDisplayProps} from "./panel-interfaces"
 
 @observer
 export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
@@ -27,20 +27,6 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 					title={cartItemText.remove.title}>
 						{cartItemText.remove.content}
 				</button>
-
-				{/* <div className="item-quantity">
-					<input
-						type="number"
-						value={item.quantity.toString()}
-						min={item.quantityMin}
-						max={item.quantityMax}
-						onChange={this.handleQuantityInputChange}
-						onKeyUp={this.handleQuantityInputChange}
-						onMouseUp={this.handleQuantityInputChange}
-						onClick={this.handleQuantityInputChange}
-						onBlur={this.handleQuantityInputChange}
-						/>
-				</div> */}
 
 				<input
 					className="item-quantity"

@@ -6,7 +6,7 @@ import {Product} from "../stores/product"
 import {ShopifyAdapter} from "../shopify"
 import {ProductDisplay, CartSystem} from "../components"
 import {CurrencyControl, Cart, CartItem} from "../stores"
-import {EcommerceShopifyStoreOptions} from "./interfaces"
+import {EcommerceShopifyStoreOptions} from "./ecommerce-interfaces"
 
 /**
  * Ecommerce shopify collection options

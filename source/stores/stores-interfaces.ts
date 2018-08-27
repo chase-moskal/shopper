@@ -7,7 +7,7 @@ import {CartItem} from "./cart-item"
 import {CurrencyControl} from "./currency-control"
 
 /**
- * CART OPTIONS INTERFACE
+ * Options for cart
  */
 export interface CartOptions {
 	itemCatalog: CartItem[]
@@ -17,7 +17,7 @@ export interface CartOptions {
 }
 
 /**
- * CART STORAGE DATA
+ * Data for cart storage
  * - information to persist the cart item quantities
  * - should eventually store other info, such as product variant customizations
  */
@@ -28,7 +28,7 @@ export interface CartStorageData {
 }
 
 /**
- * CART ITEM OPTIONS INTERFACE
+ * Options for cart item
  */
 export interface CartItemOptions {
 	product: Product
@@ -38,7 +38,7 @@ export interface CartItemOptions {
 }
 
 /**
- * CURRENCY CONTROL OPTIONS
+ * Options for currency control
  */
 export interface CurrencyControlOptions {
 
@@ -60,7 +60,7 @@ export interface CurrencyControlOptions {
 }
 
 /**
- * PRODUCT OPTIONS INTERFACE
+ * Options for a product
  */
 export interface ProductOptions {
 	id: string

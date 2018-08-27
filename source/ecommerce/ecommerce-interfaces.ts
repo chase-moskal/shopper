@@ -4,7 +4,7 @@ import {OmniStorage} from "omnistorage"
 import {Product} from "../stores/product"
 import {ShopifySettings} from "../shopify"
 import {CurrencyControlOptions} from "../stores"
-import {CartText} from "../components/cart/interfaces"
+import {CartText} from "../components/cart/cart-interfaces"
 
 /**
  * Product details that are not related to shopify

@@ -1,12 +1,10 @@
 
 import {observable, computed, action} from "mobx"
-import {ProductOptions} from "./interfaces"
+import {ProductOptions} from "./stores-interfaces"
 import {CurrencyControl} from "./currency-control"
 
 /**
- * PRODUCT CLASS
- * - represent a single ecommerce product
- * - expose getter for the formatted price tag
+ * Represent a single ecommerce product
  */
 export class Product {
 	readonly id: string

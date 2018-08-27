@@ -17,7 +17,7 @@ window["mobxPreact"] = mobxPreact
 window["shopperman"] = shopperman
 
 //
-// SHOPPERMAN DEMO FUNCTION
+// Shopperman demo function
 //
 
 window["shoppermanDemo"] = async function() {

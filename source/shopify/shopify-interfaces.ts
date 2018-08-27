@@ -2,12 +2,12 @@
 import {CurrencyControl} from "../stores/currency-control"
 
 /**
- * SHOPIFY CLIENT INTERFACE
+ * Shopify api client
  */
 export type ShopifyClient = any
 
 /**
- * SHOPIFY SDK SETTINGS INTERFACE
+ * Shopify's sdk settings
  */
 export interface ShopifySettings {
 	domain: string
@@ -15,7 +15,7 @@ export interface ShopifySettings {
 }
 
 /**
- * SHOPIFY ADAPTER OPTIONS INTERFACE
+ * Options for the shopperman shopify adapter
  */
 export interface ShopifyAdapterOptions {
 	settings: ShopifySettings

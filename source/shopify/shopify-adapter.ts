@@ -4,10 +4,14 @@ import * as shopifyBuy from "shopify-buy"
 import {Product} from "../stores/product"
 import {CurrencyControl} from "../stores/currency-control"
 import {ShopifyCheckoutMachine} from "./shopify-checkout-machine"
-import {ShopifyClient, ShopifySettings, ShopifyAdapterOptions} from "./interfaces"
+import {
+	ShopifyClient,
+	ShopifySettings,
+	ShopifyAdapterOptions
+} from "./shopify-interfaces"
 
 /**
- * SHOPIFY ADAPTER CLASS
+ * Shopify adapter
  * - wrapper for the shopify buy sdk
  * - launch shopify api requests
  * - return results with instances of shopperman typescript classes

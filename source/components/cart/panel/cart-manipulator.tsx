@@ -2,7 +2,7 @@
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {CartManipulatorProps} from "./interfaces"
+import {CartManipulatorProps} from "./panel-interfaces"
 import {CartItemDisplay} from "./cart-item-display"
 
 @observer
