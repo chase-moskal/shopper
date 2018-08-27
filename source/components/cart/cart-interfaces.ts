@@ -8,7 +8,6 @@ import {CartPanelText} from "./panel/panel-interfaces"
 export interface CartButtonText {
 	open: {
 		title: string
-		content: string
 	}
 	closed: {
 		title: string

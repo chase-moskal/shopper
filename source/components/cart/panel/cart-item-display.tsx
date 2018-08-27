@@ -22,10 +22,10 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 		const {product} = item
 		return (
 			<li className="cart-item-display">
-				<button className="item-remove-button"
+				<button
+					className="item-remove-button"
 					onClick={this.handleRemoval}
 					title={cartItemText.remove.title}>
-						{cartItemText.remove.content}
 				</button>
 
 				<input

@@ -5,7 +5,6 @@ import {CartItem} from "../../../stores/cart-item"
 export interface CartItemText {
 	remove: {
 		title: string
-		content: string
 	}
 }
 

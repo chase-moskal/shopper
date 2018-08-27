@@ -1,16 +1,7 @@
 
 @charset "utf-8";
 
-/**
- * Feather icon `shopping-cart` from [feathericons.com](https://feathericons.com/)
- */
-@mixin shopping-cart-icon($color: rgba(0,0,0, 0.5)) {
-	background-image: url(
-		"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='"
-		+ $color
-		+ "' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-shopping-cart'%3E%3Ccircle cx='9' cy='21' r='1'%3E%3C/circle%3E%3Ccircle cx='20' cy='21' r='1'%3E%3C/circle%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'%3E%3C/path%3E%3C/svg%3E"
-	);
-}
+@import "./icons";
 
 //
 // Shopperman general styles
@@ -137,6 +128,11 @@
 				left: 50%;
 				margin-top: -($size / 2);
 				margin-left: -($size / 2);
+
+				@include icon-x(white);
+				background-repeat: no-repeat;
+				background-size: 80%;
+				background-position: center center;
 			}
 		}
 	}
@@ -205,8 +201,13 @@
 				.item-remove-button {
 					position: relative;
 					z-index: 1;
-					cursor: pointer;
 					padding: 0.5em 1em;
+					cursor: pointer;
+
+					@include icon-x();
+					background-repeat: no-repeat;
+					background-size: 60%;
+					background-position: center center;
 				}
 
 				.item-quantity {
@@ -289,7 +290,7 @@
 			background-color: rgba(255,255,255, 0.9);
 
 			&::before {
-				@include shopping-cart-icon(rgba(0,0,0, 0.5));
+				@include icon-shopping-cart(rgba(0,0,0, 0.5));
 			}
 
 			span {
@@ -300,7 +301,7 @@
 				}
 
 				&.cart-close {
-					background: rgba(0,0,0, 0.6);
+					background-color: rgba(0,0,0, 0.3);
 				}
 			}
 		}
@@ -346,7 +347,7 @@
 
 				&[disabled] {
 					opacity: 0.6;
-					background: #888;
+					background: rgba(0,0,0, 0.1);
 				}
 			}
 		}

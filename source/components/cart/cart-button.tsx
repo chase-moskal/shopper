@@ -14,7 +14,7 @@ export class CartButton extends Component<CartButtonProps, any> {
 			<button className="cart-button" tabIndex={0} {...{onClick, title}}>
 				{
 					cart.panelOpen
-						? <span className="cart-close">{cartButtonText.open.content}</span>
+						? <span className="cart-close"></span>
 						: <span className="cart-numeral">{cart.activeItems.length}</span>
 				}
 			</button>

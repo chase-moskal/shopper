@@ -6,40 +6,10 @@ import {reaction, IReactionDisposer} from "mobx"
 import {CartButton} from "./cart-button"
 import {CartPanel} from "./panel/cart-panel"
 import {PerformCheckout} from "./panel/panel-interfaces"
-import {CartSystemProps, CartText} from "./cart-interfaces"
-import {ScrollTracker} from "../../stores/scroll-tracker"
+import {CartSystemProps} from "./cart-interfaces"
 
-export const makeDefaultScrollTracker = () => new ScrollTracker()
-
-export const makeDefaultCartText = (): CartText => ({
-	cartButtonText: {
-		open: {
-			title: "Close the cart",
-			content: "❌"
-		},
-		closed: {
-			title: "Open the cart"
-		}
-	},
-	cartPanelText: {
-		heading: "Shopping cart",
-		cartItemText: {
-			remove: {
-				title: "Remove cart item",
-				content: "❌"
-			}
-		},
-		cartCalculatedText: {
-			subtotal: {
-				content: "Subtotal (approximate)"
-			}
-		},
-		cartCheckoutText: {
-			title: "Buy cart items",
-			content: "Checkout"
-		}
-	}
-})
+import {makeDefaultCartText} from "./make-default-cart-text"
+import {makeDefaultScrollTracker} from "./make-default-scroll-tracker"
 
 /**
  * Cart system component class
