@@ -10,7 +10,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 		const input = event.target as HTMLInputElement
 		const {item} = this.props
 		const value = parseInt(input.value)
-		item.setQuantity(value)
+		item.setQuantity(value ? value : 0)
 	}
 
 	private readonly handleRemoval = (event: Event): void => {
