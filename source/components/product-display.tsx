@@ -40,7 +40,7 @@ export class ProductDisplay extends Component<ProductDisplayProps> {
 		} = this.props
 
 		return (
-			<div className="product-display" data-in-cart={inCart ? "true" : "false"}>
+			<div className="product-display" data-in-cart={inCart ? "true" : "false"} {...product.attributes}>
 				<h3 className="title">{product.title}</h3>
 				<div className="box">
 					<p className="price">{product.price}</p>

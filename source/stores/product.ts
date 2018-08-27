@@ -1,7 +1,7 @@
 
 import {observable, computed, action} from "mobx"
-import {ProductOptions} from "./stores-interfaces"
 import {CurrencyControl} from "./currency-control"
+import {ProductOptions, ElementAttributes} from "./stores-interfaces"
 
 /**
  * Represent a single ecommerce product
@@ -14,9 +14,12 @@ export class Product {
 	private readonly currencyControl: CurrencyControl
 
 	@observable precision: number = null
+	@observable attributes: {[key: string]: string} = {}
 
-	constructor(options: ProductOptions) {
+	constructor({precision, attributes, ...options}: ProductOptions) {
 		Object.assign(this, options)
+		this.setPrecision(precision)
+		this.setAttributes(attributes)
 	}
 
 	@computed get price(): string {
@@ -26,5 +29,9 @@ export class Product {
 
 	@action setPrecision(precision: number) {
 		this.precision = precision
+	}
+
+	@action setAttributes(attributes: ElementAttributes = {}) {
+		this.attributes = attributes
 	}
 }

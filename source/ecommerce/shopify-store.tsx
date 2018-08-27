@@ -64,8 +64,20 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 		omniStorage: options.omniStorage,
 		currencyControl,
 		itemCatalog: products.map(product => {
-			const {quantityMin, quantityMax, precision} = options.evaluator(product)
+
+			// run product evaluator
+			const {
+				quantityMin,
+				quantityMax,
+				precision,
+				attributes
+			} = options.evaluator(product)
+
+			// set product properties
 			product.setPrecision(precision)
+			product.setAttributes(attributes)
+
+			// create the cart item
 			return new CartItem({
 				product,
 				currencyControl,

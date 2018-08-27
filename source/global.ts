@@ -46,7 +46,10 @@ window["shoppermanDemo"] = async function() {
 		evaluator: product => ({
 			quantityMin: 1,
 			quantityMax: 5,
-			precision: 2
+			precision: 2,
+			attributes: /avocado/i.test(product.title)
+				? {"data-avocado": "yeppers"}
+				: {}
 		})
 	})
 }

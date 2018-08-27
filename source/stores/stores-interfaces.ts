@@ -60,6 +60,13 @@ export interface CurrencyControlOptions {
 }
 
 /**
+ * Attributes for an html element
+ */
+export interface ElementAttributes {
+	[key: string]: string
+}
+
+/**
  * Options for a product
  */
 export interface ProductOptions {
@@ -69,4 +76,5 @@ export interface ProductOptions {
 	description: string
 	currencyControl: CurrencyControl
 	precision?: number
+	attributes?: ElementAttributes
 }

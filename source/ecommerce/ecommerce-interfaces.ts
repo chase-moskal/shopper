@@ -3,8 +3,8 @@ import {OmniStorage} from "omnistorage"
 
 import {Product} from "../stores/product"
 import {ShopifySettings} from "../shopify"
-import {CurrencyControlOptions} from "../stores"
 import {CartText} from "../components/cart/cart-interfaces"
+import {CurrencyControlOptions, ElementAttributes} from "../stores"
 
 /**
  * Product details that are not related to shopify
@@ -13,6 +13,7 @@ export interface ProductEvaluation {
 	quantityMin: number
 	quantityMax: number
 	precision?: number
+	attributes?: ElementAttributes
 }
 
 /** Function to evaluate non-shopify product details */
