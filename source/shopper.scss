@@ -4,11 +4,11 @@
 @import "./icons";
 
 //
-// Shopperman general styles
-// - standard structural layout styles for shopperman components
+// shopper general styles
+// - standard structural layout styles for shopper components
 //
 
-.shopperman {
+.shopper {
 	$buttonheight: 3rem;
 	$panelspacing: 1rem;
 	$priceleeway: 2em;
@@ -272,7 +272,7 @@
 	// - simple light greyscale shades
 	//
 
-	&.shopperman-theme-basic {
+	&.shopper-theme-basic {
 		.cart-system {
 			color: #444;
 
@@ -356,11 +356,11 @@
 }
 
 //
-// Shopperman example demo styles
+// shopper example demo styles
 // - these are some opinionated idiosyncratic styles are for the demo page
 //
 
-.shopperman-demo {
+.shopper-demo {
 	$bgcolor: #186d63;
 	$fgcolor: #bbfff7;
 

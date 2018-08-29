@@ -15,7 +15,7 @@ export interface ShopifySettings {
 }
 
 /**
- * Options for the shopperman shopify adapter
+ * Options for the shopper shopify adapter
  */
 export interface ShopifyAdapterOptions {
 	settings: ShopifySettings

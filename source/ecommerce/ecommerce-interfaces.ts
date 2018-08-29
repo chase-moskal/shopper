@@ -47,7 +47,7 @@ export interface EcommerceShopifyStoreOptions {
 		productsArea?: HTMLElement
 	}[]
 
-	/** Detailed options for the shopperman cart system */
+	/** Detailed options for the shopper cart system */
 	cartSystem: {
 
 		/** Whether or not to open the checkout url in a new window */

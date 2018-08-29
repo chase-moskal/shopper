@@ -1,5 +1,5 @@
 
-# shopperman
+# shopper
 
 **cart ui for custom shopify frontends**
 

@@ -6,7 +6,7 @@ import * as commotion from "commotion"
 import * as mobxPreact from "mobx-preact"
 import * as omnistorage from "omnistorage"
 
-import * as shopperman from "."
+import * as shopper from "."
 import {ecommerceShopifyStore} from "./ecommerce/shopify-store"
 
 window["crnc"] = crnc
@@ -14,13 +14,13 @@ window["mobx"] = mobx
 window["preact"] = preact
 window["commotion"] = commotion
 window["mobxPreact"] = mobxPreact
-window["shopperman"] = shopperman
+window["shopper"] = shopper
 
 //
-// Shopperman demo function
+// shopper demo function
 //
 
-window["shoppermanDemo"] = async function() {
+window["shopperDemo"] = async function() {
 	mobx.configure({enforceActions: true})
 	await ecommerceShopifyStore({
 		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
@@ -37,9 +37,9 @@ window["shoppermanDemo"] = async function() {
 		},
 		collections: [{
 			collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
-			productsArea: document.querySelector<HTMLElement>(".shopperman .products-area")
+			productsArea: document.querySelector<HTMLElement>(".shopper .products-area")
 		}],
-		cartArea: document.querySelector<HTMLElement>(".shopperman .cart-area"),
+		cartArea: document.querySelector<HTMLElement>(".shopper .cart-area"),
 		cartSystem: {
 			checkoutInNewWindow: false
 		},

@@ -14,7 +14,7 @@ import {
  * Shopify adapter
  * - wrapper for the shopify buy sdk
  * - launch shopify api requests
- * - return results with instances of shopperman typescript classes
+ * - return results with instances of shopper typescript classes
  * - exposes a checkout machine which can be used by other components
  */
 export class ShopifyAdapter {

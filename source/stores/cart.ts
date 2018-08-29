@@ -11,7 +11,7 @@ import {CartOptions, CartStorageData} from "./stores-interfaces"
  * Default cart options
  */
 export const defaultCartOptions: Partial<CartOptions> = {
-	storageKey: "shopperman",
+	storageKey: "shopper",
 	omniStorage: new LocalClient({storage: window.localStorage})
 }
 
@@ -52,7 +52,7 @@ export class Cart {
 			}
 		}
 		catch (error) {
-			console.error(`shopperman cart load from storage error: ${error.message}`)
+			console.error(`shopper cart load from storage error: ${error.message}`)
 		}
 	}
 

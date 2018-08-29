@@ -39,8 +39,8 @@ const buildOptions = {
 		nb: "$(npm bin)/",
 		scriptSource: "source/global.ts",
 		scriptBundle: "dist/global.bundle.js",
-		styleSource: "source/shopperman.scss",
-		styleOutput: "dist/shopperman.css",
+		styleSource: "source/shopper.scss",
+		styleOutput: "dist/shopper.css",
 		polyfills: [
 			"node_modules/array.find/dist/array-find-polyfill.min.js",
 			"node_modules/es6-promise/dist/es6-promise.auto.min.js",
@@ -137,7 +137,7 @@ async function build({debug, paths, sassWatch}) {
 		)
 
 		// documentation generation
-		await axx(`${nb}typedoc --name "shopperman api docs" --readme README.docs.md --mode file --excludeExternals --excludePrivate --out dist/docs/ source/`, caxx())
+		await axx(`${nb}typedoc --name "shopper api docs" --readme README.docs.md --mode file --excludeExternals --excludePrivate --out dist/docs/ source/`, caxx())
 
 		console.log("✔ done production build")
 	}
