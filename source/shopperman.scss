@@ -364,6 +364,10 @@
 	$bgcolor: #186d63;
 	$fgcolor: #bbfff7;
 
+	a {
+		color: skyblue;
+	}
+
 	@mixin slice() {
 		width: 100%;
 		max-width: 1200px;
