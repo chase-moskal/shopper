@@ -1,4 +1,4 @@
 
-import {ScrollTracker} from "../../stores/scroll-tracker"
+import {ScrollTrackerStore} from "../../stores/scroll-tracker-store"
 
-export const makeDefaultScrollTracker = () => new ScrollTracker()
+export const makeDefaultScrollTracker = () => new ScrollTrackerStore()

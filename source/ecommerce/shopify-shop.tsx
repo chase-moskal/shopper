@@ -2,18 +2,18 @@
 import {h} from "preact"
 import * as preact from "preact"
 
-import {Product} from "../stores/product"
+import {ProductStore} from "../stores/product-store"
 import {ShopifyAdapter} from "../shopify"
 import {ProductDisplay, CartSystem} from "../components"
-import {CurrencyControl, Cart, CartItem} from "../stores"
-import {EcommerceShopifyStoreOptions, ProductEvaluator} from "./ecommerce-interfaces"
+import {CurrencyControlStore, CartStore, CartItemStore} from "../stores"
+import {EcommerceShopifyStoreOptions, ProductEvaluator, CollectionToLoad, Collection} from "./ecommerce-interfaces"
 import { OmniStorage } from "omnistorage/dist";
 
 /**
- * Ecommerce shopify collection options
+ * Establish an ecommerce experience for a shopify shop
  * - load products from shopify
  * - install a fully featured cart system and ecommerce experience
- * - place products into specific dom elements
+ * - place products into specific dom elements, specified by `collectionsToLoad`
  */
 export async function ecommerceShopifyShop({
 	omniStorage,
@@ -30,50 +30,32 @@ export async function ecommerceShopifyShop({
 	//
 
 	// currency conversion control
-	const currencyControl = new CurrencyControl(currency)
+	const currencyControlStore = new CurrencyControlStore(currency)
 
 	// shopify adapter connects us to the shopify store
 	const shopifyAdapter = new ShopifyAdapter({
 		settings: shopify,
-		currencyControl
+		currencyControlStore
 	})
 
 	//
-	// load products
+	// load product stores
 	//
 
-	// start loading products from all collections
-	const collectionsWithPromisedProducts = collectionsToLoad.map((details) => ({
-		...details,
-		products: shopifyAdapter.getProductsInCollection(details.collectionId)
-	}))
-
-	// wait for all products to finish loading
-	const collections: {
-		collectionId: string
-		products: Product[]
-		productsArea?: HTMLElement
-	}[] = await Promise.all(
-		collectionsWithPromisedProducts.map(
-			details => details.products.then(products => ({
-				...details,
-				products
-			}))
-		)
-	)
-
-	// make catalog of products by combining all products into one array
-	const products: Product[] = [].concat(...collections.map(({products}) => products))
+	const {productStores, collections} = await loadProductsAndCollections({
+		shopifyAdapter,
+		collectionsToLoad
+	})
 
 	//
-	// create cart
+	// create cart store
 	//
 
-	const cart = createCart({
-		products,
+	const cart = createCartStore({
+		productStores,
 		evaluator,
 		omniStorage,
-		currencyControl
+		currencyControlStore
 	})
 
 	//
@@ -106,18 +88,54 @@ export async function ecommerceShopifyShop({
 }
 
 /**
+ * Load products from shopify and return product store instances
+ */
+async function loadProductsAndCollections({
+	shopifyAdapter,
+	collectionsToLoad
+}: {
+	shopifyAdapter: ShopifyAdapter
+	collectionsToLoad: CollectionToLoad[]
+}): Promise<{
+	productStores: ProductStore[]
+	collections: Collection[]
+}> {
+
+	// start loading products from all collections
+	const collectionsWithPromisedProducts = collectionsToLoad.map((details) => ({
+		...details,
+		products: shopifyAdapter.getProductsInCollection(details.collectionId)
+	}))
+
+	// wait for all products to finish loading
+	const collections: Collection[] = await Promise.all(
+		collectionsWithPromisedProducts.map(
+			details => details.products.then(products => ({
+				...details,
+				products
+			}))
+		)
+	)
+
+	// make catalog of products by combining all products into one array
+	const productStores = [].concat(...collections.map(({products}) => products))
+
+	return {productStores, collections}
+}
+
+/**
  * Create a cart model populated by cart items
  */
-function createCart({products, evaluator, omniStorage, currencyControl}: {
-	products: Product[]
+function createCartStore({productStores, evaluator, omniStorage, currencyControlStore}: {
+	productStores: ProductStore[]
 	omniStorage: OmniStorage
 	evaluator: ProductEvaluator
-	currencyControl: CurrencyControl
+	currencyControlStore: CurrencyControlStore
 }) {
-	return new Cart({
+	return new CartStore({
 		omniStorage,
-		currencyControl,
-		itemCatalog: products.map(product => {
+		currencyControlStore,
+		itemCatalog: productStores.map(productStore => {
 
 			// run product evaluator
 			const {
@@ -125,16 +143,16 @@ function createCart({products, evaluator, omniStorage, currencyControl}: {
 				quantityMax,
 				precision,
 				attributes
-			} = evaluator(product)
+			} = evaluator(productStore)
 
 			// set product properties
-			product.setPrecision(precision)
-			product.setAttributes(attributes)
+			productStore.setPrecision(precision)
+			productStore.setAttributes(attributes)
 
 			// create the cart item
-			return new CartItem({
-				product,
-				currencyControl,
+			return new CartItemStore({
+				productStore,
+				currencyControlStore,
 				quantityMin,
 				quantityMax
 			})

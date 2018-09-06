@@ -19,7 +19,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 
 	render() {
 		const {item, cartItemText} = this.props
-		const {product} = item
+		const {productStore} = item
 		return (
 			<li className="cart-item-display">
 				<button
@@ -41,7 +41,7 @@ export class CartItemDisplay extends Component<CartItemDisplayProps, any> {
 					onBlur={this.handleQuantityInputChange}
 					/>
 
-				<div className="item-title">{product.title}</div>
+				<div className="item-title">{productStore.title}</div>
 				<div className="item-price pricevalue">{item.price}</div>
 			</li>
 		)

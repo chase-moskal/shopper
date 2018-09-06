@@ -1,6 +1,6 @@
 
-import {Cart} from "../../stores/cart"
-import {ScrollTracker} from "../../stores/scroll-tracker"
+import {CartStore} from "../../stores/cart-store"
+import {ScrollTrackerStore} from "../../stores/scroll-tracker-store"
 import {CheckoutMachineBase} from "../../ecommerce/checkout-machine-base"
 
 import {CartPanelText} from "./panel/panel-interfaces"
@@ -27,7 +27,7 @@ export interface CartText {
  */
 export interface CartButtonProps {
 	cartButtonText: CartButtonText
-	cart: Cart
+	cart: CartStore
 	onClick: (event: MouseEvent) => void
 }
 
@@ -37,7 +37,7 @@ export interface CartButtonProps {
 export interface CartSystemProps {
 
 	/** Cart store contains cart items */
-	cart: Cart
+	cart: CartStore
 
 	/** Checkout machine generates checkout url */
 	checkoutMachine: CheckoutMachineBase
@@ -46,7 +46,7 @@ export interface CartSystemProps {
 	checkoutInNewWindow: boolean
 
 	/** Keeps track of a scroll observable */
-	scrollTracker?: ScrollTracker
+	scrollTracker?: ScrollTrackerStore
 
 	/** Display text to show throughout the cart */
 	cartText?: CartText

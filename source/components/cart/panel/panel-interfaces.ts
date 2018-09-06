@@ -1,6 +1,6 @@
 
-import {Cart} from "../../../stores/cart"
-import {CartItem} from "../../../stores/cart-item"
+import {CartStore} from "../../../stores/cart-store"
+import {CartItemStore} from "../../../stores/cart-item-store"
 
 export interface CartItemText {
 	remove: {
@@ -27,7 +27,7 @@ export interface CartPanelText {
 }
 
 export interface CartCalculatedResultsProps {
-	cart: Cart
+	cart: CartStore
 	cartCalculatedText: CartCalculatedText
 }
 
@@ -38,23 +38,23 @@ export interface CartCalculatedResultsProps {
 export type PerformCheckout = () => Promise<string>
 
 export interface CartCheckoutProps {
-	cart: Cart
+	cart: CartStore
 	cartCheckoutText: CartCheckoutText
 	performCheckout: PerformCheckout
 }
 
 export interface CartItemDisplayProps {
-	item: CartItem
+	item: CartItemStore
 	cartItemText: CartItemText
 }
 
 export interface CartPanelProps {
-	cart: Cart
+	cart: CartStore
 	cartPanelText: CartPanelText
 	performCheckout: PerformCheckout
 }
 
 export interface CartManipulatorProps {
-	cart: Cart
+	cart: CartStore
 	cartItemText: CartItemText
 }

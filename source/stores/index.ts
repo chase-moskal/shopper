@@ -1,7 +1,7 @@
 
-export * from "./cart-item"
-export * from "./cart"
-export * from "./currency-control"
-export * from "./stores-interfaces"
-export * from "./product"
-export * from "./scroll-tracker"
+export * from "./cart-item-store"
+export * from "./cart-store"
+export * from "./currency-control-store"
+export * from "./stores-interfaces-store"
+export * from "./product-store"
+export * from "./scroll-tracker-store"

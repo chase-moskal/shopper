@@ -1,8 +1,8 @@
 
 import * as shopifyBuy from "shopify-buy"
 
-import {Product} from "../stores/product"
-import {CurrencyControl} from "../stores/currency-control"
+import {ProductStore} from "../stores/product-store"
+import {CurrencyControlStore} from "../stores/currency-control-store"
 import {ShopifyCheckoutMachine} from "./shopify-checkout-machine"
 import {
 	ShopifyClient,
@@ -22,7 +22,7 @@ export class ShopifyAdapter {
 
 	private readonly settings: ShopifySettings
 	private readonly shopifyClient: ShopifyClient
-	private readonly currencyControl: CurrencyControl
+	private readonly currencyControlStore: CurrencyControlStore
 
 	constructor(options: ShopifyAdapterOptions) {
 		Object.assign(this, options)
@@ -35,17 +35,17 @@ export class ShopifyAdapter {
 	 * Get products in collection
 	 * - return the products from a shopify collection
 	 */
-	async getProductsInCollection(collectionId: string): Promise<Product[]> {
-		const {shopifyClient, currencyControl} = this
+	async getProductsInCollection(collectionId: string): Promise<ProductStore[]> {
+		const {shopifyClient, currencyControlStore} = this
 
 		try {
 			const collection = await shopifyClient.collection.fetchWithProducts(collectionId)
-			const products: Product[] = collection.products.map(info => new Product({
+			const products: ProductStore[] = collection.products.map(info => new ProductStore({
 				id: info.variants[0].id,
 				value: parseFloat(info.variants[0].price),
 				title: info.title,
 				description: info.descriptionHtml,
-				currencyControl
+				currencyControlStore
 			}))
 			return products
 		}

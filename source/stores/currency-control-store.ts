@@ -1,13 +1,13 @@
 
 import {observable, action} from "mobx"
-import {CurrencyControlOptions} from "./stores-interfaces"
+import {CurrencyControlOptions} from "./stores-interfaces-store"
 import {convertAndFormatCurrency, CurrencyExchangeRates} from "crnc"
 
 /**
  * Facility for exchanging and displaying monetary values
  * - observable user display currency can be changed
  */
-export class CurrencyControl {
+export class CurrencyControlStore {
 
 	/** Currency in which to display monetary values */
 	@observable userDisplayCurrency: string
@@ -18,7 +18,11 @@ export class CurrencyControl {
 	private readonly exchangeRates: CurrencyExchangeRates
 
 	constructor(options: CurrencyControlOptions) {
-		Object.assign(this, options)
+		this.setUserDisplayCurrency(options.userDisplayCurrency)
+		this.exchangeRates = options.exchangeRates
+		this.storeBaseCurrency = options.storeBaseCurrency
+		this.locale = options.locale
+		this.precision = options.precision
 	}
 
 	/**

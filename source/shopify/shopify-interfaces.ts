@@ -1,5 +1,5 @@
 
-import {CurrencyControl} from "../stores/currency-control"
+import {CurrencyControlStore} from "../stores/currency-control-store"
 
 /**
  * Shopify api client
@@ -19,5 +19,5 @@ export interface ShopifySettings {
  */
 export interface ShopifyAdapterOptions {
 	settings: ShopifySettings
-	currencyControl: CurrencyControl
+	currencyControlStore: CurrencyControlStore
 }

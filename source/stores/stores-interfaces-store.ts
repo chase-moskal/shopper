@@ -2,16 +2,16 @@
 import {OmniStorage} from "omnistorage"
 import {CurrencyExchangeRates} from "crnc"
 
-import {Product} from "./product"
-import {CartItem} from "./cart-item"
-import {CurrencyControl} from "./currency-control"
+import {ProductStore} from "./product-store"
+import {CartItemStore} from "./cart-item-store"
+import {CurrencyControlStore} from "./currency-control-store"
 
 /**
  * Options for cart
  */
-export interface CartOptions {
-	itemCatalog: CartItem[]
-	currencyControl: CurrencyControl
+export interface CartStoreOptions {
+	itemCatalog: CartItemStore[]
+	currencyControlStore: CurrencyControlStore
 	storageKey?: string
 	omniStorage?: OmniStorage
 }
@@ -30,9 +30,9 @@ export interface CartStorageData {
 /**
  * Options for cart item
  */
-export interface CartItemOptions {
-	product: Product
-	currencyControl: CurrencyControl
+export interface CartItemStoreOptions {
+	productStore: ProductStore
+	currencyControlStore: CurrencyControlStore
 	quantityMin: number
 	quantityMax: number
 }
@@ -69,12 +69,12 @@ export interface ElementAttributes {
 /**
  * Options for a product
  */
-export interface ProductOptions {
+export interface ProductStoreOptions {
 	id: string
 	title: string
 	value: number
 	description: string
-	currencyControl: CurrencyControl
+	currencyControlStore: CurrencyControlStore
 	precision?: number
 	attributes?: ElementAttributes
 }

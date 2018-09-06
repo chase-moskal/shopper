@@ -4,10 +4,14 @@ import {getScrollTop} from "../toolbox"
 
 const scrollEvents = ["scroll", "resize"]
 
-export class ScrollTracker {
+export class ScrollTrackerStore {
+	@observable scroll: number
+	@observable tracking: boolean
 
-	@observable scroll: number = 0
-	@observable tracking: boolean = false
+	constructor() {
+		this.setScroll()
+		this.setTracking()
+	}
 
 	updateScroll() {
 		if (this.tracking) {
@@ -16,16 +20,12 @@ export class ScrollTracker {
 		}
 	}
 
-	@action setScroll(scroll: number) {
+	@action setScroll(scroll: number = 0) {
 		this.scroll = scroll
 	}
 
-	@action setTracking(tracking: boolean) {
+	@action setTracking(tracking: boolean = false) {
 		this.tracking = tracking
-		this.updateScroll()
-	}
-
-	private handleScrollUpdate = () => {
 		this.updateScroll()
 	}
 
@@ -40,5 +40,9 @@ export class ScrollTracker {
 		for (const event of scrollEvents) {
 			window.removeEventListener(event, this.handleScrollUpdate)
 		}
+	}
+
+	private handleScrollUpdate = () => {
+		this.updateScroll()
 	}
 }

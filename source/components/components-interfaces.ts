@@ -1,10 +1,10 @@
 
-import {Cart} from "../stores/cart"
-import {Product} from "../stores/product"
+import {CartStore} from "../stores/cart-store"
+import {ProductStore} from "../stores/product-store"
 
 export interface ProductDisplayProps {
-	cart: Cart
-	product: Product
+	cart: CartStore
+	product: ProductStore
 	buttonText1?: string
 	buttonText2?: string
 	buttonTitle?: string

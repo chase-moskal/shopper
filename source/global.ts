@@ -21,7 +21,9 @@ window["shopper"] = shopper
 //
 
 window["shopperDemo"] = async function() {
-	mobx.configure({enforceActions: true})
+
+	mobx.configure({enforceActions: "always"})
+
 	await ecommerceShopifyShop({
 		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
 		currency: {

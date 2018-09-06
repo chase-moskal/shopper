@@ -1,7 +1,7 @@
 
 import {OmniStorage} from "omnistorage"
 
-import {Product} from "../stores/product"
+import {ProductStore} from "../stores/product-store"
 import {ShopifySettings} from "../shopify"
 import {CartText} from "../components/cart/cart-interfaces"
 import {CurrencyControlOptions, ElementAttributes} from "../stores"
@@ -17,7 +17,19 @@ export interface ProductEvaluation {
 }
 
 /** Function to evaluate non-shopify product details */
-export type ProductEvaluator = (product: Product) => ProductEvaluation
+export type ProductEvaluator = (product: ProductStore) => ProductEvaluation
+
+/**
+ * Collection to load and display
+ */
+export interface CollectionToLoad {
+
+	/** Collection identifier */
+	collectionId: string
+
+	/** Dom element in which to render this collection's product displays */
+	productsArea?: HTMLElement
+}
 
 /**
  * Ecommerce shopify store options
@@ -38,14 +50,7 @@ export interface EcommerceShopifyStoreOptions {
 	cartArea: HTMLElement
 
 	/** Collections to load and display */
-	collectionsToLoad: {
-
-		/** Collection identifier */
-		collectionId: string
-
-		/** Dom element in which to render this collection's product displays */
-		productsArea?: HTMLElement
-	}[]
+	collectionsToLoad: CollectionToLoad[]
 
 	/** Detailed options for the shopper cart system */
 	cartSystem: {
@@ -59,4 +64,13 @@ export interface EcommerceShopifyStoreOptions {
 
 	/** Function to evaluate non-shopify properties for each product */
 	evaluator: ProductEvaluator
+}
+
+/**
+ * Renderable collection details
+ */
+export interface Collection {
+	collectionId: string
+	products: ProductStore[]
+	productsArea?: HTMLElement
 }

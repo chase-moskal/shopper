@@ -30,9 +30,15 @@
 
 ## see ["global.ts"](./source/global.ts) for usage example
 
-## security notes
+## notes
 
-- **dangerouslySetInnerHtml with shopify product descriptions**
+- **the mobx terminology `store` is used a lot in the codebase**
+
+	it's *not* an "ecommerce store" – for that meaning, we use the term "shop" instead
+
+	a mobx `store` is where we keep all of our observable state
+
+- **security note: `dangerouslySetInnerHtml` is used with shopify product descriptions**
 
 	html from the shopify api (product descriptions) is injected without
 	sanitization

@@ -3,13 +3,13 @@ import {computed} from "mobx"
 import {h, Component} from "preact"
 import {observer} from "mobx-preact"
 
-import {CartItem} from "../stores/cart-item"
+import {CartItemStore} from "../stores/cart-item-store"
 import {ProductDisplayProps} from "./components-interfaces"
 
 @observer
 export class ProductDisplay extends Component<ProductDisplayProps> {
 
-	@computed get cartItem(): CartItem {
+	@computed get cartItem(): CartItemStore {
 		const {cart, product} = this.props
 		return cart.getProductItem(product)
 	}
