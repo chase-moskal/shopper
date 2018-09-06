@@ -5,6 +5,7 @@
 
 - frontend tech to implement custom shopify stores
 - preact components, mobx stores, some scss
+- using `mobx@4`, `mobx-preact@2` for internet explorer compatibility
 
 ## goals
 
