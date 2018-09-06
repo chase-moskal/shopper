@@ -7,7 +7,7 @@ import * as mobxPreact from "mobx-preact"
 import * as omnistorage from "omnistorage"
 
 import * as shopper from "."
-import {ecommerceShopifyStore} from "./ecommerce/shopify-store"
+import {ecommerceShopifyShop} from "./ecommerce/shopify-shop"
 
 window["crnc"] = crnc
 window["mobx"] = mobx
@@ -22,7 +22,7 @@ window["shopper"] = shopper
 
 window["shopperDemo"] = async function() {
 	mobx.configure({enforceActions: true})
-	await ecommerceShopifyStore({
+	await ecommerceShopifyShop({
 		omniStorage: new omnistorage.LocalClient({storage: window.localStorage}),
 		currency: {
 			...await crnc.ascertainEcommerceDetails({

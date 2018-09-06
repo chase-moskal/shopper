@@ -15,7 +15,7 @@ import { OmniStorage } from "omnistorage/dist";
  * - install a fully featured cart system and ecommerce experience
  * - place products into specific dom elements
  */
-export async function ecommerceShopifyStore({
+export async function ecommerceShopifyShop({
 	omniStorage,
 	currency,
 	shopify,
