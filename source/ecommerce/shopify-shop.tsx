@@ -27,32 +27,25 @@ export async function ecommerceShopifyShop({
 	evaluator
 }: EcommerceShopifyStoreOptions) {
 
-	//
-	// spool up tools
-	//
-
-	// currency conversion control
+	// this currency control instance is passed around throughout shopper,
+	// so that the whole system treats currencies in the same consistent manner
 	const currencyControlStore = new CurrencyControlStore(currency)
 
-	// shopify adapter connects us to the shopify store
+	// shopify adapter connects us to the shopify store,
+	// allowing the system to query for products and such
 	const shopifyAdapter = new ShopifyAdapter({
 		settings: shopify,
 		currencyControlStore
 	})
 
-	//
-	// load product stores
-	//
-
+	// here we load up our collections and products from shopify
 	const {productStores, collections} = await loadProductsAndCollections({
 		shopifyAdapter,
 		collectionsToLoad
 	})
 
-	//
-	// create cart store
-	//
-
+	// we create the cart store,
+	// which also wraps the products into a cart item catalog
 	const cart = createCartStore({
 		productStores,
 		evaluator,
@@ -60,10 +53,7 @@ export async function ecommerceShopifyShop({
 		currencyControlStore
 	})
 
-	//
-	// render collection product areas
-	//
-
+	// lets render all of the products onto the page
 	for (const {collectionId, productsArea, products} of collections) {
 		preact.render(
 			<div className="product-list" data-collection-id={collectionId}>
@@ -75,10 +65,8 @@ export async function ecommerceShopifyShop({
 		)
 	}
 
-	//
-	// render the cart system
-	//
-
+	// here we render the cart system onto the page,
+	// with the cart button and openable cart panel and all
 	preact.render(
 		<CartSystem {...{
 			...cartSystem,
