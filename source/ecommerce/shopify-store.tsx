@@ -6,7 +6,8 @@ import {Product} from "../stores/product"
 import {ShopifyAdapter} from "../shopify"
 import {ProductDisplay, CartSystem} from "../components"
 import {CurrencyControl, Cart, CartItem} from "../stores"
-import {EcommerceShopifyStoreOptions} from "./ecommerce-interfaces"
+import {EcommerceShopifyStoreOptions, ProductEvaluator} from "./ecommerce-interfaces"
+import { OmniStorage } from "omnistorage/dist";
 
 /**
  * Ecommerce shopify collection options
@@ -14,18 +15,26 @@ import {EcommerceShopifyStoreOptions} from "./ecommerce-interfaces"
  * - install a fully featured cart system and ecommerce experience
  * - place products into specific dom elements
  */
-export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOptions) {
+export async function ecommerceShopifyStore({
+	omniStorage,
+	currency,
+	shopify,
+	cartArea,
+	collectionsToLoad,
+	cartSystem,
+	evaluator
+}: EcommerceShopifyStoreOptions) {
 
 	//
 	// spool up tools
 	//
 
 	// currency conversion control
-	const currencyControl = new CurrencyControl(options.currency)
+	const currencyControl = new CurrencyControl(currency)
 
 	// shopify adapter connects us to the shopify store
 	const shopifyAdapter = new ShopifyAdapter({
-		settings: options.shopify,
+		settings: shopify,
 		currencyControl
 	})
 
@@ -34,7 +43,7 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 	//
 
 	// start loading products from all collections
-	const collectionsWithPromisedProducts = options.collections.map((details) => ({
+	const collectionsWithPromisedProducts = collectionsToLoad.map((details) => ({
 		...details,
 		products: shopifyAdapter.getProductsInCollection(details.collectionId)
 	}))
@@ -57,34 +66,14 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 	const products: Product[] = [].concat(...collections.map(({products}) => products))
 
 	//
-	// create cart model
+	// create cart
 	//
 
-	const cart = new Cart({
-		omniStorage: options.omniStorage,
-		currencyControl,
-		itemCatalog: products.map(product => {
-
-			// run product evaluator
-			const {
-				quantityMin,
-				quantityMax,
-				precision,
-				attributes
-			} = options.evaluator(product)
-
-			// set product properties
-			product.setPrecision(precision)
-			product.setAttributes(attributes)
-
-			// create the cart item
-			return new CartItem({
-				product,
-				currencyControl,
-				quantityMin,
-				quantityMax
-			})
-		})
+	const cart = createCart({
+		products,
+		evaluator,
+		omniStorage,
+		currencyControl
 	})
 
 	//
@@ -108,10 +97,47 @@ export async function ecommerceShopifyStore(options: EcommerceShopifyStoreOption
 
 	preact.render(
 		<CartSystem {...{
-			...options.cartSystem,
+			...cartSystem,
 			cart,
 			checkoutMachine: shopifyAdapter.checkoutMachine
 		}}/>,
-		options.cartArea
+		cartArea
 	)
+}
+
+/**
+ * Create a cart model populated by cart items
+ */
+function createCart({products, evaluator, omniStorage, currencyControl}: {
+	products: Product[]
+	omniStorage: OmniStorage
+	evaluator: ProductEvaluator
+	currencyControl: CurrencyControl
+}) {
+	return new Cart({
+		omniStorage,
+		currencyControl,
+		itemCatalog: products.map(product => {
+
+			// run product evaluator
+			const {
+				quantityMin,
+				quantityMax,
+				precision,
+				attributes
+			} = evaluator(product)
+
+			// set product properties
+			product.setPrecision(precision)
+			product.setAttributes(attributes)
+
+			// create the cart item
+			return new CartItem({
+				product,
+				currencyControl,
+				quantityMin,
+				quantityMax
+			})
+		})
+	})
 }

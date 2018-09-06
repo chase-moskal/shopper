@@ -38,7 +38,7 @@ export interface EcommerceShopifyStoreOptions {
 	cartArea: HTMLElement
 
 	/** Collections to load and display */
-	collections: {
+	collectionsToLoad: {
 
 		/** Collection identifier */
 		collectionId: string

@@ -35,7 +35,7 @@ window["shopperDemo"] = async function() {
 			domain: "dev-bakery.myshopify.com",
 			storefrontAccessToken: "5f636be6b04aeb2a7b96fe9306386f25"
 		},
-		collections: [{
+		collectionsToLoad: [{
 			collectionId: "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==",
 			productsArea: document.querySelector<HTMLElement>(".shopper .products-area")
 		}],
