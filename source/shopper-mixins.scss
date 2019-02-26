@@ -3,6 +3,11 @@
 
 @import "./icons";
 
+$buttonheight: 3rem;
+$panelspacing: 1rem;
+$priceleeway: 2em;
+$bradius: 2px;
+
 @mixin shopper-button-bubble($size: 1rem) {
 	font-size: $size * 0.8;
 	position: absolute;
@@ -16,18 +21,7 @@
 }
 
 @mixin shopper() {
-	$buttonheight: 3rem;
-	$panelspacing: 1rem;
-	$priceleeway: 2em;
-	$bradius: 2px;
-
 	.reset-and-normalize {
-		&, & * {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-		}
-
 		ol, ul {
 			list-style: none;
 		}
