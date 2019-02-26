@@ -1,21 +1,23 @@
 {
-	"version": "0.1.0",
-	"isShellCommand": true,
-	"showOutput": "always",
-	"suppressTaskName": true,
+	"version": "2.0.0",
 	"tasks": [
 		{
-			"taskName": "production build (npm install)",
+			"label": "production build",
+			"type": "shell",
 			"command": "npm",
-			"args": ["install", "--silent"],
+			"args": ["install"],
 			"problemMatcher": ["$tsc"]
 		},
 		{
-			"taskName": "debug build (node build --debug)",
-			"isBuildCommand": true,
-			"command": "node",
-			"args": ["build", "--debug"],
+			"label": "debug build",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "build:debug"],
 			"problemMatcher": ["$tsc"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }

@@ -10,7 +10,7 @@
 		"dist": false,
 		"coverage": true,
 		"node_modules": true,
-		"*.log*": true
+		"*.log*": false
 	},
 
 	"typescript.tsdk": "node_modules/typescript/lib/"
