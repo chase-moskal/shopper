@@ -5,8 +5,9 @@
 @import "./shopper-mixins.scss";
 @import "../node_modules/menutown/source/menutown-mixins.scss";
 
-.shopper {
+html {
 	@include shopper();
+	@include shopper-basic-theme();
 
 	$bgcolor: #186d63;
 	$fgcolor: #bbfff7;

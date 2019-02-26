@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.1.0-dev.6",
+	"version": "0.1.0-dev.7",
 	"description": "shopping cart ui for shopify stores",
 	"keywords": [
 		"cart",
@@ -56,7 +56,7 @@
 	"dependencies": {
 		"commotion": "0.0.0-dev.5",
 		"crnc": "0.0.0-dev.12",
-		"menutown": "0.0.0-dev.10",
+		"menutown": "0.0.0-dev.11",
 		"omnistorage": "0.0.0-dev.10",
 		"shopify-buy": "2.1.0"
 	},
