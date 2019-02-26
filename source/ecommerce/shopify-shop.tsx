@@ -24,7 +24,7 @@ export async function ecommerceShopifyShop({
 	shopify,
 	cartArea,
 	collectionsToLoad,
-	cartSystem,
+	cartSystemOptions: cartSystem,
 	evaluator
 }: EcommerceShopifyStoreOptions) {
 

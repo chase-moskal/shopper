@@ -5,6 +5,7 @@ import {ProductStore} from "../stores/product-store"
 import {CartText} from "../components/cart/cart-interfaces"
 import {ShopifySettings} from "../shopify/shopify-interfaces"
 import {ElementAttributes, CurrencyControlOptions} from "../stores/stores-interfaces-store"
+import { CartPanelText } from "source/components/cart/panel/panel-interfaces";
 
 /**
  * Product details that are not related to shopify
@@ -53,7 +54,7 @@ export interface EcommerceShopifyStoreOptions {
 	collectionsToLoad: CollectionToLoad[]
 
 	/** Detailed options for the shopper cart system */
-	cartSystem: {
+	cartSystemOptions: {
 
 		/** Whether or not to open the checkout url in a new window */
 		checkoutInNewWindow: boolean

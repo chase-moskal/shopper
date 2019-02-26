@@ -10,7 +10,7 @@ import {CartStoreOptions, CartStorageData} from "./stores-interfaces-store"
 /**
  * Default cart options
  */
-export const defaultCartOptions: Partial<CartStoreOptions> = {
+export const defaultPureCartOptions: Partial<CartStoreOptions> = {
 	storageKey: "shopper",
 	omniStorage: new LocalClient({storage: window.localStorage})
 }
@@ -23,19 +23,17 @@ export const defaultCartOptions: Partial<CartStoreOptions> = {
  */
 export class CartStore {
 	@observable itemCatalog: CartItemStore[]
-	@observable panelOpen: boolean
 
 	private readonly storageKey: string
 	private readonly omniStorage: OmniStorage
 	private readonly currencyControl: CurrencyControlStore
 
 	constructor(opts: CartStoreOptions) {
-		const options = {...defaultCartOptions, ...opts}
+		const options = {...defaultPureCartOptions, ...opts}
 		this.storageKey = options.storageKey
 		this.omniStorage = options.omniStorage
 		this.currencyControl = options.currencyControlStore
 		this.setItemCatalog(options.itemCatalog)
-		this.togglePanelOpen(false)
 	}
 
 	/**
@@ -60,16 +58,6 @@ export class CartStore {
 	@computed get price(): string {
 		const {value, currencyControl} = this
 		return currencyControl.convertAndFormat(value)
-	}
-
-	/**
-	 * Toggle the cart panel open or closed
-	 */
-	@action togglePanelOpen(open: boolean = null): boolean {
-		this.panelOpen = open === null
-			? !this.panelOpen
-			: open
-		return this.panelOpen
 	}
 
 	/**

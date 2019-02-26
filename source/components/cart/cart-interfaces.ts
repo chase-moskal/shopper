@@ -5,20 +5,10 @@ import {CheckoutMachineBase} from "../../ecommerce/checkout-machine-base"
 
 import {CartPanelText} from "./panel/panel-interfaces"
 
-export interface CartButtonText {
-	open: {
-		title: string
-	}
-	closed: {
-		title: string
-	}
-}
-
 /**
  * Text labels to display throughout the system
  */
 export interface CartText {
-	cartButtonText: CartButtonText
 	cartPanelText: CartPanelText
 }
 
@@ -26,7 +16,6 @@ export interface CartText {
  * Props for the cart button component
  */
 export interface CartButtonProps {
-	cartButtonText: CartButtonText
 	cart: CartStore
 	onClick: (event: MouseEvent) => void
 }

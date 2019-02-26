@@ -1,23 +1,14 @@
 
-import {h, Component} from "preact"
+import {h} from "preact"
 import {observer} from "mobx-preact"
-import {CartButtonProps} from "./cart-interfaces"
+import {CartStore} from "../../stores/cart-store"
 
-@observer
-export class CartButton extends Component<CartButtonProps, any> {
-	render() {
-		const {cart, onClick, cartButtonText} = this.props
-		const title = cart.panelOpen
-			? cartButtonText.open.title
-			: cartButtonText.closed.title
-		return (
-			<button className="cart-button" tabIndex={0} {...{onClick, title}}>
-				{
-					cart.panelOpen
-						? <span className="cart-close"></span>
-						: <span className="cart-numeral">{cart.activeItems.length}</span>
-				}
-			</button>
-		)
-	}
-}
+export const CartButton = observer(({cart}: {cart: CartStore}) => (
+	<div className="cart-button">
+		{
+			cart.activeItems.length > 0
+				? <span className="cart-numeral">{cart.activeItems.length}</span>
+				: null
+		}
+	</div>
+))

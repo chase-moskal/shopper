@@ -4,6 +4,7 @@
 
 export * from "./components/components-interfaces";
 export * from "./components/product-display";
+export * from "./components/product-list";
 export * from "./components/cart/cart-button";
 export * from "./components/cart/cart-interfaces";
 export * from "./components/cart/cart-system";
@@ -20,6 +21,9 @@ export * from "./ecommerce/ecommerce-interfaces";
 export * from "./ecommerce/shopify-shop";
 export * from "./ecommerce/helpers/create-cart-store";
 export * from "./ecommerce/helpers/load-products-and-collections";
+export * from "./routines/create-cart-menu-account";
+export * from "./routines/render-cart-menu-system";
+export * from "./routines/routines-interfaces";
 export * from "./shopify/shopify-adapter";
 export * from "./shopify/shopify-checkout-machine";
 export * from "./shopify/shopify-interfaces";

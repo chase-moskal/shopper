@@ -1,7 +1,17 @@
 
 # shopper changelog
 
-# v0.0.0-dev.5
+### v0.1.0-dev.6
+
+breaking changes
+- decimate the old menu system usage, now menutown must be used
+- split `shopper.scss` into `shopper-demo.scss` and `shopper-mixins.scss`
+
+other changes
+- integrate menutown menu system
+- add `source/routines` functions for menutown integration 
+
+### v0.1.0-dev.5
 
 breaking changes:
 - rename `collections` to `collectionsToLoad`
@@ -17,6 +27,6 @@ other changes:
 - use pug layout instead of index.html
 - add new deploy script
 
-## v0.0.0
+### v0.0.0
 
 - initial release

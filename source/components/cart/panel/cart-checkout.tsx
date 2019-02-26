@@ -35,7 +35,7 @@ export class CartCheckout extends Component<CartCheckoutProps, any> {
 	}
 
 	componentWillUnmount() {
-		for (const reaction of this.reactions) reaction.dispose()
+		for (const dispose of this.reactions) dispose()
 		this.reactions = []
 	}
 

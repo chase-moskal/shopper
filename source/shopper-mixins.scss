@@ -3,12 +3,19 @@
 
 @import "./icons";
 
-//
-// shopper general styles
-// - standard structural layout styles for shopper components
-//
+@mixin shopper-button-bubble($size: 1rem) {
+	font-size: $size * 0.8;
+	position: absolute;
+	margin-left: -($size / 2);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: $size;
+	height: $size;
+	border-radius: $size;
+}
 
-.shopper {
+@mixin shopper() {
 	$buttonheight: 3rem;
 	$panelspacing: 1rem;
 	$priceleeway: 2em;
@@ -31,11 +38,6 @@
 		}
 	}
 
-	//
-	// Product area
-	// - product display anywhere on a web store
-	//
-
 	.product-area {
 		@extend .reset-and-normalize;
 
@@ -52,14 +54,7 @@
 		}
 	}
 
-	//
-	// Cart area
-	// - special absolute positioning allows cart to track with user scroll
-	// - cart button toggles the panel, indicates item count
-	// - cart panel itself
-	//
-
-	.cart-area {
+	.cart-area, .cart-panel {
 		@extend .reset-and-normalize;
 		position: relative;
 	}
@@ -72,19 +67,14 @@
 		// transition: top 400ms ease;
 	}
 
-	.cart-button {
-		z-index: 1;
-		position: absolute;
-		display: inline-block;
-		top: 2em;
-		left: 100%;
-		width: 3em;
-		height: $buttonheight;
-		background: rgba(255,255,255, 0.2);
-		border-radius: 0 $bradius $bradius 0;
-		user-select: none;
-		cursor: pointer;
+	.menu-system {
+		.menu-button {
+			position: relative;
+			cursor: pointer;
+		}
+	}
 
+	.cart-button {
 		&::before {
 			content: "";
 			z-index: -1;
@@ -100,30 +90,18 @@
 		}
 
 		span {
-			@mixin button-bubble($size: 1rem) {
-				font-size: $size * 0.8;
-				position: absolute;
-				margin-left: -($size / 2);
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: $size;
-				height: $size;
-				border-radius: $size;
-			}
-
 			background: rgba(255,255,255, 0.5);
 
 			&.cart-numeral {
 				$size: 1rem;
-				@include button-bubble($size);
+				@include shopper-button-bubble($size);
 				bottom: 55%;
 				right: 10%;
 			}
 			
 			&.cart-close {
 				$size: 1.5rem;
-				@include button-bubble($size);
+				@include shopper-button-bubble($size);
 				top: 50%;
 				left: 50%;
 				margin-top: -($size / 2);
@@ -137,7 +115,7 @@
 		}
 	}
 
-	.cart-panel {
+	.cart-system .cart-panel {
 		display: none;
 		position: absolute;
 		top: 2em;
@@ -145,6 +123,9 @@
 		width: 96%;
 		max-width: 40em;
 		min-height: 6em;
+	}
+
+	.cart-panel {
 		background: rgba(255,255,255, 0.2);
 		border-radius: $bradius 0 $bradius $bradius;
 
@@ -232,7 +213,7 @@
 
 	.cart-calculated-results {
 		width: 60%;
-		margin-left: auto;
+		margin-left: auto !important;
 		padding-top: 0;
 
 		.cart-subtotal {
@@ -258,24 +239,20 @@
 		}
 	}
 
-	@media (max-width: 800px) {
-		.cart-button {
-			left: auto;
-			right: 0;
-			border-radius: $bradius 0 0 $bradius;
-		}
-	}
-
-	//
-	// Basic theme style
-	// - opt-in aesthetics
-	// - simple light greyscale shades
-	//
+	// @media (max-width: 800px) {
+	// 	.cart-button {
+	// 		left: auto;
+	// 		right: 0;
+	// 		border-radius: $bradius 0 0 $bradius;
+	// 	}
+	// }
 
 	&.shopper-theme-basic {
-		.cart-system {
+		.cart-system, .cart-panel {
 			color: #444;
+		}
 
+		.cart-panel {
 			h1 {
 				text-transform: uppercase;
 				opacity: 0.8;
@@ -301,9 +278,9 @@
 					text-shadow: 1px 1px rgba(0,0,0, 0.2);
 				}
 
-				&.cart-close {
-					background-color: rgba(0,0,0, 0.3);
-				}
+				// &.cart-close {
+				// 	background-color: rgba(0,0,0, 0.3);
+				// }
 			}
 		}
 
@@ -318,114 +295,37 @@
 				background-image: none;
 			}
 		}
+	}
 
-		.cart-panel {
-			background: rgba(255,255,255, 0.96);
-			background: linear-gradient(
-				to bottom right,
-				rgba(255,255,255, 1),
-				rgba(220, 220, 220, 0.9)
-			);
-			box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
-		}
-
-		.cart-item-list, .cart-calculated-results {
-
-			li * {
-				background: rgba(255,255,255, 0.9);
-
-				&.pricevalue {
-					background: rgba(255,255,255, 0.6);
-				}
-			}
-		}
+	.cart-panel {
+		background: rgba(255,255,255, 0.96);
+		background: linear-gradient(
+			to bottom right,
+			rgba(255,255,255, 1),
+			rgba(220, 220, 220, 0.9)
+		);
+		box-shadow: 0 2px 8px rgba(0,0,0, 0.3);
 
 		.cart-checkout {
 			.checkout-button {
 				color: #fff;
 				background: #1e9b2a;
 				text-shadow: 1px 1px 1px rgba(0,0,0, 0.25);
-
+	
 				&[disabled] {
 					opacity: 0.6;
 					background: rgba(0,0,0, 0.1);
 				}
 			}
 		}
-	}
-}
 
-//
-// shopper example demo styles
-// - these are some opinionated idiosyncratic styles are for the demo page
-//
-
-.shopper-demo {
-	$bgcolor: #186d63;
-	$fgcolor: #bbfff7;
-
-	a {
-		color: skyblue;
-	}
-
-	@mixin slice() {
-		width: 100%;
-		max-width: 1200px;
-		margin: 0 auto;
-	}
-
-	font-size: 16px;
-	font-family: sans-serif;
-	text-align: center;
-	background: $bgcolor;
-	color: $fgcolor;
-
-	&, * {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-	}
-
-	body {
-		padding: 0 4em;
-
-		@media (max-width: 800px) {
-			padding: 0;
-		}
-	}
-
-	*:focus {
-		outline: 4px solid cyan;
-	}
-
-	.slice {
-		@include slice();
-		background: rgba(0,0,0, 0.1);
-
-		p {
-			margin: 0.66em auto;
-		}
-	}
-
-	.content {
-		padding: 1em;
-	}
-
-	.product-display {
-		margin-top: 3em;
-
-		.add-to-cart-button {
-			display: inline-block;
-			width: 8em;
-			padding: 0.32em 1em;
-			background: #13af4b;
-			color: white;
-			border: none;
-			cursor: pointer;
-
-			&[disabled] {
-				background: rgba(255,255,255, 0.1);
-				cursor: default;
+		.cart-item-list, .cart-calculated-results {
+			li * {
+				background: rgba(255,255,255, 0.9);
+	
+				&.pricevalue {
+					background: rgba(255,255,255, 0.6);
+				}
 			}
 		}
 	}

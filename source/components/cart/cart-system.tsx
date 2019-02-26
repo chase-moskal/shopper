@@ -41,13 +41,15 @@ export class CartSystem extends Component<CartSystemProps, any> {
 		const {cart} = this.props
 		const {scrollTracker, disposers} = this
 
-		// reaction when the cart panel opens or closes, to set scroll tracking
-		disposers.push(reaction(() => cart.panelOpen, panelOpen => {
-			scrollTracker.setTracking(!panelOpen)
-		}))
+		// TODO obsolete
+		// // reaction when the cart panel opens or closes, to set scroll tracking
+		// disposers.push(reaction(() => cart.panelOpen, panelOpen => {
+		// 	scrollTracker.setTracking(!panelOpen)
+		// }))
 
-		// set scroll tracker initial state
-		scrollTracker.setTracking(!cart.panelOpen)
+		// TODO obsolete
+		// // set scroll tracker initial state
+		// scrollTracker.setTracking(!cart.panelOpen)
 
 		// mount the scroll tracker
 		scrollTracker.mount()
@@ -81,17 +83,19 @@ export class CartSystem extends Component<CartSystemProps, any> {
 
 		const checkoutUrl = await checkoutMachine.checkout(cart.activeItems)
 		cart.clear()
-		cart.togglePanelOpen(false)
+		// TODO obsolete
+		// cart.togglePanelOpen(false)
 		checkoutLocation.href = checkoutUrl
 
 		return checkoutUrl
 	}
 
-	/**
-	 * Handle cart button click
-	 * - toggle the cart panel open or closed
-	 */
-	private readonly handleCartButtonClick = () => this.props.cart.togglePanelOpen()
+	// TODO obsolete
+	// /**
+	//  * Handle cart button click
+	//  * - toggle the cart panel open or closed
+	//  */
+	// private readonly handleCartButtonClick = () => this.props.cart.togglePanelOpen()
 
 	/**
 	 * Render
@@ -101,19 +105,21 @@ export class CartSystem extends Component<CartSystemProps, any> {
 	render() {
 		const {
 			performCheckout,
-			handleCartButtonClick: onClick,
+			// TODO obsolete
+			// handleCartButtonClick: onClick,
 			cartText,
 			scrollTracker
 		} = this
 		const {cart} = this.props
-		const {cartButtonText, cartPanelText} = cartText
+		const {cartPanelText} = cartText
 		return (
 			<section
 				className="cart-system"
-				data-panel-open={cart.panelOpen ? "true" : "false"}
+				// TODO obsolete
+				// data-panel-open={cart.panelOpen ? "true" : "false"}
 				data-items-in-cart={cart.activeItems.length}
 				style={{top: scrollTracker.scroll}}>
-					<CartButton {...{cart, onClick, cartButtonText}}/>
+					{/* // TODO obsolete <CartButton {...{cart, onClick, cartButtonText}}/> */}
 					<CartPanel {...{cart, performCheckout, cartPanelText}}/>
 			</section>
 		)
