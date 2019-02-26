@@ -2,9 +2,10 @@
 import {h} from "preact"
 import * as preact from "preact"
 
-import {ShopifyAdapter} from "../shopify"
-import {CurrencyControlStore} from "../stores"
-import {ProductDisplay, CartSystem} from "../components"
+import {ShopifyAdapter} from "../shopify/shopify-adapter"
+import {CartSystem} from "../components/cart/cart-system"
+import {ProductDisplay} from "../components/product-display"
+import {CurrencyControlStore} from "../stores/currency-control-store"
 
 import {createCartStore} from "./helpers/create-cart-store"
 import {loadProductsAndCollections} from "./helpers/load-products-and-collections"

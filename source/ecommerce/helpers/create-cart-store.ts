@@ -1,7 +1,7 @@
 
 import {OmniStorage} from "omnistorage"
 import {ProductEvaluator} from "../ecommerce-interfaces"
-import {ProductStore, CurrencyControlStore, CartStore, CartItemStore} from "../../stores"
+import {ProductStore, CurrencyControlStore, CartStore, CartItemStore} from "../../"
 
 /**
  * Create a cart model populated by cart items

@@ -1,6 +1,6 @@
 
 import {observable, action} from "mobx"
-import {getScrollTop} from "../toolbox"
+import {getScrollTop} from "../toolbox/get-scroll-top"
 
 const scrollEvents = ["scroll", "resize"]
 
