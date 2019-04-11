@@ -1,5 +1,4 @@
 {
-	"jsdoc": "dist/docs2",
 	"compilerOptions": {
 		"baseUrl": ".",
 		"rootDir": "source",
