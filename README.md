@@ -1,5 +1,14 @@
 
-# shopper — wip
+# shopper — shopping cart ui for custom shopify stores
+
+## wip
+
+- [x] update importly
+- [ ] implement ui of shopper panel and cart button
+- [ ] implement shopper wrangler with mock data
+- [ ] implement and test shopify api faculties
+- [ ] consider future currency conversion
+- [ ] wire it all together to complete and stable version
 
 ## all new shopper
 

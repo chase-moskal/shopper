@@ -14,7 +14,9 @@
 	"scripts": {
 		"prepare": "run-s clean build test",
 		"clean": "rimraf dist && mkdirp dist",
-		"build": "exit 0",
+		"build": "run-p importmap compile",
+		"importmap": "importly < importly.config > dist/importmap.json",
+		"compile": "tsc",
 		"test": "exit 0",
 		"start": "serve"
 	},
@@ -32,10 +34,14 @@
 		"testURL": "http://localhost/"
 	},
 	"dependencies": {
+		"lit-element": "2.2.0",
+		"lit-html": "1.1.0",
+		"menutown": "0.0.0-dev.23",
 		"shopify-buy": "2.5.0"
 	},
 	"devDependencies": {
 		"barrelsby": "2.1.1",
+		"importly": "0.0.0-dev.8",
 		"mkdirp": "0.5.1",
 		"npm-run-all": "4.1.5",
 		"rimraf": "2.6.3",
