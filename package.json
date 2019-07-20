@@ -14,9 +14,11 @@
 	"scripts": {
 		"prepare": "run-s clean build test",
 		"clean": "rimraf dist && mkdirp dist",
-		"build": "run-p importmap compile",
+		"build": "run-p importmap compile copy-styles",
 		"importmap": "importly < importly.config > dist/importmap.json",
 		"compile": "tsc",
+		"copy-styles": "ncp source/style.css dist",
+		"watch": "tsc -w",
 		"test": "exit 0",
 		"start": "serve"
 	},
@@ -41,9 +43,12 @@
 	},
 	"devDependencies": {
 		"barrelsby": "2.1.1",
+		"feather-icons": "4.22.1",
 		"importly": "0.0.0",
 		"mkdirp": "0.5.1",
+		"ncp": "2.0.0",
 		"npm-run-all": "4.1.5",
+		"octicons": "8.5.0",
 		"rimraf": "2.6.3",
 		"serve": "11.1.0",
 		"typescript": "3.5.3"

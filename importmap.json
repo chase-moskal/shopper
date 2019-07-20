@@ -1,0 +1,13 @@
+
+{
+	"imports": {
+		"lit-html/": "https://unpkg.com/lit-html@1.1.0/",
+		"lit-html": "https://unpkg.com/lit-html@1.1.0/lit-html.js",
+		"lit-element/": "https://unpkg.com/lit-element@2.2.0/",
+		"lit-element": "https://unpkg.com/lit-element@2.2.0/lit-element.js",
+		"shopify-buy/": "https://unpkg.com/shopify-buy@2.5.0/",
+		"shopify-buy": "https://unpkg.com/shopify-buy@2.5.0/index.js",
+		"menutown/": "/node_modules/menutown/",
+		"menutown": "/node_modules/menutown/dist/register-all.js"
+	}
+}
