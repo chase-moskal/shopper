@@ -47,6 +47,7 @@ export class CartPanel extends LitElement {
 					class="item-remove-button"
 					@click=${handleRemoval}
 					title="Remove item">
+						X
 				</button>
 				<input
 					class="item-quantity"
@@ -62,7 +63,7 @@ export class CartPanel extends LitElement {
 					/>
 				<div class="item-title">${item.product.title}</div>
 				<div class="item-price pricevalue">
-					${this.shopperWrangler.getItemPrice(item)}
+					${this.shopperWrangler.getItemSubtotalPrice(item)}
 				</div>
 			</li>
 		`

@@ -15,6 +15,10 @@ async function main() {
 		})
 	})
 	await shopperWrangler.loadCatalog("Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==")
+	const list = shopperWrangler.generateProductList(shopperWrangler.itemCatalog)
+	const productArea = document.querySelector(".product-area")
+	productArea.appendChild(list)
+	console.log({list, productArea})
 	window["shopperWrangler"] = shopperWrangler
 }
 
