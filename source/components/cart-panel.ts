@@ -38,7 +38,10 @@ export class CartPanel extends LitElement {
 		const handleRemoval = () => this.shopperWrangler.setQuantity(item, 0)
 		const handleQuantityInputChange = (event: Event) => {
 			const input = <HTMLInputElement>event.target
-			const value = parseInt(input.value)
+			let value = parseInt(input.value)
+			if (value < item.quantityMin) value = item.quantityMin
+			if (value > item.quantityMax) value = item.quantityMax
+			input.value = value.toString()
 			this.shopperWrangler.setQuantity(item, value ? value : 0)
 		}
 		return html`
@@ -52,7 +55,7 @@ export class CartPanel extends LitElement {
 				<input
 					class="item-quantity"
 					type="number"
-					value=${item.quantity}
+					.value=${item.quantity}
 					min=${item.quantityMin}
 					max=${item.quantityMax}
 					@change=${handleQuantityInputChange}

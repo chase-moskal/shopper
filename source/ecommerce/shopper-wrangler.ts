@@ -1,9 +1,10 @@
 
-import {ShopifyAdapter} from "./shopify-adapter.js"
 import {CartPanel} from "../components/cart-panel.js"
 import {CartButton} from "../components/cart-button.js"
-import {ShopperWranglerOptions, CartItem} from "../interfaces.js"
 import {ProductDisplay} from "../components/product-display.js"
+
+import {ShopifyAdapter} from "./shopify-adapter.js"
+import {ShopperWranglerOptions, CartItem} from "../interfaces.js"
 
 export class ShopperWrangler {
 	private _cartPanel: CartPanel

@@ -18,7 +18,6 @@ async function main() {
 	const list = shopperWrangler.generateProductList(shopperWrangler.itemCatalog)
 	const productArea = document.querySelector(".product-area")
 	productArea.appendChild(list)
-	console.log({list, productArea})
 	window["shopperWrangler"] = shopperWrangler
 }
 
