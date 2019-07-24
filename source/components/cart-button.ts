@@ -5,26 +5,20 @@ export class CartButton extends LitElement {
 
 	@property({type: Number, reflect: true}) numeral = 0
 
-	static get properties() {
-		return {
-			numeral: {type: Number, reflect: true}
-		}
-	}
-
 	static get styles() {
 		return css`
 			* {
 				box-sizing: border-box;
 			}
 			:host {
-				background: black;
-			}
-			.cart-button {
+				display: block;
 				position: relative;
+				background: var(--shopper-button-background, white);
 				width: var(--shopper-button-size, 3em);
 				height: var(--shopper-button-size, 3em);
-				padding: 0.5em;
-				background: white;
+			}
+			.cart-button {
+				padding: var(--shopper-button-padding, 0.5em);
 			}
 			svg {
 				width: 100%;
@@ -59,7 +53,6 @@ export class CartButton extends LitElement {
 					? html`<div class="cart-numeral">${this.numeral}</div>`
 					: null}
 			</div>
-
 		`
 	}
 }

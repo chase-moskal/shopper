@@ -1,5 +1,5 @@
 
-import * as shopifyBuy from "shopify-buy"
+import shopifyBuy from "shopify-buy/index.es.js"
 import {
 	Product,
 	CartItem,
@@ -23,7 +23,7 @@ export class ShopifyAdapter {
 		})
 	}
 
-	async getProductsInCollection(collectionId: string): Promise<Product> {
+	async getProductsInCollection(collectionId: string): Promise<Product[]> {
 		try {
 			const collection = await this._shopifyClient
 				.collection.fetchWithProducts(collectionId)
