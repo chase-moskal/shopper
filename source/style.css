@@ -18,9 +18,13 @@ main > header {
 }
 
 main > .content {
-	padding: 1em 0;
+	padding: 1em;
 }
 
 menu-system[initially-hidden] {
 	display: none;
+}
+
+.demo-area {
+	margin: 2em auto;
 }

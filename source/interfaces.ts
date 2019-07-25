@@ -20,6 +20,7 @@ export interface Product {
 	value: number
 	title: string
 	description: string
+	collections: string[]
 }
 
 export interface CheckoutMachine {

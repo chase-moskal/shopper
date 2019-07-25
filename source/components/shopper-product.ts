@@ -1,29 +1,20 @@
 
-import {LitElement, html, css, property, svg} from "lit-element"
-
-import {ShopperCart} from "./shopper-cart.js"
 import {CartItem} from "../ecommerce/cart-item.js"
+import {LitElement, html, property} from "lit-element"
 
 export class ShopperProduct extends LitElement {
-	@property({type: Object}) cart: ShopperCart
+	@property({type: String}) ["uid"]: string
 	@property({type: Object}) cartItem: CartItem
-
-	connectedCallback() {
-		super.connectedCallback()
-		const {cart} = this
-		if (cart) cart.subscribeUpdates(() => this.requestUpdate())
-	}
-
-	disconnectedCallback() {
-		super.disconnectedCallback()
-		const {cart} = this
-		if (cart) cart.unsubscribeUpdates(() => this.requestUpdate())
+	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean
+	
+	createRenderRoot() {
+		return this
 	}
 
 	render() {
 		const {cartItem} = this
-		const {itemsInCart} = this.cart
-		const inCart = !!itemsInCart.find(item => item === this.cartItem)
+		const inCart = this["in-cart"]
+		if (!cartItem) return html``
 		return html`
 			<div class="product-display">
 				<h3 class="title">${this.cartItem.product.title}</h3>

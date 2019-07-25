@@ -1,25 +1,46 @@
 
 import {LitElement, html, css, property} from "lit-element"
 
+import {select} from "../toolbox/select.js"
 import {CartItem} from "../ecommerce/cart-item.js"
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
+
+import {ShopperCollection} from "./shopper-collection.js"
+import {ShopperButton} from "./shopper-button.js"
 import {ShopperProduct} from "./shopper-product.js"
 
-import {Product} from "../interfaces.js"
-import {ShopperButton} from "./shopper-button.js"
-
 export class ShopperCart extends LitElement {
-	@property({type: Object}) cartButton: ShopperButton
-	@property({type: Object}) itemCatalog: CartItem[] = []
-	@property({type: Object}) shopifyAdapter: ShopifyAdapter
+
+	//
+	// CONFIGURATION
+	//
 
 	@property({type: String}) ["shopify-domain"]: string
 	@property({type: String}) ["shopify-collection-id"]: string
 	@property({type: String}) ["shopify-storefront-access-token"]: string
 
-	get itemsInCart() {
-		return this.itemCatalog.filter(item => item.quantity > 0)
+	@property({type: Object}) shopifyAdapter: ShopifyAdapter
+
+	@property({type: Object}) selectors = {
+		buttons: () => select<ShopperButton>("shopper-button"),
+		products: () => select<ShopperProduct>("shopper-product"),
+		collections: () => select<ShopperCollection>("shopper-collection"),
 	}
+
+	//
+	// PRIVATE FIELDS
+	//
+
+	private _collectionIds: string[]
+	@property({type: Object}) private _catalog: CartItem[] = []
+
+	//
+	// PUBLIC ACCESSORS
+	//
+
+	get catalog() { return this._catalog }
+	get collections() { return [...this._collectionIds] }
+	get itemsInCart() { return this._catalog.filter(item => item.quantity > 0) }
 
 	get value(): number {
 		const reducer = (subtotal: number, item: CartItem) =>
@@ -28,8 +49,7 @@ export class ShopperCart extends LitElement {
 	}
 
 	get price(): string {
-		const {value} = this
-		return `\$${value.toFixed(2)} CAD`
+		return `\$${this.value.toFixed(2)} CAD`
 	}
 
 	get quantity() {
@@ -38,90 +58,103 @@ export class ShopperCart extends LitElement {
 		return sum
 	}
 
-	private _updateSubscriptions: (() => void)[] = []
-
-	subscribeUpdates(subscription: () => void) {
-		this._updateSubscriptions.push(subscription)
-	}
-
-	unsubscribeUpdates(subscription: () => void) {
-		this._updateSubscriptions = this._updateSubscriptions
-			.filter(sub => sub !== subscription)
-	}
+	//
+	// ELEMENT LIFECYCLE
+	// initialization and updates
+	//
 
 	firstUpdated() {
-		this._maybeCreateShopifyAdapter()
+		this.createShopifyAdapter()
+		this._loadAllProducts()
 	}
 
-	update() {
-		this.cartButton.numeral = this.quantity
-		for (const subscription of this._updateSubscriptions) subscription()
-	}
+	updated() {
 
-	generateProductDisplay(item: CartItem) {
-		const productDisplay = <ShopperProduct>document.createElement("product-display")
-		productDisplay.cart = this
-		productDisplay.cartItem = item
-		return productDisplay
-	}
+		// update button numerals
+		for (const button of this.selectors.buttons())
+			button.numeral = this.quantity
 
-	generateProductList(items: CartItem[]) {
-		const div = <HTMLDivElement>document.createElement("div")
-
-		for (const item of items) {
-			const productDisplay = this.generateProductDisplay(item)
-			div.appendChild(productDisplay)
+		// keep lists up to date
+		for (const list of this.selectors.collections()) {
+			const {uid: collection} = list
+			list.cartItems = collection
+				? this._catalog.filter(
+					item => item.product.collections.includes(collection)
+				)
+				: [...this._catalog]
 		}
 
-		return div
+		// keep products up to date
+		for (const product of this.selectors.products()) {
+			if (product.uid) {
+				const cartItem = this._catalog.find(
+					item => item.product.id === product.uid
+				)
+				if (cartItem) {
+					product.uid = undefined
+					product.cartItem = cartItem
+				}
+			}
+			product["in-cart"] = this.itemsInCart.includes(product.cartItem)
+			product.requestUpdate()
+		}
 	}
 
-	static get styles() {
-		return css`
-			* {
-				box-sizing: border-box;
-			}
-			:host {
-				
-			}
-		`
-	}
+	//
+	// PUBLIC METHODS
+	//
 
 	async checkout() {
 		console.log("mock checkout", this.itemsInCart)
 	}
 
-	private _maybeCreateShopifyAdapter() {
+	//
+	// PRIVATE METHODS
+	//
+
+	private createShopifyAdapter() {
+		if (this.shopifyAdapter) return
 		const domain = this["shopify-domain"]
 		const storefrontAccessToken = this["shopify-storefront-access-token"]
-		const collectionId = this["shopify-collection-id"]
 		if (domain && storefrontAccessToken) {
-			const shopifyAdapter = new ShopifyAdapter({
+			this.shopifyAdapter = new ShopifyAdapter({
 				domain,
 				storefrontAccessToken
 			})
-			if (collectionId) this._loadCollection(collectionId)
-			this.shopifyAdapter = shopifyAdapter
 		}
 	}
 
-	private async _loadCollection(collectionId: string): Promise<CartItem[]> {
-		const products = await this.shopifyAdapter.getProductsInCollection(collectionId)
-		this._ingestProductsAsCartItems(products)
-		return this.itemCatalog
+	private async _loadAllProducts() {
+		const {collectionIds, products} = await this.shopifyAdapter.fetchEverything()
+		const cartItems = products.map(product => new CartItem({
+			product,
+			cart: this,
+			quantity: 0,
+			quantityMin: 1,
+			quantityMax: 5
+		}))
+		this._catalog = cartItems
+		this._collectionIds = collectionIds
 	}
 
-	private _ingestProductsAsCartItems(products: Product[]) {
-		for (const product of products) {
-			const item = new CartItem({
-				cart: this,
-				product,
-				quantity: 0,
-				quantityMax: 5,
-				quantityMin: 1
-			})
-			this.itemCatalog.push(item)
-		}
+	//
+	// RENDERING
+	//
+
+	static get styles() {
+		return css`
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+			ol {
+				list-style: none;
+			}
+			li {
+				margin-top: 0.5em;
+			}
+		`
 	}
 
 	private _renderCartTitle() {
@@ -190,6 +223,7 @@ export class ShopperCart extends LitElement {
 				</div>
 				<div class="cart-calculated-results"></div>
 				<div class="cart-checkout"></div>
+				<slot></slot>
 			</div>
 		`
 	}
