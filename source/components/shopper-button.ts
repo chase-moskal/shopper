@@ -1,7 +1,7 @@
 
 import {LitElement, html, css, svg, property} from "lit-element"
 
-export class CartButton extends LitElement {
+export class ShopperButton extends LitElement {
 	@property({type: Number, reflect: true}) numeral = 0
 
 	static get styles() {

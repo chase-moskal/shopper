@@ -1,8 +1,8 @@
 
-import {CartPanel} from "./components/cart-panel.js"
-import {CartButton} from "./components/cart-button.js"
-import {ProductDisplay} from "./components/product-display.js"
+import {ShopperCart} from "./components/shopper-cart.js"
+import {ShopperButton} from "./components/shopper-button.js"
+import {ShopperProduct} from "./components/shopper-product.js"
 
 import {registerComponents} from "./toolbox/register-components.js"
 
-registerComponents({CartButton, CartPanel, ProductDisplay})
+registerComponents({ShopperCart, ShopperButton, ShopperProduct})

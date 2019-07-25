@@ -1,8 +1,10 @@
 
 import shopifyBuy from "shopify-buy/index.es.js"
+
+import {CartItem} from "../ecommerce/cart-item.js"
+
 import {
 	Product,
-	CartItem,
 	ShopifyClient,
 	ShopifyAdapterOptions
 } from "../interfaces.js"
