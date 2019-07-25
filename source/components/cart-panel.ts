@@ -19,14 +19,14 @@ export class CartPanel extends LitElement {
 	}
 
 	private _renderCartTitle() {
-		const items = this.shopperWrangler.itemsInCart
+		const {cartQuantitySum} = this.shopperWrangler
 		return html`
 			<h1>
 				<span>Shopping Cart</span>
 				<span>– ${
-					items.length === 0
+					cartQuantitySum === 0
 						? "empty"
-						: `${items.length} item${items.length === 1
+						: `${cartQuantitySum} item${cartQuantitySum === 1
 							? ""
 							: "s"}`
 				}</span>
@@ -74,13 +74,13 @@ export class CartPanel extends LitElement {
 
 	render() {
 		if (!this.shopperWrangler) return html`-`
-		const items = this.shopperWrangler.itemsInCart
+		const {itemsInCart} = this.shopperWrangler
 		return html`
 			<div class="cart-panel">
 				${this._renderCartTitle()}
 				<div class="cart-manipulator">
 					<ol class="cart-item-list cart-grid">
-						${items.map(item => this._renderCartItem(item))}
+						${itemsInCart.map(item => this._renderCartItem(item))}
 					</ol>
 				</div>
 				<div class="cart-calculated-results"></div>

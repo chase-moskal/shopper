@@ -46,6 +46,12 @@ export class ShopperWrangler {
 		return `\$${value.toFixed(2)} CAD`
 	}
 
+	get cartQuantitySum() {
+		let sum = 0
+		for (const item of this.itemsInCart) sum += item.quantity
+		return sum
+	}
+
 	getItemUnitPrice(item: CartItem) {
 		return `\$${item.product.value.toFixed(2)} CAD`
 	}
@@ -77,6 +83,7 @@ export class ShopperWrangler {
 	}
 
 	update() {
+		this._cartButton.numeral = this.cartQuantitySum
 		this._cartPanel.requestUpdate()
 		this._cartButton.requestUpdate()
 		for (const subscription of this._updateSubscriptions)
