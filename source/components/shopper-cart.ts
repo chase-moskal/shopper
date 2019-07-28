@@ -24,7 +24,7 @@ export class ShopperCart extends LitElement {
 	@property({type: Object}) selectors = {
 		buttons: () => select<ShopperButton>("shopper-button"),
 		products: () => select<ShopperProduct>("shopper-product"),
-		collections: () => select<ShopperCollection>("shopper-collection"),
+		collections: () => select<ShopperCollection>("shopper-collection")
 	}
 
 	//
@@ -210,9 +210,13 @@ export class ShopperCart extends LitElement {
 		`
 	}
 
+	private handleCheckoutButtonClick = () => this.checkout()
+
 	render() {
 		if (!this.shopifyAdapter) return html`-`
-		const {itemsInCart} = this
+		const {itemsInCart, price, handleCheckoutButtonClick} = this
+		const cartIsEmpty = !itemsInCart.length
+		console.log("items in cart", itemsInCart.length, cartIsEmpty)
 		return html`
 			<div class="cart-panel">
 				${this._renderCartTitle()}
@@ -221,8 +225,27 @@ export class ShopperCart extends LitElement {
 						${itemsInCart.map(item => this._renderCartItem(item))}
 					</ol>
 				</div>
-				<div class="cart-calculated-results"></div>
-				<div class="cart-checkout"></div>
+				<div class="cart-calculated-results">
+					<ol class="cart-calculated-results cart-grid">
+						${itemsInCart.length
+							? html`
+								<li class="cart-subtotal">
+									<span>Subtotal</span>
+									<strong class="pricevalue">${price}</strong>
+								</li>
+							`
+							: null}
+					</ol>
+				</div>
+				<div class="cart-checkout">
+					<button
+						class="checkout-button"
+						title="Checkout Cart"
+						@click=${handleCheckoutButtonClick}
+						?disabled=${cartIsEmpty}>
+							Checkout!
+					</button>
+				</div>
 				<slot></slot>
 			</div>
 		`
