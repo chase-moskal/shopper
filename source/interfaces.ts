@@ -21,6 +21,7 @@ export interface Product {
 	title: string
 	description: string
 	collections: string[]
+	firstVariantId: string
 }
 
 export interface CheckoutMachine {

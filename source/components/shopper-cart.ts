@@ -19,6 +19,8 @@ export class ShopperCart extends LitElement {
 	@property({type: String}) ["shopify-collection-id"]: string
 	@property({type: String}) ["shopify-storefront-access-token"]: string
 
+	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
+
 	@property({type: Object}) shopifyAdapter: ShopifyAdapter
 
 	@property({type: Object}) selectors = {
@@ -104,8 +106,21 @@ export class ShopperCart extends LitElement {
 	// PUBLIC METHODS
 	//
 
+	clear() {
+		for (const cartItem of this._catalog)
+			cartItem.quantity = 0
+	}
+
 	async checkout() {
-		console.log("mock checkout", this.itemsInCart)
+		const checkoutUrl = await this.shopifyAdapter.checkout(this.itemsInCart)
+
+		const checkoutLocation: Location = !this["checkout-in-same-window"]
+			? window.open("", "_blank").location
+			: window.location
+
+		this.clear()
+
+		checkoutLocation.href = checkoutUrl
 	}
 
 	//
@@ -216,7 +231,6 @@ export class ShopperCart extends LitElement {
 		if (!this.shopifyAdapter) return html`-`
 		const {itemsInCart, price, handleCheckoutButtonClick} = this
 		const cartIsEmpty = !itemsInCart.length
-		console.log("items in cart", itemsInCart.length, cartIsEmpty)
 		return html`
 			<div class="cart-panel">
 				${this._renderCartTitle()}

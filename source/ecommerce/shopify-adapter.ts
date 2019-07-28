@@ -47,13 +47,10 @@ export class ShopifyAdapter {
 	
 					// else, add the new product to the products array
 					else {
-						const product: Product = {
-							id: shopifyProduct.id,
-							value: parseFloat(shopifyProduct.variants[0].price),
-							title: shopifyProduct.title,
-							description: shopifyProduct.descriptionHtml,
-							collections: [collection.id]
-						}
+						const product = this._shopifyProductToShopperProduct(
+							shopifyProduct,
+							collection.id
+						)
 						products.push(product)
 					}
 				}
@@ -70,18 +67,29 @@ export class ShopifyAdapter {
 		}
 	}
 
+	private _shopifyProductToShopperProduct(shopifyProduct: any, collectionId?: string): Product {
+		const [firstVariant] = shopifyProduct.variants
+		return {
+			id: shopifyProduct.id,
+			value: parseFloat(firstVariant.price),
+			title: shopifyProduct.title,
+			description: shopifyProduct.descriptionHtml,
+			collections: collectionId ? [collectionId] : [],
+			firstVariantId: firstVariant.id
+		}
+	}
+
 	async getProductsInCollection(collectionId: string): Promise<Product[]> {
 		try {
 			const collection = await this._shopifyClient
 				.collection.fetchWithProducts(collectionId)
 
-			const products = collection.products.map(info => ({
-				id: info.variants[0].id,
-				value: parseFloat(info.variants[0].price),
-				title: info.title,
-				description: info.descriptionHtml,
-				collections: [collectionId]
-			}))
+			const products = collection.products.map(
+				(shopifyProduct: any) => this._shopifyProductToShopperProduct(
+					shopifyProduct,
+					collectionId
+				)
+			)
 
 			return products
 		}
@@ -94,7 +102,7 @@ export class ShopifyAdapter {
 	async checkout(items: CartItem[]): Promise<string> {
 		const checkout = await this._shopifyClient.checkout.create({
 			lineItems: items.map(item => ({
-				variantId: item.product.id,
+				variantId: item.product.firstVariantId,
 				quantity: item.quantity
 			}))
 		})
