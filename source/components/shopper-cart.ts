@@ -1,5 +1,5 @@
 
-import {LitElement, html, css, property} from "lit-element"
+import {LitElement, html, css, property, svg} from "lit-element"
 
 import {select} from "../toolbox/select.js"
 import {CartItem} from "../ecommerce/cart-item.js"
@@ -156,27 +156,144 @@ export class ShopperCart extends LitElement {
 	// RENDERING
 	//
 
-	static get styles() {
-		return css`
-			* {
-				box-sizing: border-box;
-				margin: 0;
-				padding: 0;
+	static get styles() {return css`
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		:host {
+			font-family: var(--shopper-font-family, sans-serif);
+		}
+
+		table {
+			width: 100%;
+			margin: 1em auto;
+		}
+
+		th, td {
+			padding: 0.25rem;
+		}
+
+		th {
+			font-style: sans-serif;
+			font-size: 0.8em;
+			opacity: 0.35;
+			text-transform: uppercase;
+			text-align: left;
+		}
+
+		td {
+			border: 1px solid rgba(0,0,0, 0.1);
+		}
+
+		th:nth-child(1), td:nth-child(1),
+		th:nth-child(2), td:nth-child(2) {
+			text-align: center;
+		}
+
+		th:nth-child(3), td:nth-child(3) {
+			width: 99%;
+		}
+
+		th:nth-last-child(1), td:nth-last-child(1) {
+			text-align: right;
+			white-space: nowrap;
+		}
+
+		.remove-button {
+			opacity: 0.5;
+			width: 100%;
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			color: #444;
+		}
+
+		.remove-button:hover, .remove-button:focus {
+			opacity: 1;
+		}
+
+		.remove-button svg {
+			width: 100%;
+			min-width: 1.5em;
+			height: 1.5em;
+		}
+
+		.cart-subtotal {
+			text-align: right;
+			border-top: 1px solid grey;
+		}
+
+		.cart-subtotal th {
+			width: 99%;
+			text-align: right;
+		}
+
+		.cart-subtotal td {
+			white-space: nowrap;
+		}
+
+		.cart-checkout {
+			text-align: right;
+		}
+
+		.cart-checkout button {
+			font-size: 1.2em;
+			padding: 0.5em 1em;
+			font-weight: bold;
+		}
+
+		@media (max-width: 420px) {
+			thead {
+				display: none;
 			}
-			ol {
-				list-style: none;
+			tr {
+				display: block;
+				margin-top: 1em;
 			}
-			li {
-				margin-top: 0.5em;
+			th, td {
+				padding: 0.1rem;
+				display: inline-block;
 			}
+			td {
+				border: none;
+			}
+		}
+	`}
+
+	render() {
+		if (!this.shopifyAdapter) return null
+		const cartIsEmpty = !this.itemsInCart.length
+		return html`
+			<div class="cart-panel">
+				${this._renderCartTitle()}
+				${cartIsEmpty
+					? null
+					: html`
+						${this._renderCartLineItems()}
+						<div class="cart-checkout">
+							<button
+								class="checkout-button"
+								title="Checkout Cart"
+								@click=${this._handleCheckoutButtonClick}
+								?hidden=${cartIsEmpty}>
+									Checkout!
+							</button>
+						</div>
+					`}
+			</div>
 		`
 	}
+
+	private _handleCheckoutButtonClick = () => this.checkout()
 
 	private _renderCartTitle() {
 		const {quantity} = this
 		return html`
 			<h1>
-				<span>Shopping Cart</span>
+				<span>Shopping cart</span>
 				<span>– ${
 					quantity === 0
 						? "empty"
@@ -185,6 +302,30 @@ export class ShopperCart extends LitElement {
 							: "s"}`
 				}</span>
 			</h1>
+		`
+	}
+
+	private _renderCartLineItems() {
+		return html`
+			<table>
+				<thead>
+					<tr>
+						<th>Remove</th>
+						<th>Quantity</th>
+						<th>Item name</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody class="cart-lines">
+					${this.itemsInCart.map(item => this._renderCartItem(item))}
+				</tbody>
+				<tbody class="cart-subtotal">
+					<tr>
+						<th colspan="3">Subtotal</th>
+						<td>${this.price}</td>
+					</tr>
+				</tbody>
+			</table>
 		`
 	}
 
@@ -197,71 +338,30 @@ export class ShopperCart extends LitElement {
 			input.value = value.toString()
 			item.quantity = value ? value : 0
 		}
+		const handleRemoveButtonClick = () => item.quantity = 0
 		return html`
-			<li class="cart-item-display">
-				<button
-					class="item-remove-button"
-					@click=${() => item.quantity = 0}
-					title="Remove item">
-						X
-				</button>
-				<input
-					class="item-quantity"
-					type="number"
-					.value=${item.quantity}
-					min=${item.quantityMin}
-					max=${item.quantityMax}
-					@change=${handleQuantityInputChange}
-					@keyup=${handleQuantityInputChange}
-					@mouseup=${handleQuantityInputChange}
-					@click=${handleQuantityInputChange}
-					@blur=${handleQuantityInputChange}
-					/>
-				<div class="item-title">${item.product.title}</div>
-				<div class="item-price pricevalue">
-					${item.subtotalPrice}
-				</div>
-			</li>
-		`
-	}
-
-	private handleCheckoutButtonClick = () => this.checkout()
-
-	render() {
-		if (!this.shopifyAdapter) return html`-`
-		const {itemsInCart, price, handleCheckoutButtonClick} = this
-		const cartIsEmpty = !itemsInCart.length
-		return html`
-			<div class="cart-panel">
-				${this._renderCartTitle()}
-				<div class="cart-manipulator">
-					<ol class="cart-item-list cart-grid">
-						${itemsInCart.map(item => this._renderCartItem(item))}
-					</ol>
-				</div>
-				<div class="cart-calculated-results">
-					<ol class="cart-calculated-results cart-grid">
-						${itemsInCart.length
-							? html`
-								<li class="cart-subtotal">
-									<span>Subtotal</span>
-									<strong class="pricevalue">${price}</strong>
-								</li>
-							`
-							: null}
-					</ol>
-				</div>
-				<div class="cart-checkout">
-					<button
-						class="checkout-button"
-						title="Checkout Cart"
-						@click=${handleCheckoutButtonClick}
-						?disabled=${cartIsEmpty}>
-							Checkout!
+			<tr>
+				<td>
+					<button class="remove-button" title="Remove item" @click=${handleRemoveButtonClick}>
+						${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
 					</button>
-				</div>
-				<slot></slot>
-			</div>
+				</td>
+				<td>
+					<input
+						type="number"
+						.value=${item.quantity.toString()}
+						.min=${item.quantityMin.toString()}
+						.max=${item.quantityMax.toString()}
+						@change=${handleQuantityInputChange}
+						@keyup=${handleQuantityInputChange}
+						@mouseup=${handleQuantityInputChange}
+						@click=${handleQuantityInputChange}
+						@blur=${handleQuantityInputChange}
+						/>
+				</td>
+				<td>${item.product.title}</td>
+				<td>${item.subtotalPrice}</td>
+			</tr>
 		`
 	}
 }

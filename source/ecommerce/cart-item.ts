@@ -34,7 +34,7 @@ export class CartItem {
 	}
 
 	get unitPrice() {
-		return `\$${this._product.value} CAD`
+		return `\$${this._product.value.toFixed(2)} CAD`
 	}
 
 	get subtotalPrice() {

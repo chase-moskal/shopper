@@ -9,6 +9,7 @@ export class ShopperButton extends LitElement {
 			* {
 				box-sizing: border-box;
 			}
+
 			:host {
 				display: block;
 				position: relative;
@@ -16,13 +17,16 @@ export class ShopperButton extends LitElement {
 				width: var(--shopper-button-size, 3em);
 				height: var(--shopper-button-size, 3em);
 			}
+
 			.cart-button {
 				padding: var(--shopper-button-padding, 0.5em);
 			}
+
 			svg {
 				width: 100%;
 				height: 100%;
 			}
+
 			.cart-numeral {
 				position: absolute;
 				top: -0.2em;
@@ -31,10 +35,10 @@ export class ShopperButton extends LitElement {
 				justify-content: center;
 				flex-direction: column;
 				text-align: center;
-				width: 1.2em;
-				height: 1.2em;
+				width: 1.4em;
+				height: 1.4em;
 				background: red;
-				border-radius: 1.5em;
+				border-radius: 1.4em;
 				color: white;
 				font-weight: bold;
 				text-shadow: 0.5px 1px 1px rgba(0,0,0, 0.2);

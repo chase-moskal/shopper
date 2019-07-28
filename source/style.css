@@ -25,6 +25,16 @@ menu-system[initially-hidden] {
 	display: none;
 }
 
+menu-display {
+	--menu-panel-width: 100%;
+}
+
+@media (min-width: 900px) {
+	menu-display {
+		--menu-panel-width: 80%;
+	}
+}
+
 .demo-area {
 	margin: 2em auto;
 }
