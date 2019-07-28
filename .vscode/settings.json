@@ -13,5 +13,12 @@
 		"*.log*": false
 	},
 
-	"typescript.tsdk": "node_modules/typescript/lib/"
+	"typescript.tsdk": "node_modules/typescript/lib/",
+
+	"lit-plugin.globalTags": [
+		"shopper-cart",
+		"shopper-button",
+		"shopper-product",
+		"shopper-collection"
+	]
 }
