@@ -6,15 +6,18 @@
 		<title>shopper</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton:400,800"/>
 		<link rel="stylesheet" href="source/style.css"/>
+		<script async defer src="https://cdn.jsdelivr.net/npm/sorry-not-sorry"></script>
 		<script type="importmap-shim" src="dist/importmap.json"></script>
 		<script type="module-shim" src="dist/shopper-demo.js"></script>
-		<script defer src="https://unpkg.com/es-module-shims@0.2.13/dist/es-module-shims.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7.4.4/dist/polyfill.min.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@0.2.15/dist/es-module-shims.js"></script>
 	</head>
 	<body>
 		<main>
 			<header>
 				<h1>shopper</h1>
-
 				<menu-system initially-hidden>
 					<menu-display>
 						<shopper-button slot="button"></shopper-button>
@@ -24,7 +27,6 @@
 						</shopper-cart>
 					</menu-display>
 				</menu-system>
-
 			</header>
 			<div class="content">
 				<p>shopify cart ui for custom frontends</p>
@@ -32,10 +34,8 @@
 					<a href="https://github.com/chase-moskal/shopper">shopper on github</a>
 				</p>
 				<div class="demo-area">
-
 					<shopper-collection></shopper-collection>
 					<shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTQ1OTkx"></shopper-product>
-
 				</div>
 				<p style="margin-top: 100em;">cheers</p>
 			</div>

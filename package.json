@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.1.0-dev.9",
+	"version": "0.1.0-dev.10",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
@@ -15,7 +15,7 @@
 		"prepare": "run-s clean build test",
 		"clean": "rimraf dist && mkdirp dist",
 		"build": "run-p importmap compile copy-styles",
-		"importmap": "importly < importly.config > dist/importmap.json",
+		"importmap": "importly < package.json > dist/importmap.json",
 		"compile": "tsc",
 		"copy-styles": "ncp source/style.css dist",
 		"watch": "tsc -w",
@@ -38,13 +38,13 @@
 	"dependencies": {
 		"lit-element": "2.2.1",
 		"lit-html": "1.1.1",
-		"menutown": "0.0.0-dev.24",
+		"menutown": "0.0.0-dev.27",
 		"shopify-buy": "2.6.1"
 	},
 	"devDependencies": {
 		"barrelsby": "2.1.1",
-		"feather-icons": "4.22.1",
-		"importly": "0.0.0",
+		"feather-icons": "4.24.0",
+		"importly": "0.1.0-dev.0",
 		"mkdirp": "0.5.1",
 		"ncp": "2.0.0",
 		"npm-run-all": "4.1.5",
