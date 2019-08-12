@@ -1,17 +1,24 @@
 
-import {LitElement, property, html} from "lit-element"
-
+import {property, html} from "lit-element"
 import {CartItem} from "../ecommerce/cart-item.js"
+import {LoadableElement} from "./loadable-element.js"
 
-export class ShopperCollection extends LitElement {
+export class ShopperCollection extends LoadableElement {
 	@property({type: String}) ["uid"]: string
-	@property({type: Array}) cartItems: CartItem[] = []
+	@property({type: Array}) cartItems: CartItem[] = null
 
 	createRenderRoot() {
 		return this
 	}
 
-	render() {
+	static get styles() {return super.styles}
+
+	render() {return html`
+		${super.render()}
+		<style>${ShopperCollection.styles}</style>
+	`}
+
+	renderReady() {
 		return html`
 			<ol>
 				${this.cartItems.map(cartItem => html`

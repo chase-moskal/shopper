@@ -1,21 +1,16 @@
 
-import {LitElement, html, css, property, svg} from "lit-element"
+import {html, css, property, svg} from "lit-element"
 
 import {select} from "../toolbox/select.js"
 import {CartItem} from "../ecommerce/cart-item.js"
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
 
-import {ShopperCollection} from "./shopper-collection.js"
 import {ShopperButton} from "./shopper-button.js"
 import {ShopperProduct} from "./shopper-product.js"
+import {ShopperCollection} from "./shopper-collection.js"
+import {LoadableElement, LoadableState} from "./loadable-element.js"
 
-enum CartState {
-	Loading,
-	Error,
-	Ready
-}
-
-export class ShopperCart extends LitElement {
+export class ShopperCart extends LoadableElement {
 
 	//
 	// CONFIGURATION
@@ -35,13 +30,15 @@ export class ShopperCart extends LitElement {
 		collections: () => select<ShopperCollection>("shopper-collection")
 	}
 
+	@property({type: String}) errorMessage: string = "error loading cart system"
+	@property({type: String}) loadingMessage: string = "loading cart..."
+
 	//
 	// PRIVATE FIELDS
 	//
 
 	private _collectionIds: string[]
 	@property({type: Object}) private _catalog: CartItem[] = []
-	@property({type: String}) private _state: CartState = CartState.Loading
 
 	//
 	// PUBLIC ACCESSORS
@@ -75,9 +72,9 @@ export class ShopperCart extends LitElement {
 	firstUpdated() {
 		this._maybeCreateShopifyAdapter()
 		this._loadAllProducts()
-			.then(() => this._state = CartState.Ready)
+			.then(() => this.loadableState = LoadableState.Ready)
 			.catch(error => {
-				this._state = CartState.Error
+				this.loadableState = LoadableState.Error
 				console.error(error)
 			})
 	}
@@ -88,9 +85,10 @@ export class ShopperCart extends LitElement {
 		for (const button of this.selectors.buttons())
 			button.numeral = this.quantity
 
-		// keep lists up to date
+		// keep collections up to date
 		for (const list of this.selectors.collections()) {
 			const {uid: collection} = list
+			list.loadableState = this.loadableState
 			list.cartItems = collection
 				? this._catalog.filter(
 					item => item.product.collections.includes(collection)
@@ -168,48 +166,15 @@ export class ShopperCart extends LitElement {
 	// RENDERING
 	//
 
-	static get styles() {return css`
+	static get styles(): any {return [super.styles, css`
 		* {
-			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
+			box-sizing: border-box;
 		}
 
 		:host {
 			font-family: var(--shopper-font-family, sans-serif);
-		}
-
-		.loading, .error {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-family: monospace;
-			color: #444;
-		}
-
-		.loading svg, .error svg {
-			width: 2em;
-			height: 2em;
-			margin-right: 1em;
-		}
-
-		@keyframes spin {
-			from { transform: rotate(0deg); }
-			to { transform: rotate(360deg); }
-		}
-
-		@keyframes fade {
-			from { opacity: 0.8; }
-			to { opacity: 0.4; }
-		}
-
-		.loading svg {
-			opacity: 0.5;
-			animation: spin 10s linear infinite, fade 500ms linear infinite alternate;
-		}
-
-		.error {
-			color: maroon;
 		}
 
 		table {
@@ -306,43 +271,27 @@ export class ShopperCart extends LitElement {
 				border: none;
 			}
 		}
-	`}
+	`]}
 
-	render() {
-		if (!this.shopifyAdapter) return null
+	renderReady() {
+		// if (!this.shopifyAdapter) return null
 		const cartIsEmpty = !this.itemsInCart.length
-		const {_state} = this
 		return html`
 			<div class="cart-panel">
-				${(() => {
-					if (_state === CartState.Loading) return html`
-						<div class="loading">
-							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-loader"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>`}
-							<p>cart loading...</p>
+				${this._renderCartTitle()}
+				${cartIsEmpty ? null : html`
+					${this._renderCartLineItems()}
+					<div class="cart-checkout">
+						<button
+							class="checkout-button"
+							title="Checkout Cart"
+							@click=${this._handleCheckoutButtonClick}
+							?hidden=${cartIsEmpty}>
+								Checkout!
+							</button>
 						</div>
-					`
-					else if (_state === CartState.Error) return html`
-						<div class="error">
-							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line></svg>`}
-							<p>cart error</p>
-						</div>
-					`
-					else if (_state === CartState.Ready) return html`
-						${this._renderCartTitle()}
-						${cartIsEmpty ? null : html`
-							${this._renderCartLineItems()}
-							<div class="cart-checkout">
-								<button
-									class="checkout-button"
-									title="Checkout Cart"
-									@click=${this._handleCheckoutButtonClick}
-									?hidden=${cartIsEmpty}>
-										Checkout!
-								</button>
-							</div>
-						`}
-					`
-				})()}
+					</div>
+				`}
 			</div>
 		`
 	}
