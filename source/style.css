@@ -5,6 +5,10 @@
 	box-sizing: border-box;
 }
 
+html {
+	font-size: 21px;
+}
+
 main {
 	margin: auto;
 	max-width: 800px;
