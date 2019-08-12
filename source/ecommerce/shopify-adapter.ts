@@ -1,6 +1,5 @@
 
 import shopifyBuy from "shopify-buy/index.es.js"
-
 import {CartItem} from "../ecommerce/cart-item.js"
 
 import {
@@ -67,18 +66,6 @@ export class ShopifyAdapter {
 		}
 	}
 
-	private _shopifyProductToShopperProduct(shopifyProduct: any, collectionId?: string): Product {
-		const [firstVariant] = shopifyProduct.variants
-		return {
-			id: shopifyProduct.id,
-			value: parseFloat(firstVariant.price),
-			title: shopifyProduct.title,
-			description: shopifyProduct.descriptionHtml,
-			collections: collectionId ? [collectionId] : [],
-			firstVariantId: firstVariant.id
-		}
-	}
-
 	async getProductsInCollection(collectionId: string): Promise<Product[]> {
 		try {
 			const collection = await this._shopifyClient
@@ -107,5 +94,17 @@ export class ShopifyAdapter {
 			}))
 		})
 		return checkout.webUrl
+	}
+
+	private _shopifyProductToShopperProduct(shopifyProduct: any, collectionId?: string): Product {
+		const [firstVariant] = shopifyProduct.variants
+		return {
+			id: shopifyProduct.id,
+			value: parseFloat(firstVariant.price),
+			title: shopifyProduct.title,
+			description: shopifyProduct.descriptionHtml,
+			collections: collectionId ? [collectionId] : [],
+			firstVariantId: firstVariant.id
+		}
 	}
 }

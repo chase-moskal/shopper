@@ -9,6 +9,12 @@ import {ShopperCollection} from "./shopper-collection.js"
 import {ShopperButton} from "./shopper-button.js"
 import {ShopperProduct} from "./shopper-product.js"
 
+enum CartState {
+	Loading,
+	Error,
+	Ready
+}
+
 export class ShopperCart extends LitElement {
 
 	//
@@ -35,6 +41,7 @@ export class ShopperCart extends LitElement {
 
 	private _collectionIds: string[]
 	@property({type: Object}) private _catalog: CartItem[] = []
+	@property({type: String}) private _state: CartState = CartState.Loading
 
 	//
 	// PUBLIC ACCESSORS
@@ -66,8 +73,13 @@ export class ShopperCart extends LitElement {
 	//
 
 	firstUpdated() {
-		this.createShopifyAdapter()
+		this._maybeCreateShopifyAdapter()
 		this._loadAllProducts()
+			.then(() => this._state = CartState.Ready)
+			.catch(error => {
+				this._state = CartState.Error
+				console.error(error)
+			})
 	}
 
 	updated() {
@@ -127,7 +139,7 @@ export class ShopperCart extends LitElement {
 	// PRIVATE METHODS
 	//
 
-	private createShopifyAdapter() {
+	private _maybeCreateShopifyAdapter() {
 		if (this.shopifyAdapter) return
 		const domain = this["shopify-domain"]
 		const storefrontAccessToken = this["shopify-storefront-access-token"]
@@ -266,23 +278,36 @@ export class ShopperCart extends LitElement {
 	render() {
 		if (!this.shopifyAdapter) return null
 		const cartIsEmpty = !this.itemsInCart.length
+		const {_state} = this
 		return html`
 			<div class="cart-panel">
-				${this._renderCartTitle()}
-				${cartIsEmpty
-					? null
-					: html`
-						${this._renderCartLineItems()}
-						<div class="cart-checkout">
-							<button
-								class="checkout-button"
-								title="Checkout Cart"
-								@click=${this._handleCheckoutButtonClick}
-								?hidden=${cartIsEmpty}>
-									Checkout!
-							</button>
+				${(() => {
+					if (_state === CartState.Loading) return html`
+						<div class="loading">
+							<p>cart loading...</p>
 						</div>
-					`}
+					`
+					else if (_state === CartState.Error) return html`
+						<div class="error">
+							<p>cart error</p>
+						</div>
+					`
+					else if (_state === CartState.Ready) return html`
+						${this._renderCartTitle()}
+						${cartIsEmpty ? null : html`
+							${this._renderCartLineItems()}
+							<div class="cart-checkout">
+								<button
+									class="checkout-button"
+									title="Checkout Cart"
+									@click=${this._handleCheckoutButtonClick}
+									?hidden=${cartIsEmpty}>
+										Checkout!
+								</button>
+							</div>
+						`}
+					`
+				})()}
 			</div>
 		`
 	}
