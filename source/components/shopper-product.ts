@@ -1,17 +1,19 @@
 
-import {CartItem} from "../ecommerce/cart-item.js"
-import {LitElement, html, property} from "lit-element"
+import {html, property} from "lit-element"
 
-export class ShopperProduct extends LitElement {
+import {CartItem} from "../ecommerce/cart-item.js"
+import {LoadableElement} from "./loadable-element.js"
+
+export class ShopperProduct extends LoadableElement {
 	@property({type: String}) ["uid"]: string
 	@property({type: Object}) cartItem: CartItem
 	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean
-	
+
 	createRenderRoot() {
 		return this
 	}
 
-	render() {
+	renderReady() {
 		const {cartItem} = this
 		const inCart = this["in-cart"]
 		if (!cartItem) return html``
@@ -28,6 +30,7 @@ export class ShopperProduct extends LitElement {
 					</button>
 				</div>
 			</div>
+			<style>${LoadableElement.styles}</style>
 		`
 	}
 }

@@ -108,6 +108,7 @@ export class ShopperCart extends LoadableElement {
 				}
 			}
 			product["in-cart"] = this.itemsInCart.includes(product.cartItem)
+			product.loadableState = this.loadableState
 			product.requestUpdate()
 		}
 	}

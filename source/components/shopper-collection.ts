@@ -23,7 +23,7 @@ export class ShopperCollection extends LoadableElement {
 			<ol>
 				${this.cartItems.map(cartItem => html`
 					<li>
-						<shopper-product .cartItem=${cartItem}></shopper-product>
+						<shopper-product .cartItem=${cartItem} .loadableState=${this.loadableState}></shopper-product>
 					</li>
 				`)}
 			</ol>
