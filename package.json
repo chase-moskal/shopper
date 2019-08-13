@@ -28,9 +28,9 @@
 	},
 	"dependencies": {
 		"lit-element": "2.2.1",
-		"lit-html": "1.1.1",
+		"lit-html": "1.1.2",
 		"menutown": "0.0.0-dev.27",
-		"shopify-buy": "2.6.1"
+		"shopify-buy": "2.7.0"
 	},
 	"devDependencies": {
 		"barrelsby": "2.1.1",
