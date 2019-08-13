@@ -1,11 +1,11 @@
 {
 	"name": "shopper",
-	"version": "0.1.0-dev.11",
+	"version": "0.1.0-dev.12",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
-	"main": "dist/register-all.js",
 	"module": "dist/register-all.js",
+	"main": "dist/register-all.js",
 	"types": "dist/register-all.d.ts",
 	"files": [
 		"assets",
@@ -22,15 +22,6 @@
 		"test": "exit 0",
 		"start": "serve"
 	},
-	"author": "Chase Moskal <chasemoskal@gmail.com>",
-	"keywords": [
-		"cart",
-		"shopper",
-		"shopping",
-		"shopping-cart",
-		"ecommerce",
-		"shopify"
-	],
 	"jest": {
 		"verbose": true,
 		"testURL": "http://localhost/"
@@ -52,5 +43,22 @@
 		"rimraf": "2.6.3",
 		"serve": "11.1.0",
 		"typescript": "3.5.3"
-	}
+	},
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"homepage": "https://github.com/chase-moskal/shopper#readme",
+	"bugs": {
+		"url": "https://github.com/chase-moskal/shopper/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/chase-moskal/shopper.git"
+	},
+	"keywords": [
+		"cart",
+		"shopper",
+		"shopping",
+		"shopping-cart",
+		"ecommerce",
+		"shopify"
+	]
 }
