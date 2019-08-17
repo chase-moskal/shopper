@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.1.0-dev.12",
+	"version": "0.1.0-dev.14",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
@@ -29,7 +29,7 @@
 	"dependencies": {
 		"lit-element": "2.2.1",
 		"lit-html": "1.1.2",
-		"menutown": "0.0.0-dev.27",
+		"menutown": "0.0.0",
 		"shopify-buy": "2.7.0"
 	},
 	"devDependencies": {
@@ -40,7 +40,7 @@
 		"ncp": "2.0.0",
 		"npm-run-all": "4.1.5",
 		"octicons": "8.5.0",
-		"rimraf": "2.6.3",
+		"rimraf": "3.0.0",
 		"serve": "11.1.0",
 		"typescript": "3.5.3"
 	},

@@ -1,6 +1,7 @@
 
 import {html, css, property, svg} from "lit-element"
 
+import {wait} from "../toolbox/wait.js"
 import {select} from "../toolbox/select.js"
 import {CartItem} from "../ecommerce/cart-item.js"
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
@@ -32,6 +33,8 @@ export class ShopperCart extends LoadableElement {
 
 	@property({type: String}) errorMessage: string = "error loading cart system"
 	@property({type: String}) loadingMessage: string = "loading cart..."
+
+	onAddToCart = ({cartItem}: {cartItem: CartItem}) => {}
 
 	//
 	// PRIVATE FIELDS
@@ -69,14 +72,18 @@ export class ShopperCart extends LoadableElement {
 	// initialization and updates
 	//
 
-	firstUpdated() {
+	async firstUpdated() {
 		this._maybeCreateShopifyAdapter()
-		this._loadAllProducts()
-			.then(() => this.loadableState = LoadableState.Ready)
-			.catch(error => {
-				this.loadableState = LoadableState.Error
-				console.error(error)
-			})
+		try {
+			await this._loadAllProducts()
+			this.loadableState = LoadableState.Ready
+			await wait()
+			this.requestUpdate()
+		}
+		catch (error) {
+			this.loadableState = LoadableState.Error
+			console.error(error)
+		}
 	}
 
 	updated() {
@@ -109,6 +116,7 @@ export class ShopperCart extends LoadableElement {
 			}
 			product["in-cart"] = this.itemsInCart.includes(product.cartItem)
 			product.loadableState = this.loadableState
+			product.onAddToCart = ({cartItem}) => this.onAddToCart({cartItem})
 			product.requestUpdate()
 		}
 	}
@@ -275,7 +283,6 @@ export class ShopperCart extends LoadableElement {
 	`]}
 
 	renderReady() {
-		// if (!this.shopifyAdapter) return null
 		const cartIsEmpty = !this.itemsInCart.length
 		return html`
 			<div class="cart-panel">

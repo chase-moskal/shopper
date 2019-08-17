@@ -9,6 +9,14 @@ export class ShopperProduct extends LoadableElement {
 	@property({type: Object}) cartItem: CartItem
 	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean
 
+	onAddToCart = ({cartItem}: {cartItem: CartItem}) => {}
+
+	private _handleAddToCart = () => {
+		const {cartItem} = this
+		cartItem.quantity = 1
+		this.onAddToCart({cartItem})
+	}
+
 	createRenderRoot() {
 		return this
 	}
@@ -24,7 +32,7 @@ export class ShopperProduct extends LoadableElement {
 					<div class="price">${cartItem.unitPrice}</div>
 					<button class="add-to-cart-button"
 						title=${inCart ? undefined : "Add to Cart"}
-						@click=${() => cartItem.quantity = 1}
+						@click=${this._handleAddToCart}
 						?disabled=${inCart}>
 							${inCart ? "In Cart" : "Add to Cart"}
 					</button>
