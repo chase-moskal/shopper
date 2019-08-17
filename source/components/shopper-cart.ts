@@ -9,6 +9,7 @@ import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
 import {ShopperButton} from "./shopper-button.js"
 import {ShopperProduct} from "./shopper-product.js"
 import {ShopperCollection} from "./shopper-collection.js"
+import {shopperCartStyles} from "./shopper-cart-styles.js"
 import {LoadableElement, LoadableState} from "./loadable-element.js"
 
 export class ShopperCart extends LoadableElement {
@@ -175,112 +176,9 @@ export class ShopperCart extends LoadableElement {
 	// RENDERING
 	//
 
-	static get styles(): any {return [super.styles, css`
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		:host {
-			font-family: var(--shopper-font-family, sans-serif);
-		}
-
-		table {
-			width: 100%;
-			margin: 1em auto;
-		}
-
-		th, td {
-			padding: 0.25rem;
-		}
-
-		th {
-			font-style: sans-serif;
-			font-size: 0.8em;
-			opacity: 0.35;
-			text-transform: uppercase;
-			text-align: left;
-		}
-
-		td {
-			border: 1px solid rgba(0,0,0, 0.1);
-		}
-
-		th:nth-child(1), td:nth-child(1),
-		th:nth-child(2), td:nth-child(2) {
-			text-align: center;
-		}
-
-		th:nth-child(3), td:nth-child(3) {
-			width: 99%;
-		}
-
-		th:nth-last-child(1), td:nth-last-child(1) {
-			text-align: right;
-			white-space: nowrap;
-		}
-
-		.remove-button {
-			opacity: 0.5;
-			width: 100%;
-			background: transparent;
-			border: none;
-			cursor: pointer;
-			color: #444;
-		}
-
-		.remove-button:hover, .remove-button:focus {
-			opacity: 1;
-		}
-
-		.remove-button svg {
-			width: 100%;
-			min-width: 1.5em;
-			height: 1.5em;
-		}
-
-		.cart-subtotal {
-			text-align: right;
-			border-top: 1px solid grey;
-		}
-
-		.cart-subtotal th {
-			width: 99%;
-			text-align: right;
-		}
-
-		.cart-subtotal td {
-			white-space: nowrap;
-		}
-
-		.cart-checkout {
-			text-align: right;
-		}
-
-		.cart-checkout button {
-			font-size: 1.2em;
-			padding: 0.5em 1em;
-			font-weight: bold;
-		}
-
-		@media (max-width: 420px) {
-			thead {
-				display: none;
-			}
-			tr {
-				display: block;
-				margin-top: 1em;
-			}
-			th, td {
-				padding: 0.1rem;
-				display: inline-block;
-			}
-			td {
-				border: none;
-			}
-		}
-	`]}
+	static get styles(): any {
+		return [super.styles, shopperCartStyles]
+	}
 
 	renderReady() {
 		const cartIsEmpty = !this.itemsInCart.length
