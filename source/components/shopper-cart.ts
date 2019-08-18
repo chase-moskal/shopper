@@ -132,14 +132,19 @@ export class ShopperCart extends LoadableElement {
 	}
 
 	async checkout() {
+		let checkoutLocation: Location
+
+		if (this["checkout-in-same-window"]) {
+			checkoutLocation = window.location
+		}
+		else {
+			const checkoutWindow = window.open("", "_blank")
+			checkoutWindow.document.write(`loading checkout... if you are experiencing issues, please email <a href="mailto:suzie@nailcareer.com">suzie@nailcareer.com</a>`)
+			checkoutLocation = checkoutWindow.location
+		}
+
 		const checkoutUrl = await this.shopifyAdapter.checkout(this.itemsInCart)
-
-		const checkoutLocation: Location = !this["checkout-in-same-window"]
-			? window.open("", "_blank").location
-			: window.location
-
 		this.clear()
-
 		checkoutLocation.href = checkoutUrl
 	}
 
