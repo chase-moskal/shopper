@@ -30,12 +30,11 @@
 	"dependencies": {
 		"lit-element": "2.2.1",
 		"lit-html": "1.1.2",
-		"menutown": "0.0.1-dev.1",
-		"shopify-buy": "2.7.2"
+		"menutown": "0.0.1-dev.2",
+		"shopify-buy": "2.8.1"
 	},
 	"devDependencies": {
-		"barrelsby": "2.1.1",
-		"feather-icons": "4.24.0",
+		"feather-icons": "4.24.1",
 		"importly": "0.1.0-dev.0",
 		"mkdirp": "0.5.1",
 		"ncp": "2.0.0",
@@ -43,7 +42,7 @@
 		"octicons": "8.5.0",
 		"rimraf": "3.0.0",
 		"serve": "11.2.0",
-		"typescript": "3.6.3"
+		"typescript": "3.7.2"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"homepage": "https://github.com/chase-moskal/shopper#readme",
