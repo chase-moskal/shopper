@@ -1,10 +1,12 @@
 
 import {Reader} from "./toolbox/pubsub.js"
+import {ShopperComponent} from "./framework/shopper-component.js"
 
 export interface ShopperConfig {
 	mock: string
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
+	components: {[key: string]: typeof ShopperComponent}
 }
 
 export interface ShopperOptions extends ShopifyResults {
@@ -32,6 +34,7 @@ export interface ShopperModel {
 	checkout: (options: {checkoutInSameWindow: boolean}) => Promise<void>
 	clearCart: () => void
 	addToCart: (item: CartItem) => void
+	getItemPrice: (item: CartItem) => string
 }
 
 export type ShopifyClient = any

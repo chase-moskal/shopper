@@ -4,9 +4,9 @@
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
-	"module": "dist/init.js",
-	"main": "dist/init.js",
-	"types": "dist/init.d.ts",
+	"module": "dist/shopper-init.js",
+	"main": "dist/shopper-init.js",
+	"types": "dist/shopper-init.d.ts",
 	"files": [
 		"assets",
 		"dist",

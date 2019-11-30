@@ -1,5 +1,5 @@
 
-import {property, html, css, svg} from "lit-element"
+import {property, html, css, svg, CSSResultArray} from "lit-element"
 
 import {ShopperComponent} from "./shopper-component.js"
 
@@ -21,7 +21,7 @@ export class LoadableComponent extends ShopperComponent {
 	set loadableState(value: LoadableState) { this[_state] = value }
 	get loadableState(): LoadableState { return this[_state] }
 
-	static get styles() {return css`
+	static get styles(): CSSResultArray {return [css`
 		.loadable {
 			display: flex;
 			align-items: center;
@@ -56,7 +56,7 @@ export class LoadableComponent extends ShopperComponent {
 		.loadable.error {
 			color: maroon;
 		}
-	`}
+	`]}
 
 	renderReady() {
 		throw new Error("loadable: renderReady must be implemented")

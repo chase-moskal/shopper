@@ -4,22 +4,23 @@ import {parseShopperConfig} from "./startup/parse-shopper-config.js"
 
 import {ShopperCart} from "./components/shopper-cart.js"
 import {ShopperButton} from "./components/shopper-button.js"
+import {ShopperProduct} from "./components/shopper-product.js"
+import {ShopperCollection} from "./components/shopper-collection.js"
 
 (async() => {
 	const config = parseShopperConfig(document.querySelector("shopper-config"))
 
-	const {shopifyAdapter, updateCatalog, updateError} = assembleShopper(config, {
-		ShopperCart,
-		ShopperButton,
+	const {loadCatalog} = assembleShopper({
+		...config,
+		components: {
+			ShopperCart,
+			ShopperButton,
+			ShopperProduct,
+			ShopperCollection,
+		}
 	})
 
-	try {
-		updateCatalog(await shopifyAdapter.fetchEverything())
-	}
-	catch (error) {
-		updateError("shopping cart error")
-		console.error(error)
-	}
+	await loadCatalog()
 })()
 	.then(() => console.log("shopper initialized"))
 	.catch(error => console.error("shopper failed to initialize", error))

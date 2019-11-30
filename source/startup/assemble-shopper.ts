@@ -11,21 +11,22 @@ import {
 	MockPassingShopifyAdapter,
 } from "../ecommerce/shopify-adapter-mocks.js"
 
-export function assembleShopper(
-	config: ShopperConfig,
-	components: {[key: string]: typeof ShopperComponent}
-) {
-
-	const shopifyAdapter: ShopifyAdapter = config.mock !== null
+export function assembleShopper({
+	mock,
+	components,
+	shopifyDomain,
+	shopifyStorefrontAccessToken,
+}: ShopperConfig) {
+	const shopifyAdapter: ShopifyAdapter = mock !== null
 		? new (prepSlowAdapter({
 			ms: 2 * 1000,
-			Adapter: config.mock === "fail"
+			Adapter: mock === "fail"
 				? MockFailingShopifyAdapter
 				: MockPassingShopifyAdapter,
 		}))
 		: new ShopifyAdapter({
-			domain: config.shopifyDomain,
-			storefrontAccessToken: config.shopifyStorefrontAccessToken
+			domain: shopifyDomain,
+			storefrontAccessToken: shopifyStorefrontAccessToken
 		})
 
 	const {model, updateCatalog, updateError} = createShopperModel({
@@ -34,5 +35,15 @@ export function assembleShopper(
 
 	registerComponents(prepareShopperComponents(model, components))
 
-	return {model, shopifyAdapter, updateCatalog, updateError}
+	async function loadCatalog() {
+		try {
+			updateCatalog(await shopifyAdapter.fetchEverything())
+		}
+		catch (error) {
+			updateError("shopping cart error")
+			console.error(error)
+		}
+	}
+
+	return {loadCatalog}
 }

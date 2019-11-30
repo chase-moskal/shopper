@@ -75,6 +75,7 @@ export function createShopperModel({shopifyAdapter}: {
 			}
 		),
 		clearCart: action(clearCart),
+		getItemPrice: (item: CartItem) => `\$${item.product.value.toFixed(2)} CAD`
 	}
 
 	return {
