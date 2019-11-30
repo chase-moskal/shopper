@@ -1,5 +1,5 @@
 
-import {ShopifyAdapter} from "./ecommerce/shopify-adapter.js"
+import {Reader} from "./toolbox/pubsub.js"
 
 export interface ShopperConfig {
 	mock: string
@@ -7,9 +7,8 @@ export interface ShopperConfig {
 	shopifyStorefrontAccessToken: string
 }
 
-export interface ShopperOptions {
-	onUpdate: () => void
-	shopifyAdapter: ShopifyAdapter
+export interface ShopperOptions extends ShopifyResults {
+	catalog: CartItem[]
 }
 
 export interface CartItem {
@@ -19,12 +18,17 @@ export interface CartItem {
 	quantityMax: number
 }
 
-export interface ShopperModel {
-	getCartValue: () => number
-	getCartPrice: () => string
-	getCartQuantity: () => number
-	getItemsInCart: () => CartItem[]
+export interface ShopperState {
+	error: string
+	catalog: CartItem[]
+	itemsInCart: CartItem[]
+	cartValue: number
+	cartPrice: string
+	cartQuantity: number
+}
 
+export interface ShopperModel {
+	reader: Reader<ShopperState>
 	addToCart: (item: CartItem) => void
 	clearCart: () => void
 }

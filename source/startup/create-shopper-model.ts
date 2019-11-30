@@ -1,72 +1,91 @@
 
-import {ShopperOptions, ShopperModel, CartItem} from "../interfaces.js"
+import {makeReader} from "../toolbox/pubsub.js"
+import {ShopperOptions, ShopperModel, CartItem, ShopperState, ShopifyResults} from "../interfaces.js"
 
-export async function createShopperModel({
-	onUpdate,
-	shopifyAdapter,
-}: ShopperOptions): Promise<ShopperModel> {
+export function makeShopperState() {
+	
+}
 
-	//
-	// load shopify catalog
-	//
-
-	const {products, collectionIds} = await shopifyAdapter.fetchEverything()
-	const catalog: CartItem[] = products.map(product => ({
-		product,
-		quantity: 0,
-		quantityMax: 5,
-		quantityMin: 1,
-	}))
+export function createShopperModel() {
 
 	//
-	// merge in saved state from storage
+	// create shopper state object
 	//
 
-	//
-	// cart state getters
-	//
+	const state: ShopperState = {
+		error: "",
+		catalog: [],
+		itemsInCart: [],
+		cartValue: 0,
+		cartPrice: "",
+		cartQuantity: 0
+	}
 
-	const getItemsInCart = () => catalog.filter(item => item.quantity > 0)
-	const getCartValue = () => getItemsInCart().reduce(
-		(subtotal: number, item: CartItem) =>
-			subtotal + (item.product.value * item.quantity),
-		0
-	)
-	const getCartPrice = () => `\$${getCartValue().toFixed(2)} CAD`
-	const getCartQuantity = () => {
-		let sum = 0
-		for (const item of this.itemsInCart) sum += item.quantity
-		return sum
+	const {publishStateUpdate, reader} = makeReader(state)
+
+	const updateState = () => {
+		state.itemsInCart = state.catalog.filter(item => item.quantity > 0)
+		state.cartValue = state.itemsInCart.reduce(
+			(subtotal: number, item: CartItem) =>
+				subtotal + (item.product.value * item.quantity),
+			0
+		)
+		state.cartPrice = `\$${state.cartValue.toFixed(2)} CAD`
+		state.cartQuantity = (() => {
+			let sum = 0
+			for (const item of state.itemsInCart) sum += item.quantity
+			return sum
+		})()
+		publishStateUpdate()
+	}
+
+	const updateCatalog = ({products, collectionIds}: ShopifyResults) => {
+		state.catalog = products.map(product => ({
+			product,
+			quantity: 0,
+			quantityMax: 5,
+			quantityMin: 1,
+		}))
+		updateState()
+	}
+
+	const updateError = (errorMessage: string) => {
+		state.error = errorMessage
+		state.catalog = []
+		updateState()
 	}
 
 	//
 	// cart actions
 	//
 
-	const addToCart = (item: CartItem) => {
-		item.quantity = item.quantity < 1
-			? 1
-			: item.quantity
-	}
-	const clearCart = () => {
-		for (const item of catalog) {
-			item.quantity = 0
-		}
-	}
 	function action<T extends (...args: any[]) => any>(handler: T): T {
 		return <T>(() => {
 			const result = handler()
-			onUpdate()
+			updateState()
 			return result
 		})
 	}
 
+	const addToCart = action((item: CartItem) => {
+		item.quantity = item.quantity < 1
+			? 1
+			: item.quantity
+	})
+
+	const clearCart = action(() => {
+		for (const item of state.catalog) {
+			item.quantity = 0
+		}
+	})
+
 	return {
-		getCartValue,
-		getCartPrice,
-		getItemsInCart,
-		getCartQuantity,
-		addToCart: action(addToCart),
-		clearCart: action(clearCart),
+		updateError,
+		updateCatalog,
+		model: {
+			reader,
+			addToCart,
+			clearCart,
+		}
 	}
 }
