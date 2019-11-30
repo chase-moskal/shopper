@@ -10,13 +10,15 @@ export type ConstructorWithModel<T = {}> = {
 }
 
 export interface ShopperConfig {
+	mock: string
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
 }
 
+
 export interface ShopperOptions {
-	shopifyAdapter: ShopifyAdapter
 	onUpdate: () => void
+	shopifyAdapter: ShopifyAdapter
 }
 
 export interface ShopperModel {
@@ -36,10 +38,10 @@ export interface ShopifyAdapterOptions {
 	storefrontAccessToken: string
 }
 
-// export interface CartPanelConnectOptions {
-// 	cartButton?: ShopperButton
-// 	shopifyAdapter: ShopifyAdapter
-// }
+export interface ShopifyResults {
+	products: Product[],
+	collectionIds: string[]
+}
 
 export interface Product {
 	id: string

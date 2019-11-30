@@ -1,10 +1,10 @@
 
+import {provideModel} from "./framework/provide-model.js"
 import {parseShopperConfig} from "./startup/parse-shopper-config.js"
 import {createShopperModel} from "./startup/create-shopper-model.js"
 import {generateShopperOptions} from "./startup/generate-shopper-options.js"
 
 import {ShopperCart} from "./components/shopper-cart.js"
-import {provideModel} from "./startup/provide-model.js"
 import {registerComponents} from "./toolbox/register-components.js"
 
 ;(async() => {

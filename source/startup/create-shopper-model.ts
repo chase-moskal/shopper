@@ -11,7 +11,9 @@ export async function createShopperModel({
 	// load shopify catalog
 	//
 
-	const {products, collectionIds} = await shopifyAdapter.fetchEverything()
+	const results = await shopifyAdapter.fetchEverything()
+	console.log("RESULTS!", results)
+	const {products, collectionIds} = results
 	const catalog: CartItem[] = products.map(product => new CartItem({
 		product,
 		quantity: 0,
@@ -24,7 +26,7 @@ export async function createShopperModel({
 	//
 
 	//
-	// cart state
+	// cart state getters
 	//
 
 	const getItemsInCart = () => catalog.filter(item => item.quantity > 0)

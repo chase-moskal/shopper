@@ -2,10 +2,11 @@
 import {ShopperModel} from "../interfaces.js"
 import {ShopperComponent} from "./shopper-component.js"
 
-export function provideModel<T extends typeof ShopperComponent>(
+export function provideModel<T extends new(...args: any[]) => ShopperComponent>(
 	model: ShopperModel,
 	C: T
 ): T {
-	C.model = model
-	return C
+	return <T>class extends C {
+		static model = model
+	}
 }

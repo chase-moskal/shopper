@@ -1,5 +1,5 @@
 
-import {ShopperComponent} from "../startup/shopper-component.js"
+import {ShopperComponent} from "../framework/shopper-component.js"
 
 export class ShopperCart extends ShopperComponent {
 	firstUpdated() {
