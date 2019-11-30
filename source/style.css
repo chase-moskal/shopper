@@ -7,6 +7,8 @@
 
 html {
 	font-size: 21px;
+	background: #111;
+	color: rgba(255,255,255, 0.6);
 }
 
 main {
@@ -17,7 +19,7 @@ main {
 
 main > header {
 	position: relative;
-	background: grey;
+	background: #222;
 	padding: 1em;
 }
 

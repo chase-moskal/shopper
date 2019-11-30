@@ -16,9 +16,9 @@ export function assembleShopper(
 	components: {[key: string]: typeof ShopperComponent}
 ) {
 
-	const shopifyAdapter: ShopifyAdapter = config.mock
+	const shopifyAdapter: ShopifyAdapter = config.mock !== null
 		? new (prepSlowAdapter({
-			ms: 1000,
+			ms: 2 * 1000,
 			Adapter: config.mock === "fail"
 				? MockFailingShopifyAdapter
 				: MockPassingShopifyAdapter,
