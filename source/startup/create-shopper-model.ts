@@ -1,6 +1,5 @@
 
-import {ShopperOptions, ShopperModel} from "../interfaces.js"
-import {CartItem} from "../ecommerce/cart-item.js"
+import {ShopperOptions, ShopperModel, CartItem} from "../interfaces.js"
 
 export async function createShopperModel({
 	onUpdate,
@@ -11,10 +10,8 @@ export async function createShopperModel({
 	// load shopify catalog
 	//
 
-	const results = await shopifyAdapter.fetchEverything()
-	console.log("RESULTS!", results)
-	const {products, collectionIds} = results
-	const catalog: CartItem[] = products.map(product => new CartItem({
+	const {products, collectionIds} = await shopifyAdapter.fetchEverything()
+	const catalog: CartItem[] = products.map(product => ({
 		product,
 		quantity: 0,
 		quantityMax: 5,

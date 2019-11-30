@@ -1,20 +1,14 @@
 
 import shopifyBuy from "shopify-buy/index.es.js"
-import {CartItem} from "../ecommerce/cart-item.js"
 
 import {
 	Product,
+	CartItem,
 	ShopifyClient,
 	ShopifyResults,
 	ShopifyAdapterOptions
 } from "../interfaces.js"
 
-/**
- * Shopify adapter
- * - wrapper for the shopify buy sdk
- * - exposes methods for making calls to shopify
- * - exposes a checkout machine which can be used by other components
- */
 export class ShopifyAdapter {
 	private _shopifyClient: ShopifyClient
 

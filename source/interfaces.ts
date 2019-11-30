@@ -1,13 +1,5 @@
 
-import {CartItem} from "./ecommerce/cart-item.js"
 import {ShopifyAdapter} from "./ecommerce/shopify-adapter.js"
-
-export type Constructor<T = {}> = new(...args: any[]) => T
-
-export type ConstructorWithModel<T = {}> = {
-	model: any
-	new(...args: any[]): T
-}
 
 export interface ShopperConfig {
 	mock: string
@@ -15,10 +7,16 @@ export interface ShopperConfig {
 	shopifyStorefrontAccessToken: string
 }
 
-
 export interface ShopperOptions {
 	onUpdate: () => void
 	shopifyAdapter: ShopifyAdapter
+}
+
+export interface CartItem {
+	product: Product
+	quantity: number
+	quantityMin: number
+	quantityMax: number
 }
 
 export interface ShopperModel {
@@ -50,8 +48,4 @@ export interface Product {
 	description: string
 	collections: string[]
 	firstVariantId: string
-}
-
-export interface CheckoutMachine {
-	checkout(items: CartItem): Promise<string>
 }
