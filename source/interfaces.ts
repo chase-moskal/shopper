@@ -29,8 +29,9 @@ export interface ShopperState {
 
 export interface ShopperModel {
 	reader: Reader<ShopperState>
-	addToCart: (item: CartItem) => void
+	checkout: (options: {checkoutInSameWindow: boolean}) => Promise<void>
 	clearCart: () => void
+	addToCart: (item: CartItem) => void
 }
 
 export type ShopifyClient = any

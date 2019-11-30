@@ -28,7 +28,9 @@ export function assembleShopper(
 			storefrontAccessToken: config.shopifyStorefrontAccessToken
 		})
 
-	const {model, updateCatalog, updateError} = createShopperModel()
+	const {model, updateCatalog, updateError} = createShopperModel({
+		shopifyAdapter
+	})
 
 	registerComponents(prepareShopperComponents(model, components))
 
