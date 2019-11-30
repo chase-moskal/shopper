@@ -13,7 +13,7 @@
 	},
 	"include": [
 		"source/**/*.tsx",
-		"source/**/*.ts"
+		"source/**/*.ts", "source-old/shopper-demo.ts"
 	],
 	"exclude": [
 		"source-old/**"

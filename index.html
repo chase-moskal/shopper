@@ -8,23 +8,25 @@
 		<link rel="stylesheet" href="source/style.css"/>
 		<script async defer src="https://cdn.jsdelivr.net/npm/sorry-not-sorry"></script>
 		<script type="importmap-shim" src="dist/importmap.json"></script>
-		<script type="module-shim" src="dist/shopper-demo.js"></script>
+		<script type="module-shim" src="dist/init.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7.4.4/dist/polyfill.min.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@0.2.15/dist/es-module-shims.js"></script>
 	</head>
 	<body>
+		<shopper-config
+			shopify-domain="dev-bakery.myshopify.com"
+			shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
+			>
+		</shopper-config>
 		<main>
 			<header>
 				<h1>shopper</h1>
 				<menu-system initially-hidden sticky>
 					<menu-display class="shopper-menu-display">
 						<shopper-button slot="button"></shopper-button>
-						<shopper-cart
-							shopify-domain="dev-bakery.myshopify.com"
-							shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25">
-						</shopper-cart>
+						<shopper-cart checkout-in-new-window></shopper-cart>
 					</menu-display>
 				</menu-system>
 			</header>

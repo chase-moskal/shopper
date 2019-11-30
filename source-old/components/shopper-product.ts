@@ -2,7 +2,7 @@
 import {html, property} from "lit-element"
 
 import {CartItem} from "../ecommerce/cart-item.js"
-import {LoadableElement} from "./loadable-element.js"
+import {LoadableElement} from "./loadable-element.js.js"
 
 export class ShopperProduct extends LoadableElement {
 	@property({type: String}) ["uid"]: string

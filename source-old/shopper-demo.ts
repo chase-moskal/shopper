@@ -2,10 +2,10 @@
 import "menutown"
 import "./register-all.js"
 
-import {ShopperCart} from "./components/shopper-cart.js"
+import {ShopperCart} from "../source/components/shopper-cart.js"
 import {MenuSystem} from "menutown/dist/components/menu-system.js"
 import {MenuDisplay} from "menutown/dist/components/menu-display.js"
-import {MockFailingShopifyAdapter, prepMockSlowShopifyAdapter} from "./ecommerce/shopify-adapter-mocks.js"
+import {MockFailingShopifyAdapter, prepMockSlowShopifyAdapter} from "../source/ecommerce/shopify-adapter-mocks.js"
 
 if (window.location.search.includes("fail")) {
 	const cart: ShopperCart = document.querySelector("shopper-cart")
