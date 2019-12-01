@@ -24,7 +24,6 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 			: state.error
 				? LoadableState.Error
 				: LoadableState.Loading
-		console.log("collection!", this.cartItems, state)
 	}
 
 	renderReady() {

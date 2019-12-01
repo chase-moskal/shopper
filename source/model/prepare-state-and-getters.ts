@@ -3,7 +3,7 @@ import {ShopperState, CartItem, ShopperGetters} from "../interfaces.js"
 
 const price = (value: number) => `\$${value.toFixed(2)} CAD`
 
-export function prepareState() {
+export function prepareStateAndGetters() {
 	const state: ShopperState = {
 		error: "",
 		catalog: [],
@@ -30,8 +30,11 @@ export function prepareState() {
 				return sum
 			})()
 		},
-		getItemPrice(item: CartItem) {
+		getUnitPrice(item: CartItem) {
 			return price(item.product.value)
+		},
+		getLinePrice(item: CartItem) {
+			return price(item.product.value * item.quantity)
 		}
 	}
 

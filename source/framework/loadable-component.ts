@@ -1,7 +1,6 @@
 
-import {property, html, css, svg, CSSResultArray} from "lit-element"
-
 import {ShopperComponent} from "./shopper-component.js"
+import {property, html, css, svg, CSSResultArray} from "lit-element"
 
 export enum LoadableState {
 	Loading,

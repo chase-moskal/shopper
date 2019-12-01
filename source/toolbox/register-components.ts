@@ -1,7 +1,7 @@
 
 import {LitElement} from "lit-element"
 
-function dashify(camel: string): string {
+export function dashify(camel: string): string {
 	return camel.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase()
 }
 

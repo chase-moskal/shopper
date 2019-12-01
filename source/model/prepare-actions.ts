@@ -3,8 +3,8 @@ import {
 	CartItem,
 	ShopperState,
 	ShopperActions,
-	ShopifyResults,
 	ShopperGetters,
+	ShopifyResults,
 } from "../interfaces"
 
 export function prepareActions({
@@ -26,6 +26,10 @@ export function prepareActions({
 			item.quantity = (item.quantity < 1)
 				? 1
 				: item.quantity
+		},
+
+		setItemQuantity(item: CartItem, quantity: number) {
+			item.quantity = quantity
 		},
 
 		clearCart() {

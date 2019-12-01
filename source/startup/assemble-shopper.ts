@@ -1,25 +1,24 @@
 
-import {makeReader} from "../toolbox/pubsub.js"
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
-import {registerComponents} from "../toolbox/register-components.js"
-import {CartItem, ShopperModel, ShopperAssembly} from "../interfaces.js"
-import {prepareShopperComponents} from "../framework/prepare-shopper-components.js"
+import {CartItem, ShopperModel, ShopperConfig} from "../interfaces.js"
+
 import {
 	prepSlowAdapter,
 	MockFailingShopifyAdapter,
 	MockPassingShopifyAdapter,
 } from "../ecommerce/shopify-adapter-mocks.js"
-import {prepareState} from "../model/prepare-state.js"
+
+import {hitch} from "../toolbox/hitch.js"
+import {makeReader} from "../toolbox/pubsub.js"
 import {objectMap} from "../toolbox/object-map.js"
 import {prepareActions} from "../model/prepare-actions.js"
-import {hitch} from "../toolbox/hitch.js"
+import {prepareStateAndGetters} from "../model/prepare-state-and-getters.js"
 
 export function assembleShopper({
 	mock,
-	components,
 	shopifyDomain,
 	shopifyStorefrontAccessToken,
-}: ShopperAssembly) {
+}: ShopperConfig) {
 
 	//
 	// setup shopify adapter
@@ -42,7 +41,7 @@ export function assembleShopper({
 	// create shopper model
 	//
 
-	const {state, getters} = prepareState()
+	const {state, getters} = prepareStateAndGetters()
 	const {reader, update} = makeReader(state)
 	const model: ShopperModel = {
 		reader,
@@ -54,16 +53,11 @@ export function assembleShopper({
 	}
 
 	//
-	// register the components
-	//
-
-	registerComponents(prepareShopperComponents(model, components))
-
-	//
 	// return a function to begin loading the catalog
 	//
 
 	return {
+		model,
 		async loadCatalog() {
 			try {
 				model.actions.setShopifyResults(await shopifyAdapter.fetchEverything())

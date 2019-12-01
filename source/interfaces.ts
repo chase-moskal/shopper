@@ -35,12 +35,14 @@ export interface ShopperGetters {
 	readonly cartValue: number
 	readonly cartPrice: string
 	readonly cartQuantity: number
-	getItemPrice(item: CartItem): string
+	getUnitPrice(item: CartItem): string
+	getLinePrice(item: CartItem): string
 }
 
 export interface ShopperActions {
 	addToCart(item: CartItem): void
 	clearCart(): void
+	setItemQuantity(item: CartItem, quantity: number): void
 	checkout(options: {checkoutInSameWindow: boolean}): Promise<void>
 	setError(message: string): void
 	setShopifyResults(results: ShopifyResults): void

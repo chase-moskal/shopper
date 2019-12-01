@@ -3,7 +3,7 @@ import {ShopperModel} from "../interfaces.js"
 import {provideModel} from "./provide-model.js"
 import {ShopperComponent} from "./shopper-component.js"
 
-export function prepareShopperComponents(
+export function wireModelToComponents(
 	model: ShopperModel,
 	components: {[key: string]: typeof ShopperComponent}
 ) {

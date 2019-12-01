@@ -1,6 +1,5 @@
 
 import {LitElement} from "lit-element"
-
 import {Unsubscribe} from "../toolbox/pubsub.js"
 import {ShopperModel, ShopperState} from "../interfaces.js"
 
@@ -15,10 +14,14 @@ export class ShopperComponent extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback()
-		if (!this.model) throw new Error("shopper components require model")
-		this.shopperUpdate(this.model.reader.state, this.model)
-		this[_unsubscribe] = this.model.reader.subscribe(
-			(state: ShopperState) => this.shopperUpdate(state, this.model)
+		const {model} = this
+		if (!model) throw new Error("shopper components require model")
+		this.shopperUpdate(model.reader.state, model)
+		this[_unsubscribe] = model.reader.subscribe(
+			(state: ShopperState) => {
+				this.shopperUpdate(state, model)
+				this.requestUpdate()
+			}
 		)
 	}
 
