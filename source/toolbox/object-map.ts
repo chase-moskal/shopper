@@ -1,10 +1,10 @@
 
-export function objectMap<V = any, O extends {} = {}>(
+export function objectMap<V = any, X = any, O extends {} = {}>(
 	input: O,
-	mapper: (value: any, key: string) => V
+	mapper: (value: X, key: string) => V
 ): {[P in keyof O]: V} {
 	const output: any = {}
-	for (const [key, value] of Object.entries(input))
+	for (const [key, value] of Object.entries<X>(input))
 		output[key] = mapper(value, key)
 	return output
 }

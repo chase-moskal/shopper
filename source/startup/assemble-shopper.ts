@@ -1,4 +1,5 @@
 
+import {makeReader} from "../toolbox/pubsub.js"
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
 import {registerComponents} from "../toolbox/register-components.js"
 import {CartItem, ShopperModel, ShopperAssembly} from "../interfaces.js"
@@ -41,13 +42,14 @@ export function assembleShopper({
 	// create shopper model
 	//
 
-	const {state, getters, reader, publishStateUpdate} = prepareState()
+	const {state, getters} = prepareState()
+	const {reader, update} = makeReader(state)
 	const model: ShopperModel = {
 		reader,
 		getters,
 		actions: objectMap(
 			prepareActions({state, checkout, getters}),
-			value => hitch(value, {after: publishStateUpdate})
+			value => hitch(value, {after: update})
 		)
 	}
 

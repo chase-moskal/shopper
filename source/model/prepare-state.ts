@@ -1,5 +1,4 @@
 
-import {makeReader} from "../toolbox/pubsub.js"
 import {ShopperState, CartItem, ShopperGetters} from "../interfaces.js"
 
 const price = (value: number) => `\$${value.toFixed(2)} CAD`
@@ -36,6 +35,5 @@ export function prepareState() {
 		}
 	}
 
-	const {reader, publishStateUpdate} = makeReader(state)
-	return {state, getters, reader, publishStateUpdate}
+	return {state, getters}
 }

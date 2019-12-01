@@ -33,7 +33,7 @@ export interface Reader<S extends {} = {}> {
 
 export interface ReaderContext<S extends {} = {}> {
 	reader: Reader<S>
-	publishStateUpdate: () => void
+	update: () => void
 }
 
 export function pubsub<Listener extends AnyListener = AnyListener>():
@@ -77,6 +77,6 @@ export function makeReader<S extends {} = {}>(state: S): ReaderContext<S> {
 			subscribe,
 			get state() {return Object.freeze({...state})},
 		},
-		publishStateUpdate: () => publish(Object.freeze({...state})),
+		update: () => publish(Object.freeze({...state})),
 	}
 }
