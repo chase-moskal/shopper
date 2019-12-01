@@ -25,19 +25,19 @@ export function prepareActions({
 	}
 
 	return {
-		addToCart(item: CartItem) {
+		async addToCart(item: CartItem) {
 			item.quantity = (item.quantity < 1)
 				? 1
 				: item.quantity
 			state.checkedOut = false
 		},
 
-		setItemQuantity(item: CartItem, quantity: number) {
+		async setItemQuantity(item: CartItem, quantity: number) {
 			item.quantity = quantity
 			state.checkedOut = false
 		},
 
-		clearCart() {
+		async clearCart() {
 			zeroAllQuantity()
 			state.checkedOut = false
 		},
@@ -60,13 +60,13 @@ export function prepareActions({
 			checkoutLocation.href = url
 		},
 
-		setError(message: string) {
+		async setError(message: string) {
 			state.error = message
 			state.catalog = []
 			state.checkedOut = false
 		},
 
-		setShopifyResults({products}: ShopifyResults) {
+		async setShopifyResults({products}: ShopifyResults) {
 			state.catalog = products.map(product => ({
 				product,
 				quantity: 0,

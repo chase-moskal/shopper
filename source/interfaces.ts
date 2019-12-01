@@ -57,12 +57,12 @@ export interface ShopperGetters {
 }
 
 export interface ShopperActions {
-	addToCart(item: CartItem): void
-	clearCart(): void
-	setItemQuantity(item: CartItem, quantity: number): void
+	addToCart(item: CartItem): Promise<void>
+	clearCart(): Promise<void>
+	setItemQuantity(item: CartItem, quantity: number): Promise<void>
 	checkout(options: {checkoutInSameWindow: boolean}): Promise<void>
-	setError(message: string): void
-	setShopifyResults(results: ShopifyResults): void
+	setError(message: string): Promise<void>
+	setShopifyResults(results: ShopifyResults): Promise<void>
 }
 
 export interface ShopperModel {

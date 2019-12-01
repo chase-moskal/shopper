@@ -1,24 +1,21 @@
 
-import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
 import {
 	CartItem,
 	ShopperModel,
 	ShopperAssemblyOptions,
 } from "../interfaces.js"
 
-import {createCartStorage} from "../model/create-cart-storage.js"
-
 import {
 	prepSlowAdapter,
 	MockFailingShopifyAdapter,
 	MockPassingShopifyAdapter,
 } from "../ecommerce/shopify-adapter-mocks.js"
+import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
 
-import {hitch} from "../toolbox/hitch.js"
+import {asyncHitch} from "../toolbox/hitch.js"
 import {makeReader} from "../toolbox/pubsub.js"
 import {objectMap} from "../toolbox/object-map.js"
 import {prepareActions} from "../model/prepare-actions.js"
-import {SimpleDataStore} from "../toolbox/simple-data-store.js"
 import {prepareStateAndGetters} from "../model/prepare-state-and-getters.js"
 
 export function assembleModel({
@@ -56,8 +53,8 @@ export function assembleModel({
 		getters,
 		actions: objectMap(
 			prepareActions({state, checkout, getters, update}),
-			value => hitch(value, {after: () => {
-				cartStorage.saveCart(state.catalog)
+			value => asyncHitch(value, {after: async() => {
+				await cartStorage.saveCart(state.catalog)
 				update()
 			}})
 		)
@@ -71,7 +68,8 @@ export function assembleModel({
 		model,
 		async loadCatalog() {
 			try {
-				model.actions.setShopifyResults(await shopifyAdapter.fetchEverything())
+				const results = await shopifyAdapter.fetchEverything()
+				await model.actions.setShopifyResults(results)
 				await cartStorage.loadCart(state.catalog)
 				update()
 			}

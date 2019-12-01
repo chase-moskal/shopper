@@ -19,8 +19,8 @@ export function createCartStorage({key, dataStore}: {
 			await dataStore.setItem(key, JSON.stringify(store))
 		},
 		async loadCart(catalog: CartItem[]) {
-			loaded = true
 			const raw = await dataStore.getItem(key)
+			loaded = true
 			if (!raw) return
 			const store: CartData = JSON.parse(raw)
 			for (const [uid, data] of Object.entries<any>(store)) {
