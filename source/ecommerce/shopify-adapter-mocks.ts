@@ -37,11 +37,17 @@ export function prepSlowAdapter<T extends new(...args: any[]) => MockAdapter>({
 	return class MockSlowShopifyAdapter extends Adapter {
 		async fetchEverything(): Promise<ShopifyResults> {
 			await wait(ms)
-			return super.fetchEverything()
+			return Adapter.prototype.fetchEverything.call(this)
+				// // HACK makes Edge 18 work ¯\_(ツ)_/¯
+				// // supposed to be this:
+				// return super.fetchEverything()
 		}
 		async checkout(items): Promise<string> {
 			await wait(ms)
-			return super.checkout(items)
+			return Adapter.prototype.checkout.call(this, items)
+				// // HACK makes Edge 18 work ¯\_(ツ)_/¯
+				// // supposed to be this:
+				// return super.checkout(items)
 		}
 	}
 }

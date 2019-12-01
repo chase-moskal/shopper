@@ -43,12 +43,6 @@ export function prepareActions({
 		},
 
 		async checkout({checkoutInSameWindow}: {checkoutInSameWindow: boolean}) {
-			state.checkoutInProgress = true
-			update()
-			const url = await checkout(getters.itemsInCart)
-			state.checkoutInProgress = false
-			state.checkedOut = true
-			update()
 			const checkoutLocation: Location = checkoutInSameWindow
 				? window.location
 				: (() => {
@@ -56,6 +50,12 @@ export function prepareActions({
 					checkoutWindow.document.write(`loading checkout... if you are experiencing issues, please contact support`)
 					return checkoutWindow.location
 				})()
+			state.checkoutInProgress = true
+			update()
+			const url = await checkout(getters.itemsInCart)
+			state.checkoutInProgress = false
+			state.checkedOut = true
+			update()
 			zeroAllQuantity()
 			checkoutLocation.href = url
 		},

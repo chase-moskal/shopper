@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.1.0-dev.20",
+	"version": "0.1.0-dev.21",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
@@ -15,6 +15,7 @@
 		"prepare": "run-s clean build test",
 		"clean": "rimraf dist && mkdirp dist",
 		"build": "run-p importmap compile copy-styles",
+		"bundle": "rollup -c rollup.config.js",
 		"importmap": "importly < package.json > dist/importmap.json",
 		"compile": "tsc",
 		"copy-styles": "ncp source/style.css dist",
@@ -40,6 +41,8 @@
 		"npm-run-all": "^4.1.5",
 		"octicons": "^8.5.0",
 		"rimraf": "^3.0.0",
+		"rollup": "^1.27.6",
+		"rollup-plugin-node-resolve": "^5.2.0",
 		"serve": "^11.2.0",
 		"typescript": "^3.7.2"
 	},
