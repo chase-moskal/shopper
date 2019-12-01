@@ -9,17 +9,20 @@ import {
 
 export class ShopperCollection extends LightDom(LoadableComponent) {
 	@property({type: String, reflect: true}) ["uid"]: string
-	@property({type: Array}) cartItems: CartItem[] = null
+	@property({type: Boolean, reflect: true}) ["all"]: boolean
+	@property({type: Array}) items: CartItem[] = null
 
 	static get styles() {return [...super.styles, css`
 	`]}
 
 	shopperUpdate(state: ShopperState) {
-		const {uid} = this
-		this.cartItems = uid
-			? state.catalog.filter(item => item.product.collections.includes(uid))
-			: []
-		this.loadableState = (this.cartItems && this.cartItems.length > 0)
+		const {uid, all} = this
+		this.items = all
+			? [...state.catalog]
+			: uid
+				? state.catalog.filter(item => item.product.collections.includes(uid))
+				: []
+		this.loadableState = (this.items && this.items.length > 0)
 			? LoadableState.Ready
 			: state.error
 				? LoadableState.Error
@@ -27,7 +30,7 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 	}
 
 	renderReady() {
-		const {cartItems} = this
+		const {items: cartItems} = this
 		return html`
 			<ol>
 				${cartItems && cartItems.map(cartItem => html`
