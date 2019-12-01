@@ -1,6 +1,10 @@
 
 # shopper changelog
 
+### v0.1.0-dev.18
+
+massive refactor, everything is different now
+
 ### v0.1.0-dev.6
 
 breaking changes
