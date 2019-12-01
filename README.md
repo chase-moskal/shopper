@@ -11,10 +11,10 @@
 	<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.4.0/webcomponents-bundle.js"></script>
 
-	<script type="importmap-shim" src="https://unpkg.com/shopper@0.1.0-dev.21/dist/importmap.json"></script>
+	<script type="importmap-shim" src="https://cdn.jsdelivr.net/npm/shopper@0.1.0/dist/importmap.json"></script>
 	<script type="module-shim">
 		import "menutown"
-		import "shopper"
+		import "https://cdn.jsdelivr.net/npm/shopper@0.1.0/dist/shopper.js"
 	</script>
 
 	<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
