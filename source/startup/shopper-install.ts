@@ -9,6 +9,8 @@ import {ShopperProduct} from "../components/shopper-product.js"
 import {ShopperCollection} from "../components/shopper-collection.js"
 
 import {select} from "../toolbox/select.js"
+import {SimpleDataStore} from "../toolbox/simple-data-store.js"
+import {createCartStorage} from "../model/create-cart-storage.js"
 import {dashify, registerComponents} from "../toolbox/register-components.js"
 import {wireModelToComponents} from "../framework/wire-model-to-components.js"
 
@@ -18,7 +20,13 @@ export async function shopperInstall() {
 	const config = parseConfig(select("shopper-config"))
 
 	// assemble the shopper model
-	const {model, loadCatalog} = assembleModel(config)
+	const {model, loadCatalog} = assembleModel({
+		...config,
+		cartStorage: createCartStorage({
+			key: "shopper-cart",
+			dataStore: new SimpleDataStore({storage: window.localStorage})
+		})
+	})
 
 	// wire the model to the components, and register those components
 	registerComponents(wireModelToComponents(model, {

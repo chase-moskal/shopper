@@ -9,16 +9,19 @@ import {
 
 export function prepareActions({
 	state,
+	update,
 	getters,
 	checkout,
 }: {
+	update: () => void
 	state: ShopperState
 	getters: ShopperGetters
 	checkout: (items: CartItem[]) => Promise<string>
 }): ShopperActions {
 
 	function zeroAllQuantity() {
-		for (const item of state.catalog) item.quantity = 0
+		for (const item of state.catalog)
+			item.quantity = 0
 	}
 
 	return {
@@ -26,18 +29,26 @@ export function prepareActions({
 			item.quantity = (item.quantity < 1)
 				? 1
 				: item.quantity
+			state.checkedOut = false
 		},
 
 		setItemQuantity(item: CartItem, quantity: number) {
 			item.quantity = quantity
+			state.checkedOut = false
 		},
 
 		clearCart() {
 			zeroAllQuantity()
+			state.checkedOut = false
 		},
 
 		async checkout({checkoutInSameWindow}: {checkoutInSameWindow: boolean}) {
+			state.checkoutInProgress = true
+			update()
 			const url = await checkout(getters.itemsInCart)
+			state.checkoutInProgress = false
+			state.checkedOut = true
+			update()
 			const checkoutLocation: Location = checkoutInSameWindow
 				? window.location
 				: (() => {
@@ -52,6 +63,7 @@ export function prepareActions({
 		setError(message: string) {
 			state.error = message
 			state.catalog = []
+			state.checkedOut = false
 		},
 
 		setShopifyResults({products}: ShopifyResults) {
@@ -61,6 +73,7 @@ export function prepareActions({
 				quantityMax: 5,
 				quantityMin: 1,
 			}))
+			state.checkedOut = false
 		}
 	}
 }

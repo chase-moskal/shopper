@@ -1,6 +1,12 @@
 
 import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
-import {CartItem, ShopperModel, ShopperConfig} from "../interfaces.js"
+import {
+	CartItem,
+	ShopperModel,
+	ShopperAssemblyOptions,
+} from "../interfaces.js"
+
+import {createCartStorage} from "../model/create-cart-storage.js"
 
 import {
 	prepSlowAdapter,
@@ -12,13 +18,15 @@ import {hitch} from "../toolbox/hitch.js"
 import {makeReader} from "../toolbox/pubsub.js"
 import {objectMap} from "../toolbox/object-map.js"
 import {prepareActions} from "../model/prepare-actions.js"
+import {SimpleDataStore} from "../toolbox/simple-data-store.js"
 import {prepareStateAndGetters} from "../model/prepare-state-and-getters.js"
 
 export function assembleModel({
 	mock,
+	cartStorage,
 	shopifyDomain,
 	shopifyStorefrontAccessToken,
-}: ShopperConfig) {
+}: ShopperAssemblyOptions) {
 
 	//
 	// setup shopify adapter, mock or real
@@ -47,8 +55,11 @@ export function assembleModel({
 		reader,
 		getters,
 		actions: objectMap(
-			prepareActions({state, checkout, getters}),
-			value => hitch(value, {after: update})
+			prepareActions({state, checkout, getters, update}),
+			value => hitch(value, {after: () => {
+				cartStorage.saveCart(state.catalog)
+				update()
+			}})
 		)
 	}
 
@@ -61,6 +72,8 @@ export function assembleModel({
 		async loadCatalog() {
 			try {
 				model.actions.setShopifyResults(await shopifyAdapter.fetchEverything())
+				await cartStorage.loadCart(state.catalog)
+				update()
 			}
 			catch (error) {
 				const message = "shopping cart error"

@@ -35,6 +35,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 
 	renderReady() {
 		const cartIsEmpty = this.model.getters.cartQuantity < 1
+		const {checkoutInProgress} = this.model.reader.state
 		return html`
 			<section class="shopper-cart">
 				${this._renderCartTitle()}
@@ -45,6 +46,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 							class="checkout-button"
 							title="Checkout Cart"
 							@click=${this._handleCheckoutButtonClick}
+							?disabled=${checkoutInProgress}
 							?hidden=${cartIsEmpty}>
 								Checkout!
 							</button>
@@ -61,7 +63,12 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 
 	private _renderCartTitle() {
 		const {cartQuantity: quantity} = this.model.getters
-		return html`
+		const {checkedOut} = this.model.reader.state
+		return checkedOut ? html`
+			<h2>
+				Cart checked out
+			</h2>
+		` : html`
 			<h2>
 				<span>Cart</span>
 				<span>– ${

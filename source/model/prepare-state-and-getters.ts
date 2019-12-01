@@ -7,6 +7,8 @@ export function prepareStateAndGetters() {
 	const state: ShopperState = {
 		error: "",
 		catalog: [],
+		checkedOut: false,
+		checkoutInProgress: false,
 	}
 
 	const getters: ShopperGetters = {

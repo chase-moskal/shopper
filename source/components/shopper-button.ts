@@ -8,7 +8,7 @@ export class ShopperButton extends ShopperComponent {
 	@property({type: Number, reflect: true}) numeral = 0
 
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
-		this.numeral = getters.itemsInCart.length
+		this.numeral = getters.cartQuantity
 	}
 
 	static get styles() {

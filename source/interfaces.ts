@@ -10,6 +10,10 @@ export interface ShopperConfig {
 	shopifyStorefrontAccessToken: string
 }
 
+export interface ShopperAssemblyOptions extends ShopperConfig {
+	cartStorage: CartStorage
+}
+
 export interface ShopperAssembly extends ShopperConfig {
 	components: {[key: string]: typeof ShopperComponent}
 }
@@ -25,9 +29,22 @@ export interface CartItem {
 	quantityMax: number
 }
 
+export interface CartStorage {
+	saveCart(catalog: CartItem[]): Promise<void>
+	loadCart(catalog: CartItem[]): Promise<void>
+}
+
+export interface CartData {
+	[productId: string]: {
+		quantity: number
+	}
+}
+
 export interface ShopperState {
 	error: string
 	catalog: CartItem[]
+	checkedOut: boolean
+	checkoutInProgress: boolean
 }
 
 export interface ShopperGetters {

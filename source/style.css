@@ -29,7 +29,7 @@ main > .content {
 
 menu-system {
 	color: #333;
-	--menu-margin: 1em auto;
+	--menu-margin: 0.5em auto;
 }
 
 menu-system[initially-hidden] {
