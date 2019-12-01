@@ -5,6 +5,8 @@ import {ShopperCart} from "../components/shopper-cart.js"
 export function wireCartToMenuDisplay({cartSelector}: {
 	cartSelector: string
 }) {
+
+	// toggle open the menu display when the cart's first item is added
 	try {
 		const shopperCart = select<ShopperCart>(cartSelector)
 		if (!shopperCart) return false
