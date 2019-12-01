@@ -1,6 +1,6 @@
 
-import {assembleShopper} from "./assemble-shopper.js"
-import {parseShopperConfig} from "./parse-shopper-config.js"
+import {parseConfig} from "./parse-config.js"
+import {assembleModel} from "./assemble-model.js"
 import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
 
 import {ShopperCart} from "../components/shopper-cart.js"
@@ -15,10 +15,10 @@ import {wireModelToComponents} from "../framework/wire-model-to-components.js"
 export async function shopperInstall() {
 
 	// parse <shopper-config> element
-	const config = parseShopperConfig(select("shopper-config"))
+	const config = parseConfig(select("shopper-config"))
 
 	// assemble the shopper model
-	const {model, loadCatalog} = assembleShopper(config)
+	const {model, loadCatalog} = assembleModel(config)
 
 	// wire the model to the components, and register those components
 	registerComponents(wireModelToComponents(model, {

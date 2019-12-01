@@ -14,14 +14,14 @@ import {objectMap} from "../toolbox/object-map.js"
 import {prepareActions} from "../model/prepare-actions.js"
 import {prepareStateAndGetters} from "../model/prepare-state-and-getters.js"
 
-export function assembleShopper({
+export function assembleModel({
 	mock,
 	shopifyDomain,
 	shopifyStorefrontAccessToken,
 }: ShopperConfig) {
 
 	//
-	// setup shopify adapter
+	// setup shopify adapter, mock or real
 	//
 
 	const shopifyAdapter: ShopifyAdapter = mock !== null
