@@ -2,8 +2,10 @@
 import {Reader} from "./toolbox/pubsub.js"
 import {ShopperComponent} from "./framework/shopper-component.js"
 
+export type ShopperMock = null | "" | "mock" | "fail"
+
 export interface ShopperConfig {
-	mock: string
+	mock: ShopperMock
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
 }
