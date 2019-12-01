@@ -1,7 +1,7 @@
 
 import {html, css, property, svg} from "lit-element"
 
-import {ShopperState} from "../interfaces.js"
+import {ShopperState, ShopperModel} from "../interfaces.js"
 import {
 	LoadableState,
 	LoadableComponent,
@@ -14,7 +14,7 @@ export class ShopperCart extends LoadableComponent {
 		console.log("shopper cart first updated", this.model)
 	}
 
-	shopperUpdate(state: ShopperState) {
+	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 		console.log("shopper state:", state)
 		this.loadableState = state.error
 			? LoadableState.Error

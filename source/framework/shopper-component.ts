@@ -11,14 +11,14 @@ export class ShopperComponent extends LitElement {
 	private [_unsubscribe]: Unsubscribe
 	model: ShopperModel = (<any>this.constructor).model
 
-	shopperUpdate(state: ShopperState) {}
+	shopperUpdate(state: ShopperState, model: ShopperModel) {}
 
 	connectedCallback() {
 		super.connectedCallback()
 		if (!this.model) throw new Error("shopper components require model")
-		this.shopperUpdate(this.model.reader.state)
+		this.shopperUpdate(this.model.reader.state, this.model)
 		this[_unsubscribe] = this.model.reader.subscribe(
-			(state: ShopperState) => this.shopperUpdate(state)
+			(state: ShopperState) => this.shopperUpdate(state, this.model)
 		)
 	}
 

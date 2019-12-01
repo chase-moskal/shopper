@@ -1,15 +1,14 @@
 
 import {html, css, svg, property} from "lit-element"
 
-import {ShopperState} from "../interfaces.js"
+import {ShopperState, ShopperModel} from "../interfaces.js"
 import {ShopperComponent} from "../framework/shopper-component.js"
 
 export class ShopperButton extends ShopperComponent {
 	@property({type: Number, reflect: true}) numeral = 0
 
-	shopperUpdate(state: ShopperState) {
-		console.log("button shopper update!")
-		this.numeral = state.itemsInCart.length
+	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
+		this.numeral = getters.itemsInCart.length
 	}
 
 	static get styles() {

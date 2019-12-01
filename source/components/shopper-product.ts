@@ -1,7 +1,7 @@
 
 import {property, html, css} from "lit-element"
 import {LightDom} from "../framework/light-dom.js"
-import {ShopperState, CartItem} from "../interfaces.js"
+import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
 import {
 	LoadableState,
 	LoadableComponent,
@@ -15,24 +15,24 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	static get styles() {return [...super.styles, css`
 	`]}
 
-	shopperUpdate(state: ShopperState) {
+	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 		this.cartItem = state.catalog.find(item => item.product.id === this.uid)
 		this.loadableState = this.cartItem
 			? LoadableState.Ready
 			: state.error
 				? LoadableState.Error
 				: LoadableState.Loading
-		this["in-cart"] = state.itemsInCart.includes(this.cartItem)
+		this["in-cart"] = getters.itemsInCart.includes(this.cartItem)
 	}
 
 	private _handleAddToCart = () => {
-		this.model.addToCart(this.cartItem)
+		this.model.actions.addToCart(this.cartItem)
 	}
 
 	renderReady() {
 		const {cartItem, _handleAddToCart} = this
 		const inCart = this["in-cart"]
-		const getItemPrice = () => this.model.getItemPrice(cartItem)
+		const getItemPrice = () => this.model.getters.getItemPrice(cartItem)
 		return !cartItem ? html`` : html`
 			<div class="product-display">
 				<h3 class="title">${cartItem.product.title}</h3>

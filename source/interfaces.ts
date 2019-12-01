@@ -6,6 +6,9 @@ export interface ShopperConfig {
 	mock: string
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
+}
+
+export interface ShopperAssembly extends ShopperConfig {
 	components: {[key: string]: typeof ShopperComponent}
 }
 
@@ -23,18 +26,28 @@ export interface CartItem {
 export interface ShopperState {
 	error: string
 	catalog: CartItem[]
-	itemsInCart: CartItem[]
-	cartValue: number
-	cartPrice: string
-	cartQuantity: number
+}
+
+export interface ShopperGetters {
+	readonly itemsInCart: CartItem[]
+	readonly cartValue: number
+	readonly cartPrice: string
+	readonly cartQuantity: number
+	getItemPrice(item: CartItem): string
+}
+
+export interface ShopperActions {
+	addToCart(item: CartItem): void
+	clearCart(): void
+	checkout(options: {checkoutInSameWindow: boolean}): Promise<void>
+	setError(message: string): void
+	setShopifyResults(results: ShopifyResults): void
 }
 
 export interface ShopperModel {
 	reader: Reader<ShopperState>
-	checkout: (options: {checkoutInSameWindow: boolean}) => Promise<void>
-	clearCart: () => void
-	addToCart: (item: CartItem) => void
-	getItemPrice: (item: CartItem) => string
+	getters: ShopperGetters
+	actions: ShopperActions
 }
 
 export type ShopifyClient = any
