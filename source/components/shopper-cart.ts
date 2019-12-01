@@ -55,7 +55,7 @@ export class ShopperCart extends LoadableComponent {
 	}
 
 	private _handleCheckoutButtonClick = () => this.model.actions.checkout({
-		checkoutInSameWindow: this["checkout-in-same-window"] !== null
+		checkoutInSameWindow: !!this["checkout-in-same-window"]
 	})
 
 	private _renderCartTitle() {

@@ -42,7 +42,7 @@ export function prepareActions({
 				? window.location
 				: (() => {
 					const checkoutWindow = window.open("", "_blank")
-					checkoutWindow.document.write(`loading checkout... if you are experiencing issues, please email <a href="mailto:suzie@nailcareer.com">suzie@nailcareer.com</a>`)
+					checkoutWindow.document.write(`loading checkout... if you are experiencing issues, please contact support`)
 					return checkoutWindow.location
 				})()
 			zeroAllQuantity()
