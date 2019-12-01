@@ -8,13 +8,13 @@ FUNDAMENTAL STYLES
 ==================
 */
 
-* {
+.shopper-cart, .shopper-cart * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-:host {
+.shopper-cart {
 	font-family: var(--shopper-font-family, sans-serif);
 }
 
@@ -23,37 +23,42 @@ CART ITEM TABLE
 ===============
 */
 
-table {
+.shopper-cart table {
 	width: 100%;
 	margin: 1em auto;
 }
 
-th, td {
+.shopper-cart th,
+.shopper-cart td {
 	padding: 0.25rem;
 }
 
-th {
+.shopper-cart th {
 	font-style: sans-serif;
-	font-size: 0.8em;
-	opacity: 0.35;
+	font-size: 0.7em;
+	opacity: 0.5;
 	text-transform: uppercase;
 	text-align: left;
 }
 
-td {
+.shopper-cart td {
 	border: 1px solid rgba(0,0,0, 0.1);
 }
 
-th:nth-child(1), td:nth-child(1),
-th:nth-child(2), td:nth-child(2) {
+.shopper-cart th:nth-child(1),
+.shopper-cart td:nth-child(1),
+.shopper-cart th:nth-child(2),
+.shopper-cart td:nth-child(2) {
 	text-align: center;
 }
 
-th:nth-child(3), td:nth-child(3) {
+.shopper-cart th:nth-child(3),
+.shopper-cart td:nth-child(3) {
 	width: 99%;
 }
 
-th:nth-last-child(1), td:nth-last-child(1) {
+.shopper-cart th:nth-last-child(1),
+.shopper-cart td:nth-last-child(1) {
 	text-align: right;
 	white-space: nowrap;
 }
@@ -63,7 +68,7 @@ TABLE: REMOVE BUTTONS
 =====================
 */
 
-.remove-button {
+.shopper-cart .remove-button {
 	opacity: 0.5;
 	width: 100%;
 	background: transparent;
@@ -72,11 +77,12 @@ TABLE: REMOVE BUTTONS
 	color: #444;
 }
 
-.remove-button:hover, .remove-button:focus {
+.shopper-cart .remove-button:hover,
+.shopper-cart .remove-button:focus {
 	opacity: 1;
 }
 
-.remove-button svg {
+.shopper-cart .remove-button svg {
 	width: 100%;
 	min-width: 1.5em;
 	height: 1.5em;
@@ -87,17 +93,17 @@ TABLE: SUBTOTAL
 ===============
 */
 
-.cart-subtotal {
+.shopper-cart .cart-subtotal {
 	text-align: right;
 	border-top: 1px solid grey;
 }
 
-.cart-subtotal th {
+.shopper-cart .cart-subtotal th {
 	width: 99%;
 	text-align: right;
 }
 
-.cart-subtotal td {
+.shopper-cart .cart-subtotal td {
 	white-space: nowrap;
 }
 
@@ -106,20 +112,24 @@ TABLE: MEDIA QUERIES
 ====================
 */
 
-@media (max-width: 420px) {
-	thead {
+@media (max-width: 600px) {
+	.shopper-cart thead {
 		display: none;
 	}
-	tr {
+	.shopper-cart tr {
 		display: block;
 		margin-top: 1em;
 	}
-	th, td {
+	.shopper-cart th,
+	.shopper-cart td {
 		padding: 0.1rem;
 		display: inline-block;
 	}
-	td {
+	.shopper-cart td {
 		border: none;
+	}
+	.shopper-cart .product-title {
+		font-weight: bold;
 	}
 }
 
@@ -128,11 +138,11 @@ CART CHECKOUT
 =============
 */
 
-.cart-checkout {
+.shopper-cart .cart-checkout {
 	text-align: right;
 }
 
-.cart-checkout button {
+.shopper-cart .cart-checkout button {
 	font-size: 1.2em;
 	padding: 0.5em 1em;
 	font-weight: bold;

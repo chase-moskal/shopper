@@ -1,6 +1,7 @@
 
-import {html, css, property, svg} from "lit-element"
+import {html, property, svg} from "lit-element"
 
+import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, ShopperModel, CartItem} from "../interfaces.js"
 import {
 	LoadableState,
@@ -9,7 +10,7 @@ import {
 
 import {shopperCartStyles} from "./shopper-cart-styles.js"
 
-export class ShopperCart extends LoadableComponent {
+export class ShopperCart extends LightDom(LoadableComponent) {
 	static get styles() {return [...super.styles, shopperCartStyles]}
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
 
@@ -35,7 +36,7 @@ export class ShopperCart extends LoadableComponent {
 	renderReady() {
 		const cartIsEmpty = this.model.getters.cartQuantity < 1
 		return html`
-			<div class="cart-panel">
+			<section class="shopper-cart">
 				${this._renderCartTitle()}
 				${cartIsEmpty ? null : html`
 					${this._renderCartLineItems()}
@@ -50,7 +51,7 @@ export class ShopperCart extends LoadableComponent {
 						</div>
 					</div>
 				`}
-			</div>
+			</section>
 		`
 	}
 
@@ -61,8 +62,8 @@ export class ShopperCart extends LoadableComponent {
 	private _renderCartTitle() {
 		const {cartQuantity: quantity} = this.model.getters
 		return html`
-			<h1>
-				<span>Shopping cart</span>
+			<h2>
+				<span>Cart</span>
 				<span>– ${
 					quantity === 0
 						? "empty"
@@ -70,7 +71,7 @@ export class ShopperCart extends LoadableComponent {
 							? ""
 							: "s"}`
 				}</span>
-			</h1>
+			</h2>
 		`
 	}
 
@@ -103,10 +104,6 @@ export class ShopperCart extends LoadableComponent {
 		`
 	}
 
-	private _handleRemoveClick = () => {
-		
-	}
-
 	private _renderCartItem(item: CartItem) {
 		const {getters, actions} = this.model
 		const handleQuantityInputChange = (event: Event) => {
@@ -118,7 +115,7 @@ export class ShopperCart extends LoadableComponent {
 			input.value = value.toString()
 			actions.setItemQuantity(item, value ? value : 0)
 		}
-		const handleRemoveButtonClick = () => actions.setItemQuantity(item, 0)
+		const handleRemoveClick = () => actions.setItemQuantity(item, 0)
 		const linePrice = getters.getLinePrice(item)
 		return html`
 			<tr>
@@ -126,7 +123,7 @@ export class ShopperCart extends LoadableComponent {
 					<button
 						class="remove-button"
 						title="Remove item"
-						@click=${handleRemoveButtonClick}>
+						@click=${handleRemoveClick}>
 							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
 					</button>
 				</td>
@@ -143,8 +140,8 @@ export class ShopperCart extends LoadableComponent {
 						@blur=${handleQuantityInputChange}
 						/>
 				</td>
-				<td>${item.product.title}</td>
-				<td>${linePrice}</td>
+				<td class="product-title">${item.product.title}</td>
+				<td class="line-price">${linePrice}</td>
 			</tr>
 		`
 	}
