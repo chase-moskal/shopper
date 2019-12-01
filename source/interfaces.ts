@@ -1,7 +1,75 @@
 
-import {CartItem} from "./ecommerce/cart-item.js"
-import {ShopperButton} from "./components/shopper-button.js"
-import {ShopifyAdapter} from "./ecommerce/shopify-adapter.js"
+import {Reader} from "./toolbox/pubsub.js"
+import {ShopperComponent} from "./framework/shopper-component.js"
+
+export type ShopperMock = null | "" | "mock" | "fail"
+
+export interface ShopperConfig {
+	mock: ShopperMock
+	shopifyDomain: string
+	shopifyStorefrontAccessToken: string
+}
+
+export interface ShopperAssemblyOptions extends ShopperConfig {
+	cartStorage: CartStorage
+}
+
+export interface ShopperAssembly extends ShopperConfig {
+	components: {[key: string]: typeof ShopperComponent}
+}
+
+export interface ShopperOptions extends ShopifyResults {
+	catalog: CartItem[]
+}
+
+export interface CartItem {
+	product: Product
+	quantity: number
+	quantityMin: number
+	quantityMax: number
+}
+
+export interface CartStorage {
+	saveCart(catalog: CartItem[]): Promise<void>
+	loadCart(catalog: CartItem[]): Promise<void>
+}
+
+export interface CartData {
+	[productId: string]: {
+		quantity: number
+	}
+}
+
+export interface ShopperState {
+	error: string
+	catalog: CartItem[]
+	checkedOut: boolean
+	checkoutInProgress: boolean
+}
+
+export interface ShopperGetters {
+	readonly itemsInCart: CartItem[]
+	readonly cartValue: number
+	readonly cartPrice: string
+	readonly cartQuantity: number
+	getUnitPrice(item: CartItem): string
+	getLinePrice(item: CartItem): string
+}
+
+export interface ShopperActions {
+	addToCart(item: CartItem): void
+	clearCart(): void
+	setItemQuantity(item: CartItem, quantity: number): void
+	checkout(options: {checkoutInSameWindow: boolean}): Promise<void>
+	setError(message: string): void
+	setShopifyResults(results: ShopifyResults): void
+}
+
+export interface ShopperModel {
+	reader: Reader<ShopperState>
+	getters: ShopperGetters
+	actions: ShopperActions
+}
 
 export type ShopifyClient = any
 
@@ -10,9 +78,9 @@ export interface ShopifyAdapterOptions {
 	storefrontAccessToken: string
 }
 
-export interface CartPanelConnectOptions {
-	cartButton?: ShopperButton
-	shopifyAdapter: ShopifyAdapter
+export interface ShopifyResults {
+	products: Product[],
+	collectionIds: string[]
 }
 
 export interface Product {
@@ -22,8 +90,4 @@ export interface Product {
 	description: string
 	collections: string[]
 	firstVariantId: string
-}
-
-export interface CheckoutMachine {
-	checkout(items: CartItem): Promise<string>
 }

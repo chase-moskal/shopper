@@ -8,36 +8,66 @@
 		<link rel="stylesheet" href="source/style.css"/>
 		<script async defer src="https://cdn.jsdelivr.net/npm/sorry-not-sorry"></script>
 		<script type="importmap-shim" src="dist/importmap.json"></script>
-		<script type="module-shim" src="dist/shopper-demo.js"></script>
+
+		<!-- shopper install -->
+		<script type="module-shim">
+			import {shopperInstall} from "./dist/startup/shopper-install.js"
+			console.log("installing shopper...")
+			shopperInstall()
+				.then(() => console.log("🛒 shopper installed"))
+				.catch(error => console.error("shopper install failed"))
+		</script>
+
+		<script type="module-shim" src="https://unpkg.com/menutown@0.0.1-dev.2/dist/register-all.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/@babel/polyfill@7.4.4/dist/polyfill.min.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
 		<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.2.10/webcomponents-bundle.js"></script>
-		<script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@0.2.15/dist/es-module-shims.js"></script>
+		<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
 	</head>
 	<body>
+
+		<!-- shopper config -->
+		<shopper-config
+			mock
+			shopify-domain="dev-bakery.myshopify.com"
+			shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25">
+		</shopper-config>
+
 		<main>
 			<header>
 				<h1>shopper</h1>
 				<menu-system initially-hidden sticky>
 					<menu-display class="shopper-menu-display">
+
+						<!-- shopper button and the cart -->
 						<shopper-button slot="button"></shopper-button>
-						<shopper-cart
-							shopify-domain="dev-bakery.myshopify.com"
-							shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25">
-						</shopper-cart>
+						<shopper-cart checkout-in-new-window></shopper-cart>
+
 					</menu-display>
 				</menu-system>
 			</header>
 			<div class="content">
 				<p>shopify cart ui for custom frontends</p>
 				<p>
-					<a href="https://github.com/chase-moskal/shopper">shopper on github</a>
+					<a href="https://github.com/chase-moskal/shopper">
+						shopper on github
+					</a>
 				</p>
 				<div class="demo-area">
 					<h2>collection:</h2>
-					<shopper-collection></shopper-collection>
+
+					<!-- shopper collection-->
+					<shopper-collection
+						uid="Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ==">
+					</shopper-collection>
+
 					<h2>single product:</h2>
-					<shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTQ1OTkx"></shopper-product>
+
+					<!-- shopper product -->
+					<shopper-product
+						uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTQ1OTkx">
+					</shopper-product>
+
 				</div>
 				<p style="margin-top: 100em;">cheers</p>
 			</div>

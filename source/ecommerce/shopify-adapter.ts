@@ -1,24 +1,14 @@
 
 import shopifyBuy from "shopify-buy/index.es.js"
-import {CartItem} from "../ecommerce/cart-item.js"
 
 import {
 	Product,
+	CartItem,
 	ShopifyClient,
+	ShopifyResults,
 	ShopifyAdapterOptions
 } from "../interfaces.js"
 
-export interface ShopifyResults {
-	products: Product[],
-	collectionIds: string[]
-}
-
-/**
- * Shopify adapter
- * - wrapper for the shopify buy sdk
- * - exposes methods for making calls to shopify
- * - exposes a checkout machine which can be used by other components
- */
 export class ShopifyAdapter {
 	private _shopifyClient: ShopifyClient
 
@@ -66,26 +56,6 @@ export class ShopifyAdapter {
 		}
 	}
 
-	async getProductsInCollection(collectionId: string): Promise<Product[]> {
-		try {
-			const collection = await this._shopifyClient
-				.collection.fetchWithProducts(collectionId)
-
-			const products = collection.products.map(
-				(shopifyProduct: any) => this._shopifyProductToShopperProduct(
-					shopifyProduct,
-					collectionId
-				)
-			)
-
-			return products
-		}
-		catch (error) {
-			error.message = "shopify error" + error.message
-			throw error
-		}
-	}
-
 	async checkout(items: CartItem[]): Promise<string> {
 		const checkout = await this._shopifyClient.checkout.create({
 			lineItems: items.map(item => ({
@@ -107,4 +77,24 @@ export class ShopifyAdapter {
 			firstVariantId: firstVariant.id
 		}
 	}
+
+	// async getProductsInCollection(collectionId: string): Promise<Product[]> {
+	// 	try {
+	// 		const collection = await this._shopifyClient
+	// 			.collection.fetchWithProducts(collectionId)
+
+	// 		const products = collection.products.map(
+	// 			(shopifyProduct: any) => this._shopifyProductToShopperProduct(
+	// 				shopifyProduct,
+	// 				collectionId
+	// 			)
+	// 		)
+
+	// 		return products
+	// 	}
+	// 	catch (error) {
+	// 		error.message = "shopify error" + error.message
+	// 		throw error
+	// 	}
+	// }
 }

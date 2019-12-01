@@ -1,29 +1,38 @@
 
-import {property, html} from "lit-element"
-import {CartItem} from "../ecommerce/cart-item.js"
-import {LoadableElement} from "./loadable-element.js"
+import {property, css, html} from "lit-element"
+import {LightDom} from "../framework/light-dom.js"
+import {ShopperState, CartItem} from "../interfaces.js"
+import {
+	LoadableState,
+	LoadableComponent,
+} from "../framework/loadable-component.js"
 
-export class ShopperCollection extends LoadableElement {
-	@property({type: String}) ["uid"]: string
+export class ShopperCollection extends LightDom(LoadableComponent) {
+	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: Array}) cartItems: CartItem[] = null
 
-	createRenderRoot() {
-		return this
+	static get styles() {return [...super.styles, css`
+	`]}
+
+	shopperUpdate(state: ShopperState) {
+		const {uid} = this
+		this.cartItems = uid
+			? state.catalog.filter(item => item.product.collections.includes(uid))
+			: []
+		this.loadableState = (this.cartItems && this.cartItems.length > 0)
+			? LoadableState.Ready
+			: state.error
+				? LoadableState.Error
+				: LoadableState.Loading
 	}
 
-	static get styles() {return super.styles}
-
-	render() {return html`
-		${super.render()}
-		<style>${ShopperCollection.styles}</style>
-	`}
-
 	renderReady() {
+		const {cartItems} = this
 		return html`
 			<ol>
-				${this.cartItems.map(cartItem => html`
+				${cartItems && cartItems.map(cartItem => html`
 					<li>
-						<shopper-product .cartItem=${cartItem} .loadableState=${this.loadableState}></shopper-product>
+						<shopper-product uid=${cartItem.product.id}></shopper-product>
 					</li>
 				`)}
 			</ol>

@@ -1,194 +1,43 @@
 
-import {html, css, property, svg} from "lit-element"
+import {html, property, svg} from "lit-element"
 
-import {wait} from "../toolbox/wait.js"
-import {select} from "../toolbox/select.js"
-import {CartItem} from "../ecommerce/cart-item.js"
-import {ShopifyAdapter} from "../ecommerce/shopify-adapter.js"
+import {LightDom} from "../framework/light-dom.js"
+import {ShopperState, ShopperModel, CartItem} from "../interfaces.js"
+import {
+	LoadableState,
+	LoadableComponent,
+} from "../framework/loadable-component.js"
 
-import {ShopperButton} from "./shopper-button.js"
-import {ShopperProduct} from "./shopper-product.js"
-import {ShopperCollection} from "./shopper-collection.js"
 import {shopperCartStyles} from "./shopper-cart-styles.js"
-import {LoadableElement, LoadableState} from "./loadable-element.js"
 
-export class ShopperCart extends LoadableElement {
-
-	//
-	// CONFIGURATION
-	//
-
-	@property({type: String}) ["shopify-domain"]: string
-	@property({type: String}) ["shopify-collection-id"]: string
-	@property({type: String}) ["shopify-storefront-access-token"]: string
-
+export class ShopperCart extends LightDom(LoadableComponent) {
+	static get styles() {return [...super.styles, shopperCartStyles]}
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
 
-	@property({type: Object}) shopifyAdapter: ShopifyAdapter
+	onFirstAdd = () => {}
+	private _lastQuantity = 0
 
-	@property({type: Object}) selectors = {
-		buttons: () => select<ShopperButton>("shopper-button"),
-		products: () => select<ShopperProduct>("shopper-product"),
-		collections: () => select<ShopperCollection>("shopper-collection")
-	}
+	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 
-	@property({type: String}) errorMessage: string = "error loading cart system"
-	@property({type: String}) loadingMessage: string = "loading cart..."
+		// trigger callback when quantity goes from 0 to 1
+		const quantity = getters.cartQuantity
+		const {_lastQuantity} = this
+		if (_lastQuantity === 0 && quantity === 1) this.onFirstAdd()
+		this._lastQuantity = quantity
 
-	onAddToCart = ({cartItem}: {cartItem: CartItem}) => {}
-
-	//
-	// PRIVATE FIELDS
-	//
-
-	private _collectionIds: string[]
-	@property({type: Object}) private _catalog: CartItem[] = []
-
-	//
-	// PUBLIC ACCESSORS
-	//
-
-	get catalog() { return this._catalog }
-	get collections() { return [...this._collectionIds] }
-	get itemsInCart() { return this._catalog.filter(item => item.quantity > 0) }
-
-	get value(): number {
-		const reducer = (subtotal: number, item: CartItem) =>
-			subtotal + (item.product.value * item.quantity)
-		return this.itemsInCart.reduce(reducer, 0)
-	}
-
-	get price(): string {
-		return `\$${this.value.toFixed(2)} CAD`
-	}
-
-	get quantity() {
-		let sum = 0
-		for (const item of this.itemsInCart) sum += item.quantity
-		return sum
-	}
-
-	//
-	// ELEMENT LIFECYCLE
-	// initialization and updates
-	//
-
-	async firstUpdated() {
-		this._maybeCreateShopifyAdapter()
-		try {
-			await this._loadAllProducts()
-			this.loadableState = LoadableState.Ready
-			await wait()
-			this.requestUpdate()
-		}
-		catch (error) {
-			this.loadableState = LoadableState.Error
-			console.error(error)
-		}
-	}
-
-	updated() {
-
-		// update button numerals
-		for (const button of this.selectors.buttons())
-			button.numeral = this.quantity
-
-		// keep collections up to date
-		for (const list of this.selectors.collections()) {
-			const {uid: collection} = list
-			list.loadableState = this.loadableState
-			list.cartItems = collection
-				? this._catalog.filter(
-					item => item.product.collections.includes(collection)
-				)
-				: [...this._catalog]
-		}
-
-		// keep products up to date
-		for (const product of this.selectors.products()) {
-			if (product.uid) {
-				const cartItem = this._catalog.find(
-					item => item.product.id === product.uid
-				)
-				if (cartItem) {
-					product.uid = undefined
-					product.cartItem = cartItem
-				}
-			}
-			product["in-cart"] = this.itemsInCart.includes(product.cartItem)
-			product.loadableState = this.loadableState
-			product.onAddToCart = ({cartItem}) => this.onAddToCart({cartItem})
-			product.requestUpdate()
-		}
-	}
-
-	//
-	// PUBLIC METHODS
-	//
-
-	clear() {
-		for (const cartItem of this._catalog)
-			cartItem.quantity = 0
-	}
-
-	async checkout() {
-		let checkoutLocation: Location
-
-		if (this["checkout-in-same-window"]) {
-			checkoutLocation = window.location
-		}
-		else {
-			const checkoutWindow = window.open("", "_blank")
-			checkoutWindow.document.write(`loading checkout... if you are experiencing issues, please email <a href="mailto:suzie@nailcareer.com">suzie@nailcareer.com</a>`)
-			checkoutLocation = checkoutWindow.location
-		}
-
-		const checkoutUrl = await this.shopifyAdapter.checkout(this.itemsInCart)
-		this.clear()
-		checkoutLocation.href = checkoutUrl
-	}
-
-	//
-	// PRIVATE METHODS
-	//
-
-	private _maybeCreateShopifyAdapter() {
-		if (this.shopifyAdapter) return
-		const domain = this["shopify-domain"]
-		const storefrontAccessToken = this["shopify-storefront-access-token"]
-		if (domain && storefrontAccessToken) {
-			this.shopifyAdapter = new ShopifyAdapter({
-				domain,
-				storefrontAccessToken
-			})
-		}
-	}
-
-	private async _loadAllProducts() {
-		const {collectionIds, products} = await this.shopifyAdapter.fetchEverything()
-		const cartItems = products.map(product => new CartItem({
-			product,
-			cart: this,
-			quantity: 0,
-			quantityMin: 1,
-			quantityMax: 5
-		}))
-		this._catalog = cartItems
-		this._collectionIds = collectionIds
-	}
-
-	//
-	// RENDERING
-	//
-
-	static get styles(): any {
-		return [super.styles, shopperCartStyles]
+		// set loading/error/ready states
+		this.loadableState = state.error
+			? LoadableState.Error
+			: state.catalog.length > 0
+				? LoadableState.Ready
+				: LoadableState.Loading
 	}
 
 	renderReady() {
-		const cartIsEmpty = !this.itemsInCart.length
+		const cartIsEmpty = this.model.getters.cartQuantity < 1
+		const {checkoutInProgress} = this.model.reader.state
 		return html`
-			<div class="cart-panel">
+			<section class="shopper-cart">
 				${this._renderCartTitle()}
 				${cartIsEmpty ? null : html`
 					${this._renderCartLineItems()}
@@ -197,23 +46,31 @@ export class ShopperCart extends LoadableElement {
 							class="checkout-button"
 							title="Checkout Cart"
 							@click=${this._handleCheckoutButtonClick}
+							?disabled=${checkoutInProgress}
 							?hidden=${cartIsEmpty}>
 								Checkout!
 							</button>
 						</div>
 					</div>
 				`}
-			</div>
+			</section>
 		`
 	}
 
-	private _handleCheckoutButtonClick = () => this.checkout()
+	private _handleCheckoutButtonClick = () => this.model.actions.checkout({
+		checkoutInSameWindow: !!this["checkout-in-same-window"]
+	})
 
 	private _renderCartTitle() {
-		const {quantity} = this
-		return html`
-			<h1>
-				<span>Shopping cart</span>
+		const {cartQuantity: quantity} = this.model.getters
+		const {checkedOut} = this.model.reader.state
+		return checkedOut ? html`
+			<h2>
+				Cart checked out
+			</h2>
+		` : html`
+			<h2>
+				<span>Cart</span>
 				<span>– ${
 					quantity === 0
 						? "empty"
@@ -221,11 +78,14 @@ export class ShopperCart extends LoadableElement {
 							? ""
 							: "s"}`
 				}</span>
-			</h1>
+			</h2>
 		`
 	}
 
 	private _renderCartLineItems() {
+		const {getters} = this.model
+		const {itemsInCart, cartPrice} = getters
+		const lineItems = itemsInCart.map(item => this._renderCartItem(item))
 		return html`
 			<table>
 				<thead>
@@ -237,12 +97,14 @@ export class ShopperCart extends LoadableElement {
 					</tr>
 				</thead>
 				<tbody class="cart-lines">
-					${this.itemsInCart.map(item => this._renderCartItem(item))}
+					${lineItems}
 				</tbody>
 				<tbody class="cart-subtotal">
 					<tr>
 						<th colspan="3">Subtotal</th>
-						<td>${this.price}</td>
+						<td>
+							${cartPrice}
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -250,20 +112,26 @@ export class ShopperCart extends LoadableElement {
 	}
 
 	private _renderCartItem(item: CartItem) {
+		const {getters, actions} = this.model
 		const handleQuantityInputChange = (event: Event) => {
 			const input = <HTMLInputElement>event.target
 			let value = parseInt(input.value)
-			if (value < item.quantityMin) value = item.quantityMin
-			if (value > item.quantityMax) value = item.quantityMax
+			const {quantityMin: min, quantityMax: max} = item
+			if (value < min) value = min
+			if (value > max) value = max
 			input.value = value.toString()
-			item.quantity = value ? value : 0
+			actions.setItemQuantity(item, value ? value : 0)
 		}
-		const handleRemoveButtonClick = () => item.quantity = 0
+		const handleRemoveClick = () => actions.setItemQuantity(item, 0)
+		const linePrice = getters.getLinePrice(item)
 		return html`
 			<tr>
 				<td>
-					<button class="remove-button" title="Remove item" @click=${handleRemoveButtonClick}>
-						${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
+					<button
+						class="remove-button"
+						title="Remove item"
+						@click=${handleRemoveClick}>
+							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
 					</button>
 				</td>
 				<td>
@@ -279,8 +147,8 @@ export class ShopperCart extends LoadableElement {
 						@blur=${handleQuantityInputChange}
 						/>
 				</td>
-				<td>${item.product.title}</td>
-				<td>${item.subtotalPrice}</td>
+				<td class="product-title">${item.product.title}</td>
+				<td class="line-price">${linePrice}</td>
 			</tr>
 		`
 	}

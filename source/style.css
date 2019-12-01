@@ -6,7 +6,9 @@
 }
 
 html {
-	font-size: 21px;
+	font-size: 16px;
+	background: #111;
+	color: rgba(255,255,255, 0.6);
 }
 
 main {
@@ -17,12 +19,17 @@ main {
 
 main > header {
 	position: relative;
-	background: grey;
+	background: #222;
 	padding: 1em;
 }
 
 main > .content {
 	padding: 1em;
+}
+
+menu-system {
+	color: #333;
+	--menu-margin: 0.5em auto;
 }
 
 menu-system[initially-hidden] {
@@ -41,4 +48,8 @@ menu-display {
 
 .demo-area {
 	margin: 2em auto;
+}
+
+.demo-area h2 {
+	margin-top: 2em;
 }

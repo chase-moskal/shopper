@@ -1,8 +1,15 @@
 
-import {LitElement, html, css, svg, property} from "lit-element"
+import {html, css, svg, property} from "lit-element"
 
-export class ShopperButton extends LitElement {
+import {ShopperState, ShopperModel} from "../interfaces.js"
+import {ShopperComponent} from "../framework/shopper-component.js"
+
+export class ShopperButton extends ShopperComponent {
 	@property({type: Number, reflect: true}) numeral = 0
+
+	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
+		this.numeral = getters.cartQuantity
+	}
 
 	static get styles() {
 		return css`

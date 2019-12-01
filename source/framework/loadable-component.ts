@@ -1,5 +1,6 @@
 
-import {LitElement, property, html, css, svg} from "lit-element"
+import {ShopperComponent} from "./shopper-component.js"
+import {property, html, css, svg, CSSResultArray} from "lit-element"
 
 export enum LoadableState {
 	Loading,
@@ -11,7 +12,7 @@ const _state = Symbol()
 const _renderError = Symbol()
 const _renderLoading = Symbol()
 
-export class LoadableElement extends LitElement {
+export class LoadableComponent extends ShopperComponent {
 	@property({type: String}) errorMessage: string = "error"
 	@property({type: String}) loadingMessage: string = "loading..."
 	@property({type: Number}) private [_state]: LoadableState = LoadableState.Loading
@@ -19,7 +20,7 @@ export class LoadableElement extends LitElement {
 	set loadableState(value: LoadableState) { this[_state] = value }
 	get loadableState(): LoadableState { return this[_state] }
 
-	static get styles() {return css`
+	static get styles(): CSSResultArray {return [css`
 		.loadable {
 			display: flex;
 			align-items: center;
@@ -54,7 +55,7 @@ export class LoadableElement extends LitElement {
 		.loadable.error {
 			color: maroon;
 		}
-	`}
+	`]}
 
 	renderReady() {
 		throw new Error("loadable: renderReady must be implemented")
