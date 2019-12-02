@@ -12,18 +12,15 @@ html {
 }
 
 main {
-	margin: auto;
-	max-width: 800px;
 	width: 95%;
-}
-
-main > header {
-	position: relative;
-	background: #222;
+	max-width: 800px;
+	margin: auto;
 	padding: 1em;
 }
 
-main > .content {
+body > header {
+	position: relative;
+	background: #222;
 	padding: 1em;
 }
 

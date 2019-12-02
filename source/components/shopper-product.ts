@@ -32,12 +32,12 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	renderReady() {
 		const {cartItem, _handleAddToCart} = this
 		const inCart = this["in-cart"]
-		const getItemPrice = () => this.model.getters.getUnitPrice(cartItem)
+		const value = this.model.getters.getUnitValue(cartItem)
 		return !cartItem ? html`` : html`
 			<div class="product-display">
 				<h3 class="title">${cartItem.product.title}</h3>
 				<div class="box">
-					<div class="price">${getItemPrice()}</div>
+					<price-display value="${value}"></price-display>
 					<button class="add-to-cart-button"
 						title=${inCart ? undefined : "Add to Cart"}
 						@click=${_handleAddToCart}

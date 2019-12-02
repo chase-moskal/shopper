@@ -84,7 +84,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 
 	private _renderCartLineItems() {
 		const {getters} = this.model
-		const {itemsInCart, cartPrice} = getters
+		const {itemsInCart, cartValue} = getters
 		const lineItems = itemsInCart.map(item => this._renderCartItem(item))
 		return html`
 			<table>
@@ -103,7 +103,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 					<tr>
 						<th colspan="3">Subtotal</th>
 						<td>
-							${cartPrice}
+							<price-display value="${cartValue}"></price-display>
 						</td>
 					</tr>
 				</tbody>
@@ -123,7 +123,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 			actions.setItemQuantity(item, value ? value : 0)
 		}
 		const handleRemoveClick = () => actions.setItemQuantity(item, 0)
-		const linePrice = getters.getLinePrice(item)
+		const lineValue = getters.getLineValue(item)
 		return html`
 			<tr>
 				<td>
@@ -148,7 +148,9 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 						/>
 				</td>
 				<td class="product-title">${item.product.title}</td>
-				<td class="line-price">${linePrice}</td>
+				<td class="line-price">
+					<price-display value="${lineValue}"></price-display>
+				</td>
 			</tr>
 		`
 	}

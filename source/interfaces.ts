@@ -6,6 +6,8 @@ export type ShopperMock = null | "" | "mock" | "fail"
 
 export interface ShopperConfig {
 	mock: ShopperMock
+	ratesUrl: string
+	baseCurrency: string
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
 }
@@ -50,10 +52,9 @@ export interface ShopperState {
 export interface ShopperGetters {
 	readonly itemsInCart: CartItem[]
 	readonly cartValue: number
-	readonly cartPrice: string
 	readonly cartQuantity: number
-	getUnitPrice(item: CartItem): string
-	getLinePrice(item: CartItem): string
+	getUnitValue(item: CartItem): number
+	getLineValue(item: CartItem): number
 }
 
 export interface ShopperActions {

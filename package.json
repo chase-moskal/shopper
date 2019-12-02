@@ -16,7 +16,7 @@
 		"clean": "rimraf dist && mkdirp dist",
 		"build": "run-p importmap compile copy-styles",
 		"bundle": "rollup -c rollup.config.js",
-		"importmap": "importly --host=node_modules < package.json > dist/importmap.json",
+		"importmap": "importly < package.json > dist/importmap.json",
 		"compile": "tsc",
 		"copy-styles": "ncp source/style.css dist",
 		"watch": "tsc -w",
@@ -28,6 +28,8 @@
 		"testURL": "http://localhost/"
 	},
 	"dependencies": {
+		"commotion": "0.1.0-dev.0",
+		"crnc": "0.0.0-dev.17",
 		"lit-element": "^2.2.1",
 		"lit-html": "^1.1.2",
 		"menutown": "0.0.1-dev.2",

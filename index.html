@@ -18,7 +18,7 @@
 			console.log("installing shopper...")
 			shopperInstall()
 				.then(() => console.log("🛒 shopper installed"))
-				.catch(error => console.error("shopper install failed"))
+				.catch(error => console.error("shopper install failed", error))
 		</script>
 		<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
 	</head>
@@ -27,44 +27,47 @@
 		<!-- shopper config -->
 		<shopper-config
 			mock
+			base-currency="cad"
 			shopify-domain="dev-bakery.myshopify.com"
-			shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25">
-		</shopper-config>
+			shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
+		></shopper-config>
 
+		<header>
+			<h1>shopper</h1>
+			<menu-system initially-hidden sticky>
+				<menu-display class="shopper-menu-display">
+
+					<!-- shopper button and the cart -->
+					<shopper-button slot="button"></shopper-button>
+					<shopper-cart></shopper-cart>
+
+				</menu-display>
+			</menu-system>
+		</header>
 		<main>
-			<header>
-				<h1>shopper</h1>
-				<menu-system initially-hidden sticky>
-					<menu-display class="shopper-menu-display">
+			<p>shopify cart ui for custom frontends</p>
+			<p>
+				<a href="https://github.com/chase-moskal/shopper">
+					shopper on github
+				</a>
+			</p>
+			<div class="demo-area">
 
-						<!-- shopper button and the cart -->
-						<shopper-button slot="button"></shopper-button>
-						<shopper-cart></shopper-cart>
+				<!-- price display -->
+				<h2>price display:</h2>
+				<price-display value="1594847400.05"></price-display>
 
-					</menu-display>
-				</menu-system>
-			</header>
-			<div class="content">
-				<p>shopify cart ui for custom frontends</p>
-				<p>
-					<a href="https://github.com/chase-moskal/shopper">
-						shopper on github
-					</a>
-				</p>
-				<div class="demo-area">
-					<h2>collection:</h2>
+				<!-- shopper collection-->
+				<h2>collection:</h2>
+				<shopper-collection all></shopper-collection>
 
-					<!-- shopper collection-->
-					<shopper-collection all></shopper-collection>
+				
+				<!-- shopper product -->
+				<h2>single product:</h2>
+				<shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
 
-					<h2>single product:</h2>
-
-					<!-- shopper product -->
-					<shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
-
-				</div>
-				<p style="margin-top: 100em;">cheers</p>
 			</div>
+			<p style="margin-top: 100em;">cheers</p>
 		</main>
 	</body>
 </html>

@@ -1,8 +1,6 @@
 
 import {ShopperState, CartItem, ShopperGetters} from "../interfaces.js"
 
-const price = (value: number) => `\$${value.toFixed(2)} CAD`
-
 export function prepareStateAndGetters() {
 	const state: ShopperState = {
 		error: "",
@@ -22,9 +20,6 @@ export function prepareStateAndGetters() {
 				0
 			)
 		},
-		get cartPrice() {
-			return price(getters.cartValue)
-		},
 		get cartQuantity() {
 			return (() => {
 				let sum = 0
@@ -32,11 +27,11 @@ export function prepareStateAndGetters() {
 				return sum
 			})()
 		},
-		getUnitPrice(item: CartItem) {
-			return price(item.product.value)
+		getUnitValue(item: CartItem) {
+			return item.product.value
 		},
-		getLinePrice(item: CartItem) {
-			return price(item.product.value * item.quantity)
+		getLineValue(item: CartItem) {
+			return item.product.value * item.quantity
 		}
 	}
 
