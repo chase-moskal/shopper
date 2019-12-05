@@ -62,7 +62,7 @@ export async function installPriceDisplaySystem({ratesUrl, baseCurrency}: {
 				outputCurrency,
 			} = state
 
-			const {price, symbol, amount, code} = convertAndFormatCurrency({
+			const {price, amount, currency} = convertAndFormatCurrency({
 				value,
 				precision,
 				exchangeRates,
@@ -71,10 +71,10 @@ export async function installPriceDisplaySystem({ratesUrl, baseCurrency}: {
 			})
 
 			return html`
-				<div title="${price}">
-					<span class="symbol">${symbol}</span
+				<div>
+					<span class="symbol">${currency.symbol}</span
 					><span class="amount">${amount}</span>
-					<span class="code">${code}</span>
+					<span class="code">${currency.code}</span>
 				</div>
 			`
 		}

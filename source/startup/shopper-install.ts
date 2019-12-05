@@ -7,7 +7,7 @@ import {ShopperCart} from "../components/shopper-cart.js"
 import {ShopperButton} from "../components/shopper-button.js"
 import {ShopperProduct} from "../components/shopper-product.js"
 import {ShopperCollection} from "../components/shopper-collection.js"
-import {installPriceDisplaySystem} from "../components/install-price-display-system.js"
+import {installPriceDisplaySystem} from "./install-price-display-system.js"
 
 import {select} from "../toolbox/select.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"
