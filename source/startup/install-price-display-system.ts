@@ -53,10 +53,13 @@ export async function installPriceDisplaySystem({
 				box-sizing: border-box;
 			}
 
+			*:focus {
+				outline: var(--focus-outline, 2px solid cyan);
+			}
+
 			:host {
 				display: inline-block;
 				min-width: 8em;
-				background: blue;
 			}
 
 			.price-display {
@@ -69,7 +72,7 @@ export async function installPriceDisplaySystem({
 			}
 
 			.symbol {
-				font-size: 0.7em;
+				font-size: 0.8em;
 				vertical-align: top;
 			}
 
@@ -83,7 +86,7 @@ export async function installPriceDisplaySystem({
 			}
 
 			.code {
-				font-size: 0.7em;
+				font-size: 0.8em;
 				padding: 0.1em;
 				display: inline-block;
 				cursor: pointer;
@@ -110,21 +113,26 @@ export async function installPriceDisplaySystem({
 				width: 100%;
 				z-index: 1;
 				text-align: left;
-				background: white;
-				color: green;
+				border-radius: 3px;
+				overflow: hidden;
 			}
 
-			.menu > li {}
 			.menu > li > button {
 				display: block;
 				width: 100%;
-				padding: 0.2em;
-				background: red;
+				padding: 0.6em;
+				background: white;
+				color: #222;
 				cursor: pointer;
 			}
 
-			.menu > li > button:hover {
-				background: yellow;
+			.menu > li > button:hover,
+			.menu > li > button:focus {
+				background: deepskyblue;
+				color: white;
+			}
+			.menu > li > button:active {
+				background: #0080ab;
 			}
 
 
@@ -132,10 +140,14 @@ export async function installPriceDisplaySystem({
 				vertical-align: middle;
 			}
 
-			.menu-symbol {}
-			.menu-code {}
+			.menu-symbol {
+				font-size: 1.2em;
+				font-weight: bold;
+			}
+
 			.menu-name {
 				font-size: 0.8em;
+				margin-left: 0.5em;
 			}
 
 			.blanket {
@@ -144,8 +156,10 @@ export async function installPriceDisplaySystem({
 				bottom: 0;
 				left: 0;
 				right: 0;
-				background: rgba(0,0,0, 0.9);
+				background: rgba(0,0,0, 0.5);
 				z-index: 1;
+				backdrop-filter: var(--price-blanket-backdrop, blur(5px));
+				-webkit-backdrop-filter: var(--price-blanket-backdrop, blur(5px));
 			}
 		`}
 

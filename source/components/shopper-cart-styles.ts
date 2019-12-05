@@ -37,7 +37,7 @@ CART ITEM TABLE
 	font-style: sans-serif;
 	font-size: 0.7em;
 	opacity: 0.5;
-	text-transform: uppercase;
+	text-transform: up600pxpercase;
 	text-align: left;
 }
 
@@ -112,7 +112,7 @@ TABLE: MEDIA QUERIES
 ====================
 */
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
 	.shopper-cart thead {
 		display: none;
 	}
