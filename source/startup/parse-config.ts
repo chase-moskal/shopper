@@ -16,4 +16,7 @@ export const parseConfig = (element: HTMLElement): ShopperConfig => ({
 
 	baseCurrency:
 		element.getAttribute("base-currency") || undefined,
+
+	currencies:
+		element.getAttribute("currencies") || undefined,
 })
