@@ -70,16 +70,27 @@ export async function shopperInstall({
 	})
 
 	// figure out which available currencies are configured
-	const codes = config.currencies
-		.split(",")
-		.map(code => code.trim())
-		.map(code => code.toUpperCase())
-	const currencies: Currencies = {}
-	for (const code of codes) {
-		const currency = defaultCurrencies[code]
-		if (!currency) throw new Error(`unknown currency "${code}"`)
-		currencies[code] = defaultCurrencies[code]
-	}
+	const currency: boolean = !!config.currencies
+	const installCurrencyConversions = currency
+		? async() => {
+			const codes = config.currencies
+				.split(",")
+				.map(code => code.trim())
+				.map(code => code.toUpperCase())
+			const currencies: Currencies = {}
+			for (const code of codes) {
+				const currency = defaultCurrencies[code]
+				if (!currency) throw new Error(`unknown currency "${code}"`)
+				currencies[code] = defaultCurrencies[code]
+			}
+			await installPriceDisplaySystem({
+				ratesUrl,
+				currencies,
+				baseCurrency,
+				currencyStorage,
+			})
+		}
+		: async() => {}
 
 	// do a bunch of concurrent stuff
 	await Promise.all([
@@ -93,11 +104,6 @@ export async function shopperInstall({
 			})),
 
 		// download exchange rates and set up currency conversions
-		installPriceDisplaySystem({
-			ratesUrl,
-			currencies,
-			baseCurrency,
-			currencyStorage,
-		})
+		installCurrencyConversions()
 	])
 }
