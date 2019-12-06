@@ -39,7 +39,7 @@ export async function installPriceDisplaySystem({
 	const state: PriceModelState = {
 		exchangeRates: {[baseCurrency]: 1},
 		inputCurrency: baseCurrency,
-		outputCurrency: preference,
+		outputCurrency: baseCurrency,
 	}
 
 	const {reader, update} = makeReader(state)
