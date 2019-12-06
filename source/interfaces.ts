@@ -37,6 +37,11 @@ export interface CartStorage {
 	loadCart(catalog: CartItem[]): Promise<void>
 }
 
+export interface CurrencyStorage {
+	save(code: string): Promise<void>
+	load(): Promise<string>
+}
+
 export interface CartData {
 	[productId: string]: {
 		quantity: number

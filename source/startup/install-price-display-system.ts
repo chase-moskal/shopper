@@ -9,6 +9,9 @@ import {currencies as defaultCurrencies} from "crnc/dist/ecommerce/currencies.js
 
 import {makeReader} from "../toolbox/pubsub.js"
 import {registerComponents} from "../toolbox/register-components.js"
+import {createCurrencyStorage} from "../model/create-currency-storage.js"
+import {SimpleDataStore} from "../toolbox/simple-data-store.js"
+import {CurrencyStorage} from "../interfaces.js"
 
 export interface PriceModelState {
 	inputCurrency: string
@@ -19,11 +22,16 @@ export interface PriceModelState {
 export async function installPriceDisplaySystem({
 	ratesUrl,
 	baseCurrency,
-	currencies = defaultCurrencies
+	currencies = defaultCurrencies,
+	currencyStorage = createCurrencyStorage({
+		key: "price-display-currency",
+		dataStore: new SimpleDataStore({storage: localStorage})
+	})
 }: {
 	baseCurrency: string
 	ratesUrl?: string
 	currencies?: Currencies
+	currencyStorage?: CurrencyStorage
 }) {
 	if (!baseCurrency) throw new Error("baseCurrency is not defined")
 	baseCurrency = baseCurrency.toUpperCase()
