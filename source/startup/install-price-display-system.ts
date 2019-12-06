@@ -36,10 +36,12 @@ export async function installPriceDisplaySystem({
 	if (!baseCurrency) throw new Error("baseCurrency is not defined")
 	baseCurrency = baseCurrency.toUpperCase()
 
+	const preference = await currencyStorage.load() || baseCurrency
+
 	const state: PriceModelState = {
 		exchangeRates: {[baseCurrency]: 1},
 		inputCurrency: baseCurrency,
-		outputCurrency: baseCurrency,
+		outputCurrency: preference,
 	}
 
 	const {reader, update} = makeReader(state)
@@ -47,6 +49,7 @@ export async function installPriceDisplaySystem({
 	const setCurrency = (code: string) => {
 		state.outputCurrency = code
 		update()
+		currencyStorage.save(code)
 	}
 
 	class PriceDisplay extends LitElement {
