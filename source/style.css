@@ -51,6 +51,10 @@ menu-display {
 	margin-top: 2em;
 }
 
+.demo-area shopper-collection price-display {
+	font-size: 2em;
+}
+
 price-display[menu-open] {
 	z-index: 101;
 	position: relative;

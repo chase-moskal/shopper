@@ -1,6 +1,7 @@
 
 import {Reader} from "./toolbox/pubsub.js"
 import {ShopperComponent} from "./framework/shopper-component.js"
+import {CurrencyExchangeRates} from "crnc/dist/interfaces.js"
 
 export type ShopperMock = null | "" | "mock" | "fail"
 
@@ -12,6 +13,14 @@ export interface ShopperConfig {
 	shopifyDomain: string
 	shopifyStorefrontAccessToken: string
 }
+
+export interface PriceModelState {
+	inputCurrency: string
+	outputCurrency: string
+	exchangeRates: CurrencyExchangeRates
+}
+
+export type SetCurrency = (code: string) => void
 
 export interface ShopperAssemblyOptions extends ShopperConfig {
 	cartStorage: CartStorage
