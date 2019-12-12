@@ -18,7 +18,7 @@
 		"bundle": "rollup -c rollup.config.js",
 		"importmap": "importly < package.json > dist/importmap.json",
 		"compile": "tsc",
-		"copy-styles": "ncp source/style.css dist",
+		"copy-styles": "ncp source/demo.css dist/demo.css",
 		"watch": "tsc -w",
 		"test": "exit 0",
 		"start": "serve"

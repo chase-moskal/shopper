@@ -11,7 +11,7 @@ html {
 	color: rgba(255,255,255, 0.6);
 }
 
-main {
+main, body > header {
 	width: 95%;
 	max-width: 800px;
 	margin: auto;
@@ -49,6 +49,11 @@ menu-display {
 
 .demo-area h2 {
 	margin-top: 2em;
+}
+
+.demo-area shopper-collection li {
+	margin-top: 1em;
+	list-style-position: inside;
 }
 
 .demo-area shopper-collection price-display {
