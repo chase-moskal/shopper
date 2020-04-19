@@ -105,5 +105,6 @@ export interface Product {
 	title: string
 	description: string
 	collections: string[]
+	comparedValue: number
 	firstVariantId: string
 }

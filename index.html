@@ -13,20 +13,13 @@
 
 		<script type="module-shim" src="https://unpkg.com/menutown@0.0.1-dev.2/dist/register-all.js"></script>
 		<script type="importmap-shim" src="dist/importmap.json"></script>
-		<script defer type="module-shim">
-			import {shopperInstall} from "./dist/startup/shopper-install.js"
-			console.log("installing shopper...")
-			shopperInstall()
-				.then(() => console.log("🛒 shopper installed"))
-				.catch(error => console.error("shopper install failed", error))
-		</script>
+		<script defer type="module-shim" src="dist/shopper.js"></script>
 		<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
 	</head>
 	<body>
 
 		<!-- shopper config -->
 		<shopper-config
-			mock
 			base-currency="cad"
 			currencies="cad,usd,gbp,eur"
 			shopify-domain="dev-bakery.myshopify.com"

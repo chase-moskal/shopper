@@ -27,13 +27,13 @@ export class ShopifyAdapter {
 			for (const collection of collections) {
 				for (const shopifyProduct of collection.products) {
 					const product = products.find(product => product.id === shopifyProduct.id)
-	
+
 					// if the product is already known, add the collection id
 					if (product) {
 						const existingCollectionId = product.collections.find(id => id === collection.id)
 						if (!existingCollectionId) product.collections.push(collection.id)
 					}
-	
+
 					// else, add the new product to the products array
 					else {
 						const product = this._shopifyProductToShopperProduct(
@@ -66,11 +66,17 @@ export class ShopifyAdapter {
 		return checkout.webUrl
 	}
 
-	private _shopifyProductToShopperProduct(shopifyProduct: any, collectionId?: string): Product {
+	private _shopifyProductToShopperProduct(
+		shopifyProduct: any,
+		collectionId?: string,
+	): Product {
 		const [firstVariant] = shopifyProduct.variants
 		return {
 			id: shopifyProduct.id,
 			value: parseFloat(firstVariant.price),
+			comparedValue: firstVariant.compareAtPrice
+				? parseFloat(firstVariant.compareAtPrice)
+				: null,
 			title: shopifyProduct.title,
 			description: shopifyProduct.descriptionHtml,
 			collections: collectionId ? [collectionId] : [],
