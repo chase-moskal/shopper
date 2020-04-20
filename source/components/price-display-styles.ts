@@ -27,7 +27,7 @@ export const priceDisplayStyles = css`
 	flex: 1 1 auto;
 }
 
-.price-display > div > span {
+.price-display > .price-area > span {
 	display: inline-block;
 }
 
@@ -128,16 +128,16 @@ button {
 }
 
 .discount-area {
-	font-size: var(--price-display-discount-area-font-size, 0.9em);
 	display: flex;
-	flex-direction: row-reverse;
+	flex-direction: var(--price-display-discount-area-flex-direction, row);
 }
 
 .discount-area > * {
-	margin: 0 0.2em;
+	margin: 0 0.1em;
 }
 
 .compared {
+	font-size: var(--price-display-compared-font-size, 0.8em);
 	opacity: var(--price-display-compared-opacity, 0.7);
 }
 
@@ -145,14 +145,19 @@ button {
 	text-decoration: line-through;
 }
 
+.compared, .percent-off {
+	display: flex;
+	align-items: center;
+}
+
 .percent-off {
 	opacity: var(--price-display-percent-off-opacity, 1);
-	font-size: var(--price-display-percent-off-font-size, 0.9em);
+	font-size: var(--price-display-percent-off-font-size, 0.8em);
+	padding: var(--price-display-percent-off-padding, 0 0.1em);
 	color: var(--price-display-percent-off-color, inherit);
 	background: var(--price-display-percent-off-background, transparent);
 	border: var(--price-display-percent-off-border, none);
 	border-radius: var(--price-display-percent-off-border-radius, 3px);
-	padding: var(--price-display-percent-off-padding, 0 0.2em);
 }
 
 `
