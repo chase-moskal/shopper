@@ -70,7 +70,7 @@ export function prepareActions({
 			state.catalog = products.map(product => ({
 				product,
 				quantity: 0,
-				quantityMax: 5,
+				quantityMax: 10,
 				quantityMin: 1,
 			}))
 			state.checkedOut = false
