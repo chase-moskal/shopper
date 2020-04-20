@@ -38,7 +38,10 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 			<div class="product-display">
 				<h3 class="title">${cartItem.product.title}</h3>
 				<div class="box">
-					<price-display value="${value}" comparedValue=${comparedValue}></price-display>
+					<price-display
+						value="${value}"
+						comparedValue=${comparedValue}
+					></price-display>
 					<button class="add-to-cart-button"
 						title=${inCart ? undefined : "Add to Cart"}
 						@click=${_handleAddToCart}

@@ -20,7 +20,7 @@ export const priceDisplayStyles = css`
 .price-display {
 	display: flex;
 	flex-direction: var(--price-display-flex-direction, column);
-	align-items: var(--price-display-align-items, center);
+	align-items: var(--price-display-align-items, flex-start);
 }
 
 .price-display > div {
@@ -133,6 +133,10 @@ button {
 	padding: 0.6rem;
 }
 
+.menu-note {
+	padding: 0.2rem 0.6rem;
+}
+
 .menu > li > button:hover,
 .menu > li > button:focus {
 	background: var(--price-display-menu-hover-background, deepskyblue);
@@ -180,6 +184,7 @@ button {
 
 .discount-area {
 	display: flex;
+	font-size: var(--price-display-discount-area-font-size, 1em);
 	flex-direction: var(--price-display-discount-area-flex-direction, row);
 }
 
@@ -189,7 +194,7 @@ button {
 
 .compared {
 	font-size: var(--price-display-compared-font-size, 1em);
-	opacity: var(--price-display-compared-opacity, 0.7);
+	opacity: var(--price-display-compared-opacity, 0.3);
 }
 
 .compared .amount {
@@ -207,7 +212,7 @@ button {
 }
 
 .percent-off {
-	opacity: var(--price-display-percent-off-opacity, 1);
+	opacity: var(--price-display-percent-off-opacity, 0.5);
 	font-size: var(--price-display-percent-off-font-size, 1em);
 	padding: var(--price-display-percent-off-padding, 0 0.2em);
 	color: var(--price-display-percent-off-color, inherit);

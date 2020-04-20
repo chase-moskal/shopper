@@ -120,7 +120,12 @@ export function preparePriceDisplay({
 										</button>
 									</li>
 								`)}
-								<div class="menu-note">* converted currency: prices are estimates and may be different at checkout</div>
+								<div class="menu-note">
+									<slot name="menu-note">
+										* converted currency: prices are estimates and may be 
+										different at checkout
+									</slot>
+								</div>
 							</ul>
 						` : html``}
 					</div>

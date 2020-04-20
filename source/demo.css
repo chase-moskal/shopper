@@ -20,8 +20,8 @@ main, body > header {
 
 body > header {
 	position: relative;
-	background: #222;
 	padding: 1em;
+	background: #222;
 }
 
 menu-system {
@@ -74,8 +74,6 @@ price-display[menu-open] {
 }
 
 price-display {
-	--price-display-compared-opacity: 0.4;
-	--price-display-percent-off-opacity: 0.5;
 	--price-display-percent-off-color: green;
 	--price-display-percent-off-background: #00ff0026;
 	--price-display-percent-off-border: 1px solid #214a216b;

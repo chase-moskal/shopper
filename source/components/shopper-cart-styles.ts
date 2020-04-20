@@ -34,10 +34,10 @@ CART ITEM TABLE
 }
 
 .shopper-cart th {
-	font-style: sans-serif;
-	font-size: 0.7em;
 	opacity: 0.5;
-	text-transform: up600pxpercase;
+	font-size: 0.7em;
+	font-style: sans-serif;
+	text-transform: uppercase;
 	text-align: left;
 }
 
@@ -130,6 +130,9 @@ TABLE: MEDIA QUERIES
 	}
 	.shopper-cart .product-title {
 		font-weight: bold;
+	}
+	.shopper-cart price-display {
+		margin-left: 1em;
 	}
 }
 
