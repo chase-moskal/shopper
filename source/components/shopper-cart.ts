@@ -124,6 +124,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 		}
 		const handleRemoveClick = () => actions.setItemQuantity(item, 0)
 		const lineValue = getters.getLineValue(item)
+		const lineComparedValue = getters.getLineComparedValue(item)
 		return html`
 			<tr>
 				<td>
@@ -149,7 +150,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 				</td>
 				<td class="product-title">${item.product.title}</td>
 				<td class="line-price">
-					<price-display right value="${lineValue}"></price-display>
+					<price-display right value="${lineValue}" comparedValue=${lineComparedValue}></price-display>
 				</td>
 			</tr>
 		`

@@ -6,7 +6,7 @@
 }
 
 html {
-	font-size: 21px;
+	font-size: 16px;
 	background: #111;
 	color: rgba(255,255,255, 0.6);
 }
@@ -63,4 +63,12 @@ menu-display {
 price-display[menu-open] {
 	z-index: 101;
 	position: relative;
+}
+
+price-display {
+	--price-display-compared-opacity: 0.6;
+	--price-display-percent-off-opacity: 0.7;
+	--price-display-percent-off-color: green;
+	--price-display-percent-off-background: #00ff0026;
+	--price-display-percent-off-border: 1px solid #214a216b;
 }

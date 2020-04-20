@@ -70,6 +70,7 @@ export interface ShopperGetters {
 	readonly cartQuantity: number
 	getUnitValue(item: CartItem): number
 	getLineValue(item: CartItem): number
+	getLineComparedValue(item: CartItem): number
 }
 
 export interface ShopperActions {

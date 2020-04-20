@@ -19,9 +19,15 @@ export const priceDisplayStyles = css`
 
 .price-display {
 	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
-.price-display > span {
+.price-display > div {
+	flex: 1 1 auto;
+}
+
+.price-display > div > span {
 	display: inline-block;
 }
 
@@ -117,8 +123,36 @@ button {
 	right: 0;
 	background: rgba(0,0,0, 0.5);
 	z-index: 1;
-	backdrop-filter: var(--price-blanket-backdrop, blur(5px));
-	-webkit-backdrop-filter: var(--price-blanket-backdrop, blur(5px));
+	backdrop-filter: var(--price-display-blanket-backdrop, blur(5px));
+	-webkit-backdrop-filter: var(--price-display-blanket-backdrop, blur(5px));
+}
+
+.discount-area {
+	font-size: var(--price-display-discount-area-font-size, 0.9em);
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.discount-area > * {
+	margin: 0 0.2em;
+}
+
+.compared {
+	opacity: var(--price-display-compared-opacity, 0.7);
+}
+
+.compared .amount {
+	text-decoration: line-through;
+}
+
+.percent-off {
+	opacity: var(--price-display-percent-off-opacity, 1);
+	font-size: var(--price-display-percent-off-font-size, 0.9em);
+	color: var(--price-display-percent-off-color, inherit);
+	background: var(--price-display-percent-off-background, transparent);
+	border: var(--price-display-percent-off-border, none);
+	border-radius: var(--price-display-percent-off-border-radius, 3px);
+	padding: var(--price-display-percent-off-padding, 0 0.2em);
 }
 
 `

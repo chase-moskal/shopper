@@ -32,7 +32,12 @@ export function prepareStateAndGetters() {
 		},
 		getLineValue(item: CartItem) {
 			return item.product.value * item.quantity
-		}
+		},
+		getLineComparedValue(item: CartItem) {
+			return item.product.comparedValue
+				? item.product.comparedValue * item.quantity
+				: null
+		},
 	}
 
 	return {state, getters}
