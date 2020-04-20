@@ -86,8 +86,20 @@ button {
 	min-width: var(--price-display-menu-min-width, 14em);
 	z-index: 1;
 	text-align: left;
-	border-radius: 3px;
-	overflow: hidden;
+	color: var(--price-display-menu-color, #222);
+	white-space: normal;
+}
+
+.menu::before {
+	position: absolute;
+	content: "";
+	display: block;
+	width: 0px;
+	height: 0px;
+	border: 10px solid transparent;
+	border-bottom-color: var(--price-display-menu-background, white);
+	top: -20px;
+	right: var(--price-display-menu-border-radius, 5px);
 }
 
 :host([right]) .menu {
@@ -98,10 +110,27 @@ button {
 .menu > li > button {
 	display: block;
 	width: 100%;
-	padding: 0.6em;
-	background: var(--price-display-menu-background, white);
-	color: var(--price-display-menu-color, #222);
 	cursor: pointer;
+	background: var(--price-display-menu-background, white);
+}
+
+.menu > li:first-child > button {
+	border-radius:
+		var(--price-display-menu-border-radius, 5px)
+		var(--price-display-menu-border-radius, 5px)
+		0 0;
+}
+
+.menu > *:last-child {
+	border-radius:
+		0 0
+		var(--price-display-menu-border-radius, 5px)
+		var(--price-display-menu-border-radius, 5px);
+}
+
+.menu-note,
+.menu > li > button {
+	padding: 0.6rem;
 }
 
 .menu > li > button:hover,
@@ -122,9 +151,19 @@ button {
 	font-weight: bold;
 }
 
+.menu-star {
+	opacity: 0.75;
+}
+
 .menu-name {
-	/* font-size: 0.8em; */
 	margin-left: 0.5em;
+}
+
+.menu-note {
+	font-size: var(--price-display-menu-font-size, 0.8em);
+	font-style: var(--price-display-menu-font-style, italic);
+	color: var(--price-display-menu-note-color, #222222bd);
+	background: var(--price-display-menu-note-background, #f9e996);
 }
 
 .blanket {
@@ -163,13 +202,14 @@ button {
 }
 
 .compared .symbol {
+	font-size: 0.7em;
 	align-self: flex-start;
 }
 
 .percent-off {
 	opacity: var(--price-display-percent-off-opacity, 1);
 	font-size: var(--price-display-percent-off-font-size, 1em);
-	padding: var(--price-display-percent-off-padding, 0 0.1em);
+	padding: var(--price-display-percent-off-padding, 0 0.2em);
 	color: var(--price-display-percent-off-color, inherit);
 	background: var(--price-display-percent-off-background, transparent);
 	border: var(--price-display-percent-off-border, none);

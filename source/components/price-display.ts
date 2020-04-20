@@ -77,7 +77,7 @@ export function preparePriceDisplay({
 				precision,
 				exchangeRates,
 				inputCurrency,
-				outputCurrency
+				outputCurrency,
 			})
 
 			const comparedPrice = comparedValue
@@ -86,9 +86,19 @@ export function preparePriceDisplay({
 					precision,
 					exchangeRates,
 					inputCurrency,
-					outputCurrency
+					outputCurrency,
 				})
 				: null
+
+			const calculatePercentOff = () => {
+				const difference = comparedPrice.value - price.value
+				const fraction = difference / comparedPrice.value
+				const percentage = Math.round(fraction * 100)
+				return percentage
+			}
+
+			const currencyIsConverted = inputCurrency !== outputCurrency
+			const conversionMark = currencyIsConverted ? "*" : ""
 
 			return html`
 				<div class="price-display">
@@ -96,7 +106,7 @@ export function preparePriceDisplay({
 						<span class="symbol">${price.currency.symbol}</span
 						><span class="amount">${price.amount}</span>
 						<button class="code" @click=${this.toggle}>
-							${price.currency.code}<span class="down">▼</span>
+							${price.currency.code}${conversionMark}<span class="down">▼</span>
 						</button>
 						${menuOpen ? html`
 							<div class="blanket" @click=${this.toggle}></div>
@@ -104,11 +114,13 @@ export function preparePriceDisplay({
 								${Object.values(currencies).map(({symbol, code, name}) => html`
 									<li>
 										<button @click=${this._prepareHandleMenuClick(code)}>
-											<span class="menu-symbol">${symbol}</span>
+											<span class="menu-symbol">${symbol}</span
+											><span class="menu-star">${code === inputCurrency ? "" : "*"}</span>
 											<span class="menu-name">${name}</span>
 										</button>
 									</li>
 								`)}
+								<div class="menu-note">* converted currency: prices are estimates and may be different at checkout</div>
 							</ul>
 						` : html``}
 					</div>
@@ -118,14 +130,7 @@ export function preparePriceDisplay({
 								<span class="symbol">${comparedPrice.currency.symbol}</span
 								><span class="amount">${comparedPrice.amount}</span>
 							</span>
-							<span class="percent-off">
-								${(() => {
-									const difference = comparedPrice.value - price.value
-									const fraction = difference / comparedPrice.value
-									const percentage = Math.round(fraction * 100)
-									return `${percentage}% off`
-								})()}
-							</span>
+							<span class="percent-off">${calculatePercentOff()}% off</span>
 						</div>
 					` : null}
 				</div>
