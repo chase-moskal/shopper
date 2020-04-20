@@ -18,13 +18,17 @@ export const priceDisplayStyles = css`
 }
 
 .price-display {
-	position: relative;
 	display: flex;
-	flex-direction: column;
+	flex-direction: var(--price-display-flex-direction, column);
+	align-items: var(--price-display-align-items, center);
 }
 
 .price-display > div {
 	flex: 1 1 auto;
+}
+
+.price-area {
+	position: relative;
 }
 
 .price-display > .price-area > span {
@@ -32,8 +36,15 @@ export const priceDisplayStyles = css`
 }
 
 .symbol {
-	font-size: 0.8em;
 	vertical-align: top;
+}
+
+.price-area .amount {
+	font-size: 1.5em;
+}
+
+.compared .amount {
+	font-size: 1em;
 }
 
 button {
@@ -46,7 +57,6 @@ button {
 }
 
 .code {
-	font-size: 0.8em;
 	padding: 0.1em;
 	display: inline-block;
 	cursor: pointer;
@@ -55,12 +65,14 @@ button {
 }
 
 .code:hover {
-	border: 1px solid rgba(128,128,128, 0.2);
+	border: var(
+		--price-display-code-hover-border,
+		1px solid rgba(128,128,128, 0.5)
+	);
 }
 
 .code .down {
 	opacity: 0.5;
-	font-size: 0.8em;
 	margin-left: 0.2em;
 }
 
@@ -71,7 +83,7 @@ button {
 	top: 100%;
 	left: 0;
 	width: 100%;
-	min-width: var(--price-display-menu-min-width, 12em);
+	min-width: var(--price-display-menu-min-width, 14em);
 	z-index: 1;
 	text-align: left;
 	border-radius: 3px;
@@ -111,7 +123,7 @@ button {
 }
 
 .menu-name {
-	font-size: 0.8em;
+	/* font-size: 0.8em; */
 	margin-left: 0.5em;
 }
 
@@ -137,7 +149,7 @@ button {
 }
 
 .compared {
-	font-size: var(--price-display-compared-font-size, 0.8em);
+	font-size: var(--price-display-compared-font-size, 1em);
 	opacity: var(--price-display-compared-opacity, 0.7);
 }
 
@@ -150,9 +162,13 @@ button {
 	align-items: center;
 }
 
+.compared .symbol {
+	align-self: flex-start;
+}
+
 .percent-off {
 	opacity: var(--price-display-percent-off-opacity, 1);
-	font-size: var(--price-display-percent-off-font-size, 0.8em);
+	font-size: var(--price-display-percent-off-font-size, 1em);
 	padding: var(--price-display-percent-off-padding, 0 0.1em);
 	color: var(--price-display-percent-off-color, inherit);
 	background: var(--price-display-percent-off-background, transparent);
