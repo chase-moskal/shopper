@@ -68,6 +68,10 @@ shopper-collection button {
 	padding: 0.5em 1em;
 }
 
+shopper-product img {
+	max-width: 600px;
+}
+
 price-display[menu-open] {
 	z-index: 101;
 	position: relative;

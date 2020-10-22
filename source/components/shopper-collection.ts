@@ -10,6 +10,7 @@ import {
 export class ShopperCollection extends LightDom(LoadableComponent) {
 	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: Boolean, reflect: true}) ["all"]: boolean
+	@property({type: Boolean, reflect: true}) ["show-images"]: boolean
 	@property({type: Array}) items: CartItem[] = null
 
 	static get styles() {return [...super.styles, css`
@@ -35,7 +36,10 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 			<ol>
 				${cartItems && cartItems.map(cartItem => html`
 					<li>
-						<shopper-product uid=${cartItem.product.id}></shopper-product>
+						<shopper-product
+							show-image=${this["show-images"]}
+							uid=${cartItem.product.id}
+						></shopper-product>
 					</li>
 				`)}
 			</ol>

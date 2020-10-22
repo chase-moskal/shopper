@@ -80,7 +80,13 @@ export class ShopifyAdapter {
 			title: shopifyProduct.title,
 			description: shopifyProduct.descriptionHtml,
 			collections: collectionId ? [collectionId] : [],
-			firstVariantId: firstVariant.id
+			firstVariantId: firstVariant.id,
+			image: firstVariant.image
+				? {
+					alt: firstVariant.image.alt ?? "",
+					src: firstVariant.image.src,
+				}
+				: null,
 		}
 	}
 

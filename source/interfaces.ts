@@ -100,6 +100,11 @@ export interface ShopifyResults {
 	collectionIds: string[]
 }
 
+export interface ProductImage {
+	alt: string
+	src: string
+}
+
 export interface Product {
 	id: string
 	value: number
@@ -108,4 +113,5 @@ export interface Product {
 	collections: string[]
 	comparedValue: number
 	firstVariantId: string
+	image?: ProductImage
 }
