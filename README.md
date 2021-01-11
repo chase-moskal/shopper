@@ -8,16 +8,16 @@
 1. **load shopper with `<script>` elements** (and some polyfills)
 
 	```html
-	<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
-	<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.4.0/webcomponents-bundle.js"></script>
+	<script async defer src="https://unpkg.com/sorry-not-sorry"></script>
+	<script defer src="https://unpkg.com/whatwg-fetch@3.5.0/dist/fetch.umd.js"></script>
+	<script defer src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-bundle.js"></script>
 
-	<script type="importmap-shim" src="https://cdn.jsdelivr.net/npm/shopper@0.1.0/dist/importmap.json"></script>
+	<script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.0/dist/importmap.json"></script>
 	<script type="module-shim">
 		import "menutown"
-		import "https://cdn.jsdelivr.net/npm/shopper@0.1.0/dist/shopper.js"
+		import "https://unpkg.com/shopper@0.2.0-dev.0/dist/shopper.js"
 	</script>
-
-	<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
+	<script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
 	```
 
 2. **configure shopper with a `<shopper-config>` element**
@@ -30,6 +30,12 @@
 	```
 
 	you can find your shopify details somewhere in your shopify account ¯\\\_(ツ)\_/¯
+
+	*alternatively,* you can use a mock config snippet to play around with fake dummy data (instead of connecting to a real shopify account)
+
+	```html
+	<shopper-config mock></shopper-config>
+	```
 
 	also, you can add a `mock` attribute to play with dummy data (instead of connecting to a real shopify account)
 
