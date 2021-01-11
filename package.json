@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.1.5",
+	"version": "0.2.0-dev.0",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
@@ -16,7 +16,7 @@
 		"clean": "rimraf dist && mkdirp dist",
 		"build": "run-p importmap compile copy-styles",
 		"bundle": "rollup -c rollup.config.js",
-		"importmap": "importly < package.json > dist/importmap.json",
+		"importmap": "importly --host=unpkg < package.json > dist/importmap.json",
 		"compile": "tsc",
 		"copy-styles": "ncp source/demo.css dist/demo.css",
 		"watch": "tsc -w",
@@ -43,10 +43,10 @@
 		"npm-run-all": "^4.1.5",
 		"octicons": "^8.5.0",
 		"rimraf": "^3.0.2",
-		"rollup": "^2.32.1",
+		"rollup": "^2.36.1",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"serve": "^11.3.2",
-		"typescript": "^4.0.3"
+		"typescript": "^4.1.3"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"homepage": "https://github.com/chase-moskal/shopper#readme",

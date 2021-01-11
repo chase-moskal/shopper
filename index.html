@@ -6,15 +6,17 @@
 		<title>shopper</title>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton:400,800"/>
 		<link rel="stylesheet" href="source/demo.css"/>
-		<script async defer src="https://cdn.jsdelivr.net/npm/sorry-not-sorry"></script>
 
-		<script defer src="https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
-		<script defer src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.4.0/webcomponents-bundle.js"></script>
+		<script async defer src="https://unpkg.com/sorry-not-sorry"></script>
+		<script defer src="https://unpkg.com/whatwg-fetch@3.5.0/dist/fetch.umd.js"></script>
+		<script defer src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-bundle.js"></script>
 
-		<script type="module-shim" src="https://unpkg.com/menutown@0.0.1-dev.2/dist/register-all.js"></script>
 		<script type="importmap-shim" src="dist/importmap.json"></script>
-		<script defer type="module-shim" src="dist/shopper.js"></script>
-		<script defer src="https://unpkg.com/es-module-shims@0.4.6/dist/es-module-shims.js"></script>
+		<script type="module-shim">
+			import "menutown"
+			import "./dist/shopper.js"
+		</script>
+		<script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
 	</head>
 	<body>
 
