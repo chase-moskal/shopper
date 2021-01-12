@@ -1,7 +1,16 @@
 
 # 🛒 ***shopper** – shopify cart ui*
 
-[**⚡ live demo**](https://chasemoskal.com/shopper/) — shopper is a shopify cart system for selling shopify products on your own websites
+shopper lets you plug your shopify store onto your website
+- [**⚡ live demo**](https://chasemoskal.com/shopper/)
+- easy html install, works on any website, customizable visuals
+- full shopping cart experience with shopify checkout button
+- display all your store's products, or individual collections, or individual products
+- built-in currency conversions for displaying prices to users
+
+shopper is experimental open source technology
+- future versions may be subject to change
+- contributions welcome
 
 ## 📦 install and configure shopper with html
 
@@ -20,24 +29,35 @@
     <script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
     ```
 
+    place this in your html document's `<head>` section
+
 2. **configure shopper with a `<shopper-config>` element**
+
+    place this in your html `<body>` section to get started
 
     ```html
     <shopper-config
+      mock
+      base-currency="cad"
+      currencies="cad,usd,gbp,eur"
+    ></shopper-config>
+    ```
+
+    the above config is in `mock` mode, which lets you play around with fake products
+
+    the next step is to replace this configuration with the one below, however substituting the shopify data for your own, to connect your real shopify store
+
+    ```html
+    <shopper-config
+      base-currency="cad"
+      currencies="cad,usd,gbp,eur"
       shopify-domain="dev-bakery.myshopify.com"
       shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
     ></shopper-config>
     ```
 
-    you can find your shopify details somewhere in your shopify account ¯\\\_(ツ)\_/¯
-
-    *alternatively,* you can use a mock config snippet to play around with fake dummy data (instead of connecting to a real shopify account)
-
-    ```html
-    <shopper-config mock></shopper-config>
-    ```
-
-    also, you can add a `mock` attribute to play with dummy data (instead of connecting to a real shopify account)
+    you can find your shopify details somewhere in your shopify account ¯\\\_(ツ)\_/¯  
+    (somebody please write instructions for this, contributions welcome!)
 
 3. **place `<shopper-cart>` element somewhere on your page**
 
@@ -47,7 +67,7 @@
     <shopper-cart></shopper-cart>
     ```
 
-    however, optionally, you may wish to place the cart inside a menu system (like in the demo)
+    however, optionally, you may wish instead to place the cart inside a menu system (like in the demo)
 
     ```html
     <menu-system initially-hidden sticky>
@@ -92,11 +112,10 @@
 
 ## 👩‍🔧 under the hood
 
-- `shopper` is published as an npm package, so you can roll-it-up or webpack it at your leisure
+- `shopper` is published as an npm package
 - shopper saves data to `localStorage` to keep track of your cart details between page loads
-- shopper's official public interface is what's available via html configuration (consider shopper's javascript modules as internal implementations which might change, so you can choose to use the javascript modules directly for advanced customizations at your own risk)
 
 ## 💖 made with open source love
 
-- [twitch.tv/chasemoskal](https://www.twitch.tv/chasemoskal) catch me live streaming open source work like this
 - please file issues and collaborate!
+- created by chase moskal

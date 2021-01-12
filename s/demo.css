@@ -48,7 +48,9 @@ menu-display {
 }
 
 .demo-area h2 {
+	opacity: 0.5;
 	margin-top: 2em;
+	margin-bottom: 0.6em;
 }
 
 .demo-area shopper-collection li {
@@ -56,8 +58,9 @@ menu-display {
 	list-style-position: inside;
 }
 
-.demo-area shopper-collection {
-	font-size: 2em;
+.demo-area shopper-collection img,
+.demo-area shopper-product img {
+	width: 240px;
 }
 
 shopper-collection ol {
