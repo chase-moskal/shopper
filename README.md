@@ -7,84 +7,84 @@
 
 1. **load shopper with `<script>` elements** (and some polyfills)
 
-	```html
-	<script async defer src="https://unpkg.com/sorry-not-sorry"></script>
-	<script defer src="https://unpkg.com/whatwg-fetch@3.5.0/dist/fetch.umd.js"></script>
-	<script defer src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-bundle.js"></script>
+    ```html
+    <script async defer src="https://unpkg.com/sorry-not-sorry"></script>
+    <script defer src="https://unpkg.com/whatwg-fetch@3.5.0/dist/fetch.umd.js"></script>
+    <script defer src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-bundle.js"></script>
 
-	<script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.0/x/importmap.json"></script>
-	<script type="module-shim">
-		import "menutown"
-		import "https://unpkg.com/shopper@0.2.0-dev.0/x/shopper.js"
-	</script>
-	<script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
-	```
+    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.0/x/importmap.json"></script>
+    <script type="module-shim">
+      import "menutown"
+      import "https://unpkg.com/shopper@0.2.0-dev.0/x/shopper.js"
+    </script>
+    <script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
+    ```
 
 2. **configure shopper with a `<shopper-config>` element**
 
-	```html
-	<shopper-config
-		shopify-domain="dev-bakery.myshopify.com"
-		shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
-	></shopper-config>
-	```
+    ```html
+    <shopper-config
+      shopify-domain="dev-bakery.myshopify.com"
+      shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
+    ></shopper-config>
+    ```
 
-	you can find your shopify details somewhere in your shopify account ¯\\\_(ツ)\_/¯
+    you can find your shopify details somewhere in your shopify account ¯\\\_(ツ)\_/¯
 
-	*alternatively,* you can use a mock config snippet to play around with fake dummy data (instead of connecting to a real shopify account)
+    *alternatively,* you can use a mock config snippet to play around with fake dummy data (instead of connecting to a real shopify account)
 
-	```html
-	<shopper-config mock></shopper-config>
-	```
+    ```html
+    <shopper-config mock></shopper-config>
+    ```
 
-	also, you can add a `mock` attribute to play with dummy data (instead of connecting to a real shopify account)
+    also, you can add a `mock` attribute to play with dummy data (instead of connecting to a real shopify account)
 
 3. **place `<shopper-cart>` element somewhere on your page**
 
-	this is all you need
+    this is all you need
 
-	```html
-	<shopper-cart></shopper-cart>
-	```
+    ```html
+    <shopper-cart></shopper-cart>
+    ```
 
-	however, optionally, you may wish to place the cart inside a menu system (like in the demo)
+    however, optionally, you may wish to place the cart inside a menu system (like in the demo)
 
-	```html
-	<menu-system initially-hidden sticky>
-		<menu-display>
+    ```html
+    <menu-system initially-hidden sticky>
+      <menu-display>
 
-			<shopper-button slot="button"></shopper-button>
-			<shopper-cart></shopper-cart>
+        <shopper-button slot="button"></shopper-button>
+        <shopper-cart></shopper-cart>
 
-		</menu-display>
-	</menu-system>
-	```
+      </menu-display>
+    </menu-system>
+    ```
 
-	also, the cart can take a `checkout-in-same-window` attribute, if you want to avoid a popup during checkout
+    also, the cart can take a `checkout-in-same-window` attribute, if you want to avoid a popup during checkout
 
-	```html
-	<shopper-cart checkout-in-same-window></shopper-cart>
-	```
+    ```html
+    <shopper-cart checkout-in-same-window></shopper-cart>
+    ```
 
 4. **list products for sale**
 
-	list all store products with a collection element and the `all` attribute
+    list all store products with a collection element and the `all` attribute
 
-	```html
-	<shopper-collection all></shopper-collection>
-	```
+    ```html
+    <shopper-collection all></shopper-collection>
+    ```
 
-	list a single collection by its shopify uid
+    list a single collection by its shopify uid
 
-	```html
-	<shopper-collection uid="Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="></shopper-collection>
-	```
+    ```html
+    <shopper-collection uid="Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="></shopper-collection>
+    ```
 
-	display a single product for sale
+    display a single product for sale
 
-	```html
-	<shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
-	```
+    ```html
+    <shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
+    ```
 
 ## 💅 customize shopper's appearance with css
 
