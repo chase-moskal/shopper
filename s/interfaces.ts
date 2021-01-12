@@ -1,7 +1,8 @@
 
+import {CurrencyExchangeRates} from "crnc/x/interfaces.js"
+
 import {Reader} from "./toolbox/pubsub.js"
 import {ShopperComponent} from "./framework/shopper-component.js"
-import {CurrencyExchangeRates} from "crnc/dist/interfaces.js"
 
 export type ShopperMock = null | "" | "mock" | "fail"
 

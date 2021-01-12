@@ -1,12 +1,12 @@
 
-import {Currencies} from "crnc/dist/interfaces.js"
-import {assumeUserCurrency} from "crnc/dist/ecommerce/assume-user-currency.js"
+import {Currencies} from "crnc/x/interfaces.js"
+import {assumeUserCurrency} from "crnc/x/ecommerce/assume-user-currency.js"
 import {
 	ascertainEcommerceDetails
-} from "crnc/dist/ecommerce/ascertain-ecommerce-details.js"
+} from "crnc/x/ecommerce/ascertain-ecommerce-details.js"
 import {
 	currencies as defaultCurrencies
-} from "crnc/dist/ecommerce/currencies.js"
+} from "crnc/x/ecommerce/currencies.js"
 
 import {makeReader} from "../toolbox/pubsub.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"

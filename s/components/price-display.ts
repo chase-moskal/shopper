@@ -1,7 +1,7 @@
 
 import {LitElement, html} from "lit-element"
-import {Currencies} from "crnc/dist/interfaces.js"
-import {convertAndFormatCurrency} from "crnc/dist/currency-tools/convert-and-format-currency.js"
+import {Currencies} from "crnc/x/interfaces.js"
+import {convertAndFormatCurrency} from "crnc/x/currency-tools/convert-and-format-currency.js"
 
 import {Reader} from "../toolbox/pubsub.js"
 import {priceDisplayStyles} from "./price-display-styles.js"

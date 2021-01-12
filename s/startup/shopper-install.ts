@@ -1,7 +1,7 @@
 
 import {
 	currencies as defaultCurrencies
-} from "crnc/dist/ecommerce/currencies.js"
+} from "crnc/x/ecommerce/currencies.js"
 
 import {parseConfig} from "./parse-config.js"
 import {assembleModel} from "./assemble-model.js"
@@ -24,7 +24,7 @@ import {
 	ShopperConfig,
 } from "../interfaces.js"
 import {objectMap} from "../toolbox/object-map.js"
-import {Currency, Currencies} from "crnc/dist/interfaces.js"
+import {Currency, Currencies} from "crnc/x/interfaces.js"
 
 export type CurrencyStorage = any
 export interface ShopperInstallOptions {
