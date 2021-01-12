@@ -1,11 +1,11 @@
 
-import {
-	currencies as defaultCurrencies
-} from "crnc/x/ecommerce/currencies.js"
+import {Currencies} from "crnc/x/interfaces.js"
+import {currencies as defaultCurrencies} from "crnc/x/ecommerce/currencies.js"
 
 import {parseConfig} from "./parse-config.js"
 import {assembleModel} from "./assemble-model.js"
 import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
+import {installPriceDisplaySystem} from "./install-price-display-system.js"
 
 import {ShopperCart} from "../components/shopper-cart.js"
 import {ShopperButton} from "../components/shopper-button.js"
@@ -16,17 +16,10 @@ import {select} from "../toolbox/select.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"
 import {createCartStorage} from "../model/create-cart-storage.js"
 import {createCurrencyStorage} from "../model/create-currency-storage.js"
-import {installPriceDisplaySystem} from "./install-price-display-system.js"
+import {CartStorage, CurrencyStorage, ShopperConfig} from "../interfaces.js"
 import {dashify, registerComponents} from "../toolbox/register-components.js"
 import {wireModelToComponents} from "../framework/wire-model-to-components.js"
-import {
-	CartStorage,
-	ShopperConfig,
-} from "../interfaces.js"
-import {objectMap} from "../toolbox/object-map.js"
-import {Currency, Currencies} from "crnc/x/interfaces.js"
 
-export type CurrencyStorage = any
 export interface ShopperInstallOptions {
 	config?: ShopperConfig
 	cartStorage?: CartStorage
@@ -35,22 +28,23 @@ export interface ShopperInstallOptions {
 
 export async function shopperInstall({
 
-	// parse shopper config
-	config = parseConfig(select("shopper-config")),
+		// parse shopper config
+		config = parseConfig(select("shopper-config")),
 
-	// cart storage mechanism
-	cartStorage = createCartStorage({
-		key: "shopper-cart",
-		dataStore: new SimpleDataStore({storage: localStorage})
-	}),
+		// cart storage mechanism
+		cartStorage = createCartStorage({
+			key: "shopper-cart",
+			dataStore: new SimpleDataStore({storage: localStorage})
+		}),
 
-	// currency preference storage
-	currencyStorage = createCurrencyStorage({
-		key: "shopper-currency",
-		dataStore: new SimpleDataStore({storage: localStorage})
-	})
+		// currency preference storage
+		currencyStorage = createCurrencyStorage({
+			key: "shopper-currency",
+			dataStore: new SimpleDataStore({storage: localStorage})
+		}),
 
-}: ShopperInstallOptions = {}) {
+	}: ShopperInstallOptions = {}) {
+
 	const {ratesUrl, baseCurrency} = config
 
 	// assemble the shopper model
@@ -70,8 +64,7 @@ export async function shopperInstall({
 	})
 
 	// figure out which available currencies are configured
-	const currency: boolean = !!config.currencies
-	const installCurrencyConversions = currency
+	const installCurrencyConversions = !!config.currencies
 		? async() => {
 			const codes = config.currencies
 				.split(",")
@@ -90,7 +83,13 @@ export async function shopperInstall({
 				currencyStorage,
 			})
 		}
-		: async() => {}
+		: async() => {
+			await installPriceDisplaySystem({
+				ratesUrl,
+				baseCurrency,
+				currencyStorage,
+			})
+		}
 
 	// do a bunch of concurrent stuff
 	await Promise.all([

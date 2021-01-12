@@ -1,12 +1,8 @@
 
 import {Currencies} from "crnc/x/interfaces.js"
 import {assumeUserCurrency} from "crnc/x/ecommerce/assume-user-currency.js"
-import {
-	ascertainEcommerceDetails
-} from "crnc/x/ecommerce/ascertain-ecommerce-details.js"
-import {
-	currencies as defaultCurrencies
-} from "crnc/x/ecommerce/currencies.js"
+import {currencies as defaultCurrencies} from "crnc/x/ecommerce/currencies.js"
+import {ascertainEcommerceDetails} from "crnc/x/ecommerce/ascertain-ecommerce-details.js"
 
 import {makeReader} from "../toolbox/pubsub.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"
@@ -21,8 +17,8 @@ export async function installPriceDisplaySystem({
 		currencies = defaultCurrencies,
 		currencyStorage = createCurrencyStorage({
 			key: "price-display-currency",
-			dataStore: new SimpleDataStore({storage: localStorage})
-		})
+			dataStore: new SimpleDataStore({storage: localStorage}),
+		}),
 	}: {
 		baseCurrency: string
 		ratesUrl?: string
@@ -63,9 +59,7 @@ export async function installPriceDisplaySystem({
 		} = await ascertainEcommerceDetails({
 			ratesUrl,
 			storeBaseCurrency: baseCurrency,
-			userDisplayCurrency: assumeUserCurrency({
-				fallback: baseCurrency
-			}),
+			userDisplayCurrency: assumeUserCurrency({fallback: baseCurrency}),
 		})
 		state.exchangeRates = exchangeRates
 		state.outputCurrency = (await currencyStorage.load()) || userDisplayCurrency

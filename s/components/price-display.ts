@@ -8,16 +8,16 @@ import {priceDisplayStyles} from "./price-display-styles.js"
 import {SetCurrency, PriceModelState} from "../interfaces.js"
 
 export function preparePriceDisplay({
-	state,
-	reader,
-	currencies,
-	setCurrency,
-}: {
-	currencies: Currencies
-	state: PriceModelState
-	setCurrency: SetCurrency
-	reader: Reader<PriceModelState>
-}): typeof LitElement {
+		state,
+		reader,
+		currencies,
+		setCurrency,
+	}: {
+		currencies: Currencies
+		state: PriceModelState
+		setCurrency: SetCurrency
+		reader: Reader<PriceModelState>
+	}): typeof LitElement {
 
 	return class PriceDisplay extends LitElement {
 		static get properties() {
