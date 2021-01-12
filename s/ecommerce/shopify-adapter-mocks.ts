@@ -1,7 +1,8 @@
 
-import {wait} from "../toolbox/wait.js"
-import {ShopifyResults} from "../interfaces.js"
 import {ShopifyAdapter} from "./shopify-adapter.js"
+
+import {wait} from "../toolbox/wait.js"
+import {CartItem, ShopifyResults} from "../interfaces.js"
 
 export class MockAdapter extends ShopifyAdapter {
 	constructor() {
@@ -28,12 +29,13 @@ export class MockFailingShopifyAdapter extends MockAdapter {
 }
 
 export function prepSlowAdapter<T extends new(...args: any[]) => MockAdapter>({
-	ms,
-	Adapter,
-}: {
-	Adapter: T
-	ms: number
-}): T {
+		ms,
+		Adapter,
+	}: {
+		Adapter: T
+		ms: number
+	}): T {
+
 	return class MockSlowShopifyAdapter extends Adapter {
 		async fetchEverything(): Promise<ShopifyResults> {
 			await wait(ms)
@@ -42,7 +44,7 @@ export function prepSlowAdapter<T extends new(...args: any[]) => MockAdapter>({
 				// // supposed to be this:
 				// return super.fetchEverything()
 		}
-		async checkout(items): Promise<string> {
+		async checkout(items: CartItem[]): Promise<string> {
 			await wait(ms)
 			return Adapter.prototype.checkout.call(this, items)
 				// // HACK makes Edge 18 work ¯\_(ツ)_/¯

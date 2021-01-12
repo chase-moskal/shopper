@@ -4,21 +4,21 @@
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
-	"module": "dist/shopper.js",
-	"main": "dist/shopper.js",
-	"types": "dist/shopper.d.ts",
+	"module": "x/shopper.js",
+	"main": "x/shopper.js",
+	"types": "x/shopper.d.ts",
 	"files": [
-		"dist",
-		"source"
+		"s",
+		"x"
 	],
 	"scripts": {
 		"prepare": "run-s clean build test",
-		"clean": "rimraf dist && mkdirp dist",
+		"clean": "rimraf x && mkdirp x",
 		"build": "run-p importmap compile copy-styles",
 		"bundle": "rollup -c rollup.config.js",
-		"importmap": "importly --host=unpkg < package.json > dist/importmap.json",
+		"importmap": "importly --host=unpkg < package.json > x/importmap.json",
 		"compile": "tsc",
-		"copy-styles": "ncp source/demo.css dist/demo.css",
+		"copy-styles": "ncp s/demo.css x/demo.css",
 		"watch": "tsc -w",
 		"test": "exit 0",
 		"start": "serve"

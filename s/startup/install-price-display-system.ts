@@ -16,19 +16,20 @@ import {createCurrencyStorage} from "../model/create-currency-storage.js"
 import {CurrencyStorage, PriceModelState, SetCurrency} from "../interfaces.js"
 
 export async function installPriceDisplaySystem({
-	ratesUrl,
-	baseCurrency,
-	currencies = defaultCurrencies,
-	currencyStorage = createCurrencyStorage({
-		key: "price-display-currency",
-		dataStore: new SimpleDataStore({storage: localStorage})
-	})
-}: {
-	baseCurrency: string
-	ratesUrl?: string
-	currencies?: Currencies
-	currencyStorage?: CurrencyStorage
-}) {
+		ratesUrl,
+		baseCurrency,
+		currencies = defaultCurrencies,
+		currencyStorage = createCurrencyStorage({
+			key: "price-display-currency",
+			dataStore: new SimpleDataStore({storage: localStorage})
+		})
+	}: {
+		baseCurrency: string
+		ratesUrl?: string
+		currencies?: Currencies
+		currencyStorage?: CurrencyStorage
+	}): Promise<void> {
+
 	if (!baseCurrency) throw new Error("baseCurrency is not defined")
 	baseCurrency = baseCurrency.toUpperCase()
 
@@ -72,6 +73,5 @@ export async function installPriceDisplaySystem({
 	}
 	catch (error) {
 		console.warn(`failed to download exchange rates via ratesUrl "${ratesUrl}"`)
-		return null
 	}
 }

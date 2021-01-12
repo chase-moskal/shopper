@@ -47,7 +47,7 @@ export class ShopifyAdapter {
 
 			return {
 				products,
-				collectionIds: collections.map(collection => collection.id)
+				collectionIds: collections.map((collection: any) => collection.id)
 			}
 		}
 		catch (error) {

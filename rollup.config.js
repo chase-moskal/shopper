@@ -2,9 +2,9 @@
 import resolve from "rollup-plugin-node-resolve"
 
 export default {
-	input: "dist/shopper.js",
+	input: "x/shopper.js",
 	output: {
-		file: "dist/shopper.bundle.js",
+		file: "x/shopper.bundle.js",
 		format: "iife",
 		name: "shopperBundle"
 	},

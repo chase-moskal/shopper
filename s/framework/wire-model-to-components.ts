@@ -7,7 +7,7 @@ export function wireModelToComponents(
 	model: ShopperModel,
 	components: {[key: string]: typeof ShopperComponent}
 ) {
-	const newComponents = {}
+	const newComponents: {[key: string]: typeof ShopperComponent} = {}
 	for (const [key, value] of Object.entries(components)) {
 		newComponents[key] = provideModel(model, value)
 	}
