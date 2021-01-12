@@ -1,0 +1,1 @@
+{"version":3,"file":"select.js","sourceRoot":"","sources":["../../s/toolbox/select.ts"],"names":[],"mappings":"AACA,MAAM,UAAU,MAAM,CAAwB,QAAgB;IAC7D,OAAO,QAAQ,CAAC,aAAa,CAAC,QAAQ,CAAC,CAAA;AACxC,CAAC;AAED,MAAM,UAAU,OAAO,CAAwB,QAAgB;IAC9D,OAAO,KAAK,CAAC,IAAI,CAAC,QAAQ,CAAC,gBAAgB,CAAC,QAAQ,CAAC,CAAC,CAAA;AACvD,CAAC"}
