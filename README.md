@@ -20,10 +20,10 @@
 1. **add `<script>` elements in your html `<head>`**
 
     ```html
-    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.1/x/importmap.json"></script>
+    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.2/x/importmap.json"></script>
     <script defer type="module-shim">
       import "menutown"
-      import "https://unpkg.com/shopper@0.2.0-dev.1/x/shopper.js"
+      import "https://unpkg.com/shopper@0.2.0-dev.2/x/shopper.js"
     </script>
     <script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
     ```
