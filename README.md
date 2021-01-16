@@ -14,6 +14,7 @@
 - aims to be used by people who only know basic html and css
 - future versions of shopper may be subject to change
 - contributions welcome
+- [discord chat](https://discord.gg/vFFDqHT2AB)
 
 ## 📦 install and configure shopper with simple html
 
@@ -158,6 +159,5 @@
 
 ## 💖 made with open source love by chase moskal
 
-- please file issues and collaborate! 🍻
-- add me on discord and let's chat! i'm happy to help  
-    `Chase Moskal#7898`
+- please file issues and collaborate 🍻
+- join the [discord chat!](https://discord.gg/vFFDqHT2AB)
