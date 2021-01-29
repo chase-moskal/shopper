@@ -73,6 +73,7 @@ export class ShopifyAdapter {
 		const [firstVariant] = shopifyProduct.variants
 		return {
 			id: shopifyProduct.id,
+			available: shopifyProduct.availableForSale,
 			value: parseFloat(firstVariant.price),
 			comparedValue: firstVariant.compareAtPrice
 				? parseFloat(firstVariant.compareAtPrice)

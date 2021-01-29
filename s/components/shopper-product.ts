@@ -11,8 +11,9 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	@property({type: String}) ["uid"]: string
 	@property({type: Object}) cartItem: CartItem
 	@property({type: String, reflect: true}) ["href"]: string
-	@property({type: String, reflect: true}) ["in-cart"]: boolean
-	@property({type: Boolean, reflect: true}) ["show-image"]: boolean
+	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean = false
+	@property({type: Boolean, reflect: true}) ["show-image"]: boolean = false
+	@property({type: Boolean, reflect: true}) ["out-of-stock"]: boolean = false
 
 	static get styles() {return [...super.styles, css``]}
 
@@ -24,6 +25,9 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 				? LoadableState.Error
 				: LoadableState.Loading
 		this["in-cart"] = getters.itemsInCart.includes(this.cartItem)
+		this["out-of-stock"] = this.cartItem
+			? !this.cartItem.product.available
+			: false
 	}
 
 	private _handleAddToCart = () => {
@@ -35,35 +39,41 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 		const href = this["href"]
 		const inCart = this["in-cart"]
 		const showImage = this["show-image"]
+		const outOfStock = this["out-of-stock"]
 		const value = this.model.getters.getUnitValue(cartItem)
-		const comparedValue = cartItem.product.comparedValue
+		const {product} = cartItem
 		const linkify = (content: TemplateResult) => href
 			? html`<a href=${href}>${content}</a>`
 			: content
 		return !cartItem ? null : html`
-			${(showImage && cartItem.product.image) ? html`
+			${(showImage && product.image) ? html`
 				<div class="product-image">
 					${linkify(html`
 						<img
-							src=${cartItem.product.image.src}
-							alt=${cartItem.product.image.alt}
+							src=${product.image.src}
+							alt=${product.image.alt}
 							/>
 					`)}
 				</div>
 			` : null}
 			<h3 class="title">
-				${linkify(html`${cartItem.product.title}`)}
+				${linkify(html`${product.title}`)}
 			</h3>
+			${outOfStock
+				? html`<p class="out-of-stock">Out of stock</p>`
+				: null}
 			<div class="box">
 				<price-display
 					value="${value}"
-					comparedValue=${comparedValue}
+					comparedValue=${product.comparedValue}
 				></price-display>
 				<button class="add-to-cart-button"
 					title=${inCart ? undefined : "Add to Cart"}
 					@click=${_handleAddToCart}
-					?disabled=${inCart}>
-						${inCart ? "In Cart" : "Add to Cart"}
+					?disabled=${outOfStock || inCart}>
+						${outOfStock
+							? "Sold out"
+							: inCart ? "In Cart" : "Add to Cart"}
 				</button>
 			</div>
 		`

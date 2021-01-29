@@ -110,6 +110,7 @@ export interface Product {
 	id: string
 	value: number
 	title: string
+	available: boolean
 	description: string
 	collections: string[]
 	comparedValue: number
