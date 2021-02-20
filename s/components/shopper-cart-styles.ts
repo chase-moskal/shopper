@@ -89,6 +89,24 @@ TABLE: REMOVE BUTTONS
 }
 
 /*
+TABLE: QUANTITY
+===============
+*/
+
+.shopper-cart quantity-input {
+	display: flex;
+	width: 3em;
+	--border-color: transparent;
+}
+
+/*
+TABLE: QUANTITY
+===============
+*/
+
+.shopper-cart table 
+
+/*
 TABLE: SUBTOTAL
 ===============
 */
@@ -112,13 +130,57 @@ TABLE: MEDIA QUERIES
 ====================
 */
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
 	.shopper-cart thead {
 		display: none;
 	}
-	.shopper-cart tr {
+	.shopper-cart table tr {
+		margin-top: 2em;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		border-top: 1px solid #8884;
+	}
+	.shopper-cart tr > * {
 		display: block;
-		margin-top: 1em;
+		flex: 0 0 auto;
+	}
+	.shopper-cart .remove-cell {
+		display: flex;
+		align-items: center;
+	}
+	.shopper-cart quantity-input {
+		font-size: 1.2em;
+		width: 3em;
+		--button-scale: 1.5;
+	}
+	.shopper-cart .product-title {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		font-size: 1.2em;
+		flex: 1 1 auto;
+		width: unset !important;
+		font-weight: bold;
+		text-align: right;
+	}
+	.shopper-cart .line-price {
+		flex: 1 0 auto;
+		width: 100%;
+	}
+	.shopper-cart .cart-subtotal td {
+		width: 100%;
+	}
+	.shopper-cart table * {
+		border: none;
+	}
+	/* .shopper-cart .product-title {
+		flex: 1 0 100%;
+		display: block;
+	} */
+	/* .shopper-cart tr {
+		display: block;
+		margin-top: 2em;
 	}
 	.shopper-cart th,
 	.shopper-cart td {
@@ -134,6 +196,22 @@ TABLE: MEDIA QUERIES
 	.shopper-cart price-display {
 		margin-left: 1em;
 	}
+	.shopper-cart quantity-input {
+		display: flex;
+		font-size: 1em;
+		width: 5em;
+		--button-scale: 1.2;
+		--button-padding: 0.3em 0.6em;
+		--border-color: #3332;
+	}
+	.shopper-cart tr {
+		display: flex;
+		flex-direction: column;
+		margin-top: 2em;
+	}
+	.shopper-cart .product-title {
+		order: -1;
+	} */
 }
 
 /*

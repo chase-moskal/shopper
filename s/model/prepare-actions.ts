@@ -12,10 +12,12 @@ export function prepareActions({
 	update,
 	getters,
 	checkout,
+	defaultQuantityMax,
 }: {
 	update: () => void
 	state: ShopperState
 	getters: ShopperGetters
+	defaultQuantityMax: number
 	checkout: (items: CartItem[]) => Promise<string>
 }): ShopperActions {
 
@@ -70,8 +72,8 @@ export function prepareActions({
 			state.catalog = products.map(product => ({
 				product,
 				quantity: 0,
-				quantityMax: 10,
 				quantityMin: 1,
+				quantityMax: defaultQuantityMax,
 			}))
 			state.checkedOut = false
 		}

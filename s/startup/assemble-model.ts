@@ -22,6 +22,7 @@ export function assembleModel({
 	mock,
 	cartStorage,
 	shopifyDomain,
+	defaultQuantityMax,
 	shopifyStorefrontAccessToken,
 }: ShopperAssemblyOptions) {
 
@@ -52,7 +53,7 @@ export function assembleModel({
 		reader,
 		getters,
 		actions: objectMap(
-			prepareActions({state, checkout, getters, update}),
+			prepareActions({state, checkout, getters, update, defaultQuantityMax}),
 			value => asyncHitch(value, {after: async() => {
 				await cartStorage.saveCart(state.catalog)
 				update()

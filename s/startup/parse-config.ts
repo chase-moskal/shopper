@@ -19,4 +19,7 @@ export const parseConfig = (element: HTMLElement): ShopperConfig => ({
 
 	currencies:
 		element.getAttribute("currencies") || undefined,
+
+	defaultQuantityMax:
+		parseInt(element.getAttribute("default-quantity-max") || "25"),
 })

@@ -3,10 +3,8 @@ import {html, property, svg} from "lit-element"
 
 import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, ShopperModel, CartItem} from "../interfaces.js"
-import {
-	LoadableState,
-	LoadableComponent,
-} from "../framework/loadable-component.js"
+import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
+import {QuantityChangeEvent} from "../components/quantity-input/events/quantity-change-event.js"
 
 import {shopperCartStyles} from "./shopper-cart-styles.js"
 
@@ -113,21 +111,15 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 
 	private _renderCartItem(item: CartItem) {
 		const {getters, actions} = this.model
-		const handleQuantityInputChange = (event: Event) => {
-			const input = <HTMLInputElement>event.target
-			let value = parseInt(input.value)
-			const {quantityMin: min, quantityMax: max} = item
-			if (value < min) value = min
-			if (value > max) value = max
-			input.value = value.toString()
-			actions.setItemQuantity(item, value ? value : 0)
+		const handleQuantityChange = ({detail: value}: QuantityChangeEvent) => {
+			actions.setItemQuantity(item, value)
 		}
 		const handleRemoveClick = () => actions.setItemQuantity(item, 0)
 		const lineValue = getters.getLineValue(item)
 		const lineComparedValue = getters.getLineComparedValue(item)
 		return html`
 			<tr>
-				<td>
+				<td class="remove-cell">
 					<button
 						class="remove-button"
 						title="Remove item"
@@ -135,18 +127,14 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
 					</button>
 				</td>
-				<td>
-					<input
-						type="number"
-						.value=${item.quantity.toString()}
-						.min=${item.quantityMin.toString()}
-						.max=${item.quantityMax.toString()}
-						@change=${handleQuantityInputChange}
-						@keyup=${handleQuantityInputChange}
-						@mouseup=${handleQuantityInputChange}
-						@click=${handleQuantityInputChange}
-						@blur=${handleQuantityInputChange}
-						/>
+				<td class="quantity">
+					<quantity-input
+						.value=${item.quantity}
+						.min=${item.quantityMin}
+						.max=${item.quantityMax}
+						.step=${1}
+						@quantitychange=${handleQuantityChange}
+					></quantity-input>
 				</td>
 				<td class="product-title">${item.product.title}</td>
 				<td class="line-price">

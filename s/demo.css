@@ -60,7 +60,8 @@ menu-display {
 
 .demo-area shopper-collection img,
 .demo-area shopper-product img {
-	width: 240px;
+	width: 100%;
+	max-width: 240px;
 }
 
 shopper-collection ol {

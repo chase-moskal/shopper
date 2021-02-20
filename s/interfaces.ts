@@ -12,6 +12,7 @@ export interface ShopperConfig {
 	currencies: string
 	baseCurrency: string
 	shopifyDomain: string
+	defaultQuantityMax: number
 	shopifyStorefrontAccessToken: string
 }
 
