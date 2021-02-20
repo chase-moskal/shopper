@@ -3,7 +3,7 @@
 		"baseUrl": ".",
 		"rootDir": "s",
 		"outDir": "x",
-		"target": "esnext",
+		"target": "es6",
 		"lib": ["es6", "dom"],
 		"module": "esnext",
 		"moduleResolution": "node",
