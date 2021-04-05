@@ -99,12 +99,18 @@ button {
 	border: 10px solid transparent;
 	border-bottom-color: var(--price-display-menu-background, white);
 	top: -20px;
+	left: var(--price-display-menu-border-radius, 5px);
 	right: var(--price-display-menu-border-radius, 5px);
 }
 
 :host([right]) .menu {
 	left: unset;
 	right: 0;
+}
+
+:host([right]) .menu::before {
+	left: unset;
+	right: var(--price-display-menu-border-radius, 5px);
 }
 
 .menu > li > button {
