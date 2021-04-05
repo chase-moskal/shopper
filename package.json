@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.2.0-dev.7",
+	"version": "0.2.0-dev.8",
 	"description": "shopping cart ui for shopify stores",
 	"license": "ISC",
 	"type": "module",
