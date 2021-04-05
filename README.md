@@ -21,12 +21,12 @@
 1. **add `<script>` elements in your html `<head>`**
 
     ```html
-    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.3/x/importmap.json"></script>
+    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.6/x/importmap.json"></script>
     <script defer type="module-shim">
       import "menutown"
-      import "https://unpkg.com/shopper@0.2.0-dev.3/x/shopper.js"
+      import "https://unpkg.com/shopper@0.2.0-dev.6/x/shopper.js"
     </script>
-    <script defer src="https://unpkg.com/es-module-shims@0.8.0/dist/es-module-shims.js"></script>
+    <script defer src="https://unpkg.com/es-module-shims@0.10.3/dist/es-module-shims.js"></script>
     ```
 
 1. **configure shopper with a `<shopper-config>` element**
@@ -138,7 +138,7 @@
 - written in typescript
 - es modules
 - universally-compatible web components
-- only makes network requests to shopify, and to exchangeratesapi.io to fetch exchange rates
+- only makes network requests to shopify, and to https://www.bankofcanada.ca/ to fetch exchange rates
 - saves cart data to `localStorage` to keep track of your cart between page loads
 - if you want to support some older browsers, you can improve compatibility by adding these scripts above the others
     ```html

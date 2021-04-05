@@ -11,9 +11,6 @@ export const parseConfig = (element: HTMLElement): ShopperConfig => ({
 	shopifyStorefrontAccessToken:
 		element.getAttribute("shopify-storefront-access-token"),
 
-	ratesUrl:
-		element.getAttribute("rates-url") || undefined,
-
 	baseCurrency:
 		element.getAttribute("base-currency") || undefined,
 

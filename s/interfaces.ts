@@ -8,7 +8,6 @@ export type ShopperMock = null | "" | "mock" | "fail"
 
 export interface ShopperConfig {
 	mock: ShopperMock
-	ratesUrl: string
 	currencies: string
 	baseCurrency: string
 	shopifyDomain: string

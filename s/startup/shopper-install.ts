@@ -46,7 +46,7 @@ export async function shopperInstall({
 
 	}: ShopperInstallOptions = {}) {
 
-	const {ratesUrl, baseCurrency} = config
+	const {baseCurrency} = config
 
 	// assemble the shopper model
 	const {model, loadCatalog} = assembleModel({
@@ -75,11 +75,10 @@ export async function shopperInstall({
 			const currencies: Currencies = {}
 			for (const code of codes) {
 				const currency = defaultCurrencies[code]
-				if (!currency) throw new Error(`unknown currency "${code}"`)
-				currencies[code] = defaultCurrencies[code]
+				if (currency) currencies[code] = currency
+				else console.warn(`unknown currency "${code}"`)
 			}
 			await installPriceDisplaySystem({
-				ratesUrl,
 				currencies,
 				baseCurrency,
 				currencyStorage,
@@ -87,7 +86,6 @@ export async function shopperInstall({
 		}
 		: async() => {
 			await installPriceDisplaySystem({
-				ratesUrl,
 				baseCurrency,
 				currencyStorage,
 			})

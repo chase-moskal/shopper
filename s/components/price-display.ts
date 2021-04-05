@@ -1,6 +1,7 @@
 
 import {LitElement, html} from "lit-element"
 import {Currencies} from "crnc/x/interfaces.js"
+import {currencies} from "crnc/x/ecommerce/currencies.js"
 import {convertAndFormatCurrency} from "crnc/x/currency-tools/convert-and-format-currency.js"
 
 import {Reader} from "../toolbox/pubsub.js"
@@ -13,10 +14,10 @@ export function preparePriceDisplay({
 		currencies,
 		setCurrency,
 	}: {
-		currencies: Currencies
 		state: PriceModelState
-		setCurrency: SetCurrency
+		currencies: Currencies
 		reader: Reader<PriceModelState>
+		setCurrency: SetCurrency
 	}): typeof LitElement {
 
 	return class PriceDisplay extends LitElement {
@@ -100,6 +101,15 @@ export function preparePriceDisplay({
 			const currencyIsConverted = inputCurrency !== outputCurrency
 			const conversionMark = currencyIsConverted ? "*" : ""
 
+			const finalCurrencies: Currencies = {}
+			for (const requestedCode of Object.keys(currencies)) {
+				const availableCurrencies = Object.keys(state.exchangeRates)
+				const requestedIsAvailable = availableCurrencies.indexOf(requestedCode) !== -1
+				if (requestedIsAvailable) {
+					finalCurrencies[requestedCode] = currencies[requestedCode]
+				}
+			}
+
 			return html`
 				<div class="price-display">
 					<div class="price-area">
@@ -111,7 +121,7 @@ export function preparePriceDisplay({
 						${menuOpen ? html`
 							<div class="blanket" @click=${this.toggle}></div>
 							<ul class="menu">
-								${Object.values(currencies).map(({symbol, code, name}) => html`
+								${Object.values(finalCurrencies).map(({symbol, code, name}) => html`
 									<li>
 										<button @click=${this._prepareHandleMenuClick(code)}>
 											<span class="menu-symbol">${symbol}</span

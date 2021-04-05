@@ -12,7 +12,6 @@ import {createCurrencyStorage} from "../model/create-currency-storage.js"
 import {CurrencyStorage, PriceModelState, SetCurrency} from "../interfaces.js"
 
 export async function installPriceDisplaySystem({
-		ratesUrl,
 		baseCurrency,
 		currencies = defaultCurrencies,
 		currencyStorage = createCurrencyStorage({
@@ -21,7 +20,6 @@ export async function installPriceDisplaySystem({
 		}),
 	}: {
 		baseCurrency: string
-		ratesUrl?: string
 		currencies?: Currencies
 		currencyStorage?: CurrencyStorage
 	}): Promise<void> {
@@ -52,20 +50,18 @@ export async function installPriceDisplaySystem({
 
 	registerComponents({PriceDisplay})
 
-	try {
-		const {
-			exchangeRates,
-			userDisplayCurrency,
-		} = await ascertainEcommerceDetails({
-			ratesUrl,
-			storeBaseCurrency: baseCurrency,
-			userDisplayCurrency: assumeUserCurrency({fallback: baseCurrency}),
-		})
-		state.exchangeRates = exchangeRates
-		state.outputCurrency = (await currencyStorage.load()) || userDisplayCurrency
-		update()
-	}
-	catch (error) {
-		console.warn(`failed to download exchange rates via ratesUrl "${ratesUrl}"`)
-	}
+	const rememberedDisplayCurrency = await currencyStorage.load()
+
+	const {
+		exchangeRates,
+		userDisplayCurrency,
+	} = await ascertainEcommerceDetails({
+		storeBaseCurrency: baseCurrency,
+		userDisplayCurrency: rememberedDisplayCurrency
+			|| assumeUserCurrency({fallback: baseCurrency}),
+	})
+
+	state.exchangeRates = exchangeRates
+	state.outputCurrency = userDisplayCurrency
+	update()
 }
