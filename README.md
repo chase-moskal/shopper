@@ -92,6 +92,34 @@
     <shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
     ```
 
+## 📡 connect shopper to your real shopify store
+
+- **replace your `<shopper-config>`**  
+    use the example below, but replace `shopify-domain` and `shopify-storefront-access-token` with your own values
+
+    ```html
+    <shopper-config
+      base-currency="cad"
+      currencies="cad,usd,gbp,eur"
+      shopify-domain="dev-bakery.myshopify.com"
+      shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
+    ></shopper-config>
+    ```
+
+- **obtain your `shopify-domain` and `shopify-storefront-access-token`**
+    - login to your shopify store's admin area
+    - copy your `shopify-domain` from your browser address bar's url
+    - create a new private app (a connection point for your website)
+        1. click on the "apps" section on the left sidebar
+        2. click the sneaky "Manage private apps" link
+        3. check on the agreements and stuff to enable private apps
+        4. click "Create new private app"
+        5. enter the app name, and developer email
+        6. skip the whole "Admin API" section
+        7. enable "Storefront API" and check on all "Read" permissions
+        8. save your app
+    - copy your app's "Storefront access token" (NOT TO BE CONFUSED with the "API Token") and use this as your `shopify-storefront-access-token`
+
 ## 🤔 how do i find a shopify uid?
 
 shopify doesn't provide you with the uid's, so i wrote some quick javascript snippets you can execute in any javascript console. this is mildly advanced, so you might need help
@@ -133,34 +161,6 @@ this involves getting the URLs for the product or collection in the shopify ui, 
 > **we should fix this.**  
 > we should implement `id` in addition to `uid`, and shopper should do this weird base64 gid transformation for us.  
 > then users can just get the ids straight from the shopify ui, not so bad.. this uid stuff is terrible
-
-## 📡 connect shopper to your real shopify store
-
-- **replace your `<shopper-config>`**  
-    use the example below, but replace `shopify-domain` and `shopify-storefront-access-token` with your own values
-
-    ```html
-    <shopper-config
-      base-currency="cad"
-      currencies="cad,usd,gbp,eur"
-      shopify-domain="dev-bakery.myshopify.com"
-      shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
-    ></shopper-config>
-    ```
-
-- **obtain your `shopify-domain` and `shopify-storefront-access-token`**
-    - login to your shopify store's admin area
-    - copy your `shopify-domain` from your browser address bar's url
-    - create a new private app (a connection point for your website)
-        1. click on the "apps" section on the left sidebar
-        2. click the sneaky "Manage private apps" link
-        3. check on the agreements and stuff to enable private apps
-        4. click "Create new private app"
-        5. enter the app name, and developer email
-        6. skip the whole "Admin API" section
-        7. enable "Storefront API" and check on all "Read" permissions
-        8. save your app
-    - copy your app's "Storefront access token" (NOT TO BE CONFUSED with the "API Token") and use this as your `shopify-storefront-access-token`
 
 ## 💅 customize shopper's appearance with css
 
