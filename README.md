@@ -11,8 +11,8 @@
 
 **shopper is experimental open source technology**
 - built on the [shopify buy js sdk](https://shopify.github.io/js-buy-sdk/)
-- aims to be used by people who only know basic html and css
-- future versions of shopper may be subject to change
+- can be installed by people with basic html and css skills
+- experimental: future versions of shopper might change
 - contributions welcome
 - [discord chat](https://discord.gg/vFFDqHT2AB)
 
@@ -92,6 +92,48 @@
     <shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
     ```
 
+## 🤔 how do i find a shopify uid?
+
+shopify doesn't provide you with the uid's, so i wrote some quick javascript snippets you can execute in any javascript console. this is mildly advanced, so you might need help
+
+this involves getting the URLs for the product or collection in the shopify ui, and then pasting those urls into these snippets before you execute them to get the uids
+
+- get a shopify product uid, replace the link with
+
+    ```js
+    {
+      console.log(getShopifyProductUid("https://dev-bakery.myshopify.com/admin/products/10232162183"))
+
+      function getShopifyProductUid(link) {
+        const {pathname} = new URL(link)
+        const [,id] = pathname.match(/\/(\d+)$/)
+        const gid = `gid://shopify/Product/${id}`
+        const uid = btoa(gid)
+        return uid
+      }
+    }
+    ```
+
+- the same thing for collection id
+
+    ```js
+    {
+      console.log(getShopifyProductUid("https://dev-bakery.myshopify.com/admin/collections/424441479"))
+
+      function getShopifyCollectionUid(link) {
+        const {pathname} = new URL(link)
+        const [,id] = pathname.match(/\/(\d+)$/)
+        const gid = `gid://shopify/Collection/${id}`
+        const uid = btoa(gid)
+        return uid
+      }
+    }
+    ```
+
+> **we should fix this.**  
+> we should implement `id` in addition to `uid`, and shopper should do this weird base64 gid transformation for us.  
+> then users can just get the ids straight from the shopify ui, not so bad.. this uid stuff is terrible
+
 ## 📡 connect shopper to your real shopify store
 
 - **replace your `<shopper-config>`**  
@@ -149,13 +191,10 @@
 
 ## ⚠️ known deficiencies, limitations, problems, and priorities
 
-- there are aspects of shopper that are very well thought-out — but it's not all that way — some of it was purpose-built rather quickly. i'm open to sweeping refactors, let's chat about it
-- there's no way to disable the currency conversion system
-- we're missing many fine-grained customizable details, for example, the maximum allowable quantity for items in the cart is hardcoded to 10 — but this should be a simple customizable attribute
-- there are annoying bugs for *some* mobile users with setting quantities in the cart
+- shopper was built quickly. we're open to refactors!
+- we should implement `id` instead of hard-to-get shopify `uid`
 - we should make some example css themes that look good so people don't have to customize the css
-- we should probably finish the optimized rollup bundle and recommend its usage in this readme
-- we should install a localstorage cache mechanism for the currency exchange rates
+- we should publish an optimized rollup build for end-use (not suitable for consumption from apps with their own build)
 
 ## 💖 made with open source love by chase moskal
 
