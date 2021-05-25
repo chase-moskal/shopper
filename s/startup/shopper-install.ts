@@ -49,10 +49,13 @@ export async function shopperInstall({
 	const {baseCurrency} = config
 
 	// assemble the shopper model
-	const {model, loadCatalog} = assembleModel({
+	const {model, loadCatalog, refreshCartStorage} = assembleModel({
 		...config,
 		cartStorage
 	})
+
+	// listen for localstorage changes
+	window.addEventListener("storage", refreshCartStorage)
 
 	// wire the model to the components, and register those components
 	registerComponents({
@@ -78,17 +81,19 @@ export async function shopperInstall({
 				if (currency) currencies[code] = currency
 				else console.warn(`unknown currency "${code}"`)
 			}
-			await installPriceDisplaySystem({
+			const {refreshCurrencyStorage} = await installPriceDisplaySystem({
 				currencies,
 				baseCurrency,
 				currencyStorage,
 			})
+			window.addEventListener("storage", refreshCurrencyStorage)
 		}
 		: async() => {
-			await installPriceDisplaySystem({
+			const {refreshCurrencyStorage} = await installPriceDisplaySystem({
 				baseCurrency,
 				currencyStorage,
 			})
+			window.addEventListener("storage", refreshCurrencyStorage)
 		}
 
 	// do a bunch of concurrent stuff

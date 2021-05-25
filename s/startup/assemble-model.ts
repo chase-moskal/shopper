@@ -80,6 +80,10 @@ export function assembleModel({
 				error.message = `${message}: ${error.message}`
 				console.error(error)
 			}
-		}
+		},
+		refreshCartStorage: async() => {
+			await cartStorage.loadCart(state.catalog)
+			update()
+		},
 	}
 }

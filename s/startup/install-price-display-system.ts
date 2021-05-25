@@ -22,7 +22,7 @@ export async function installPriceDisplaySystem({
 		baseCurrency: string
 		currencies?: Currencies
 		currencyStorage?: CurrencyStorage
-	}): Promise<void> {
+	}) {
 
 	if (!baseCurrency) throw new Error("baseCurrency is not defined")
 	baseCurrency = baseCurrency.toUpperCase()
@@ -64,4 +64,11 @@ export async function installPriceDisplaySystem({
 	state.exchangeRates = exchangeRates
 	state.outputCurrency = userDisplayCurrency
 	update()
+
+	return {
+		refreshCurrencyStorage: async() => {
+			const code = await currencyStorage.load()
+			setCurrency(code)
+		},
+	}
 }
