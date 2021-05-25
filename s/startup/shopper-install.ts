@@ -69,32 +69,27 @@ export async function shopperInstall({
 	})
 
 	// figure out which available currencies are configured
-	const installCurrencyConversions = !!config.currencies
-		? async() => {
-			const codes = config.currencies
-				.split(",")
-				.map(code => code.trim())
-				.map(code => code.toUpperCase())
-			const currencies: Currencies = {}
-			for (const code of codes) {
-				const currency = defaultCurrencies[code]
-				if (currency) currencies[code] = currency
-				else console.warn(`unknown currency "${code}"`)
-			}
-			const {refreshCurrencyStorage} = await installPriceDisplaySystem({
-				currencies,
-				baseCurrency,
-				currencyStorage,
-			})
-			window.addEventListener("storage", refreshCurrencyStorage)
-		}
-		: async() => {
-			const {refreshCurrencyStorage} = await installPriceDisplaySystem({
-				baseCurrency,
-				currencyStorage,
-			})
-			window.addEventListener("storage", refreshCurrencyStorage)
-		}
+	async function installCurrencyConversions() {
+		const options = !!config.currencies
+			? (() => {
+				const codes = config.currencies
+					.split(",")
+					.map(code => code.trim())
+					.map(code => code.toUpperCase())
+				const currencies: Currencies = {}
+				for (const code of codes) {
+					const currency = defaultCurrencies[code]
+					if (currency) currencies[code] = currency
+					else console.warn(`unknown currency "${code}"`)
+				}
+				return {currencies, baseCurrency, currencyStorage}
+			})()
+			: {baseCurrency, currencyStorage}
+
+		const {refreshCurrencyStorage} = await installPriceDisplaySystem(options)
+
+		window.addEventListener("storage", refreshCurrencyStorage)
+	}
 
 	// do a bunch of concurrent stuff
 	await Promise.all([
