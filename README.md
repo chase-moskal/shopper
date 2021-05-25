@@ -80,16 +80,16 @@
     <shopper-collection all></shopper-collection>
     ```
 
-    list a single collection by its shopify uid
+    list a single collection. get the `link` by copying and pasting the url from your shopify admin panel
 
     ```html
-    <shopper-collection uid="Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzQyNDQ0MTQ3OQ=="></shopper-collection>
+    <shopper-collection link="https://dev-bakery.myshopify.com/admin/collections/424441479"></shopper-collection>
     ```
 
     display a single product for sale
 
     ```html
-    <shopper-product uid="Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEwMjMyMTYyMTgz"></shopper-product>
+    <shopper-product link="https://dev-bakery.myshopify.com/admin/products/10232162183"></shopper-product>
     ```
 
 ## 📡 connect shopper to your real shopify store
@@ -119,48 +119,6 @@
         7. enable "Storefront API" and check on all "Read" permissions
         8. save your app
     - copy your app's "Storefront access token" (NOT TO BE CONFUSED with the "API Token") and use this as your `shopify-storefront-access-token`
-
-## 🤔 how do i find a shopify uid?
-
-shopify doesn't provide you with the uid's, so i wrote some quick javascript snippets you can execute in any javascript console. this is mildly advanced, so you might need help
-
-this involves getting the URLs for the product or collection in the shopify ui, and then pasting those urls into these snippets before you execute them to get the uids
-
-- get a shopify product uid, replace the link with
-
-    ```js
-    {
-      console.log(getShopifyProductUid("https://dev-bakery.myshopify.com/admin/products/10232162183"))
-
-      function getShopifyProductUid(link) {
-        const {pathname} = new URL(link)
-        const [,id] = pathname.match(/\/(\d+)$/)
-        const gid = `gid://shopify/Product/${id}`
-        const uid = btoa(gid)
-        return uid
-      }
-    }
-    ```
-
-- the same thing for collection id
-
-    ```js
-    {
-      console.log(getShopifyProductUid("https://dev-bakery.myshopify.com/admin/collections/424441479"))
-
-      function getShopifyCollectionUid(link) {
-        const {pathname} = new URL(link)
-        const [,id] = pathname.match(/\/(\d+)$/)
-        const gid = `gid://shopify/Collection/${id}`
-        const uid = btoa(gid)
-        return uid
-      }
-    }
-    ```
-
-> **we should fix this.**  
-> we should implement `id` in addition to `uid`, and shopper should do this weird base64 gid transformation for us.  
-> then users can just get the ids straight from the shopify ui, not so bad.. this uid stuff is terrible
 
 ## 💅 customize shopper's appearance with css
 
@@ -192,7 +150,6 @@ this involves getting the URLs for the product or collection in the shopify ui, 
 ## ⚠️ known deficiencies, limitations, problems, and priorities
 
 - shopper was built quickly. we're open to refactors!
-- we should implement `id` instead of hard-to-get shopify `uid`
 - we should make some example css themes that look good so people don't have to customize the css
 - we should publish an optimized rollup build for end-use (not suitable for consumption from apps with their own build)
 

@@ -1,15 +1,15 @@
 
 import {property, html, css, TemplateResult} from "lit-element"
+
 import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
-import {
-	LoadableState,
-	LoadableComponent,
-} from "../framework/loadable-component.js"
+import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
+import {shopifyProductLinkToUid} from "../toolbox/shopify-ids/shopify-product-link-to-uid.js"
 
 export class ShopperProduct extends LightDom(LoadableComponent) {
-	@property({type: String}) ["uid"]: string
 	@property({type: Object}) cartItem: CartItem
+	@property({type: String, reflect: true}) ["uid"]: string
+	@property({type: String, reflect: true}) ["link"]: string
 	@property({type: String, reflect: true}) ["href"]: string
 	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean = false
 	@property({type: Boolean, reflect: true}) ["show-image"]: boolean = false
@@ -17,8 +17,17 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 
 	static get styles() {return [...super.styles, css``]}
 
+	get shopifyId() {
+		const {uid, link} = this
+		return uid
+			? uid
+			: link
+				? shopifyProductLinkToUid(link)
+				: undefined
+	}
+
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
-		this.cartItem = state.catalog.find(item => item.product.id === this.uid)
+		this.cartItem = state.catalog.find(item => item.product.id === this.shopifyId)
 		this.loadableState = this.cartItem
 			? LoadableState.Ready
 			: state.error
