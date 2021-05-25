@@ -21,7 +21,11 @@ export class ShopifyAdapter {
 
 	async fetchEverything(): Promise<ShopifyResults> {
 		try {
-			const collections = await this._shopifyClient.collection.fetchAllWithProducts()
+			const collections = await this._shopifyClient.collection
+				.fetchAllWithProducts({
+					first: 249,
+					productsFirst: 249,
+				})
 			let products = []
 
 			for (const collection of collections) {
