@@ -1,6 +1,16 @@
 
 # shopper changelog
 
+### v0.2.0-dev.9
+
+- increase: product limit to 249 (up from 20)
+- implement: persistent state across tabs
+- implement: new `link` attr is easier to use than `uid` (now you can just use links from shopify to reference collections and products)
+
+### v0.2.0-dev.8
+
+lots of little feature and aesthetic additions that i didn't keep track of
+
 ### v0.1.0-dev.18
 
 massive refactor, everything is different now
