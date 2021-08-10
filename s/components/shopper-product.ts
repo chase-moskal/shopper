@@ -56,7 +56,7 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 			: content
 		return !cartItem ? null : html`
 			${(showImage && product.image) ? html`
-				<div class="product-image">
+				<div class=product-image>
 					${linkify(html`
 						<img
 							src=${product.image.src}
@@ -65,25 +65,28 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 					`)}
 				</div>
 			` : null}
-			<h3 class="title">
-				${linkify(html`${product.title}`)}
-			</h3>
-			${outOfStock
-				? html`<p class="out-of-stock">Out of stock</p>`
-				: null}
-			<div class="box">
-				<price-display
-					value="${value}"
-					comparedValue=${product.comparedValue}
-				></price-display>
-				<button class="add-to-cart-button"
-					title=${inCart ? undefined : "Add to Cart"}
-					@click=${_handleAddToCart}
-					?disabled=${outOfStock || inCart}>
-						${outOfStock
-							? "Sold out"
-							: inCart ? "In Cart" : "Add to Cart"}
-				</button>
+			<div class=product-content>
+				<h3 class=title>
+					${linkify(html`${product.title}`)}
+				</h3>
+				${outOfStock
+					? html`<p class=out-of-stock>Out of stock</p>`
+					: null}
+				<div class=box>
+					<price-display
+						value="${value}"
+						comparedValue=${product.comparedValue}
+					></price-display>
+					<button
+						class=add-to-cart-button
+						title=${inCart ? undefined : "Add to Cart"}
+						@click=${_handleAddToCart}
+						?disabled=${outOfStock || inCart}>
+							${outOfStock
+								? "Sold out"
+								: inCart ? "In Cart" : "Add to Cart"}
+					</button>
+				</div>
 			</div>
 		`
 	}
