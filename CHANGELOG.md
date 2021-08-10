@@ -1,6 +1,11 @@
 
 # shopper changelog
 
+### v0.2.0-dev.10
+
+breaking:
+- add: div inside shopper-product `.product-content` that contains `.title` and `.box`
+
 ### v0.2.0-dev.9
 
 - increase: product limit to 249 (up from 20)
