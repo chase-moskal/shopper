@@ -1,12 +1,12 @@
 
 import {LitElement, html} from "lit-element"
 import {Currencies} from "crnc/x/interfaces.js"
-import {currencies} from "crnc/x/ecommerce/currencies.js"
 import {convertAndFormatCurrency} from "crnc/x/currency-tools/convert-and-format-currency.js"
 
 import {Reader} from "../toolbox/pubsub.js"
 import {priceDisplayStyles} from "./price-display-styles.js"
 import {SetCurrency, PriceModelState} from "../interfaces.js"
+import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
 
 export function preparePriceDisplay({
 		state,
@@ -91,13 +91,6 @@ export function preparePriceDisplay({
 				})
 				: null
 
-			const calculatePercentOff = () => {
-				const difference = comparedPrice.value - price.value
-				const fraction = difference / comparedPrice.value
-				const percentage = Math.round(fraction * 100)
-				return percentage
-			}
-
 			const currencyIsConverted = inputCurrency !== outputCurrency
 			const conversionMark = currencyIsConverted ? "*" : ""
 
@@ -145,7 +138,12 @@ export function preparePriceDisplay({
 								<span class="symbol">${comparedPrice.currency.symbol}</span
 								><span class="amount">${comparedPrice.amount}</span>
 							</span>
-							<span class="percent-off">${calculatePercentOff()}% off</span>
+							<span class="percent-off">
+								${calculatePercentOff({
+									currentValue: price.value,
+									comparisonValue: comparedPrice.value,
+								})}% off
+							</span>
 						</div>
 					` : null}
 				</div>

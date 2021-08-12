@@ -2,7 +2,9 @@
 import {property, html, css, TemplateResult} from "lit-element"
 
 import {LightDom} from "../framework/light-dom.js"
+import {isDefined} from "../toolbox/is-defined.js"
 import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
+import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
 import {shopifyProductLinkToUid} from "../toolbox/shopify-ids/shopify-product-link-to-uid.js"
 
@@ -11,6 +13,7 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: String, reflect: true}) ["link"]: string
 	@property({type: String, reflect: true}) ["href"]: string
+	@property({type: String, reflect: true}) ["sale"]: string
 	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean = false
 	@property({type: Boolean, reflect: true}) ["show-image"]: boolean = false
 	@property({type: Boolean, reflect: true}) ["out-of-stock"]: boolean = false
@@ -37,6 +40,14 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 		this["out-of-stock"] = this.cartItem
 			? !this.cartItem.product.available
 			: false
+		this["sale"] = this.cartItem
+			? isDefined(this.cartItem.product.comparedValue)
+				? calculatePercentOff({
+					currentValue: this.cartItem.product.value,
+					comparisonValue: this.cartItem.product.comparedValue,
+				}).toString()
+				: undefined
+			: undefined
 	}
 
 	private _handleAddToCart = () => {

@@ -1,6 +1,10 @@
 
 # shopper changelog
 
+### v0.2.0-dev.11
+
+- add: sale attribute
+
 ### v0.2.0-dev.10
 
 breaking:
