@@ -3,6 +3,13 @@
 
 ### v0.2.0-dev.11
 
+- upgrade to xiome menu system, removing menutown
+- modernize to `lit` package, removing `lit-html` and `lit-element`
+- improve customizability, expose more css variables and `::part`s
+- switch to mit license, from isc
+
+### v0.2.0-dev.11
+
 - add: sale attribute
 
 ### v0.2.0-dev.10

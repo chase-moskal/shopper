@@ -21,12 +21,13 @@
 1. **add `<script>` elements in your html `<head>`**
 
     ```html
-    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.7/x/importmap.json"></script>
+    <xiome-mock></xiome-mock>
+    <script type="importmap-shim" src="https://unpkg.com/shopper@0.2.0-dev.12/x/importmap.json"></script>
     <script defer type="module-shim">
-      import "menutown"
-      import "https://unpkg.com/shopper@0.2.0-dev.7/x/shopper.js"
+      import "xiome/x/xiome-mock.bundle.min.js"
+      import "https://unpkg.com/shopper@0.2.0-dev.12/x/shopper.js"
     </script>
-    <script defer src="https://unpkg.com/es-module-shims@0.10.3/dist/es-module-shims.js"></script>
+    <script defer src="https://unpkg.com/es-module-shims@1.4.6/dist/es-module-shims.js"></script>
     ```
 
 1. **configure shopper with a `<shopper-config>` element**
@@ -56,14 +57,14 @@
     however, optionally, you may wish instead to place the cart inside a menu system (like in the demo)
 
     ```html
-    <menu-system initially-hidden sticky>
-      <menu-display>
+    <xio-menu initially-hidden sticky>
+      <xio-menu-item>
 
-        <shopper-button slot="button"></shopper-button>
-        <shopper-cart></shopper-cart>
+        <shopper-button></shopper-button>
+        <shopper-cart slot="panel"></shopper-cart>
 
-      </menu-display>
-    </menu-system>
+      </xio-menu-item>
+    </xio-menu>
     ```
 
     also, the cart can take a `checkout-in-same-window` attribute, if you want to avoid a popup during checkout
