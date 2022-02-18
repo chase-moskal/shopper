@@ -42,7 +42,7 @@ CART ITEM TABLE
 }
 
 .shopper-cart td {
-	border: 1px solid rgba(0,0,0, 0.1);
+	border: var(--shopper-cart-table-border, 1px solid rgba(0,0,0, 0.1));
 }
 
 .shopper-cart th:nth-child(1),
@@ -74,7 +74,7 @@ TABLE: REMOVE BUTTONS
 	background: transparent;
 	border: none;
 	cursor: pointer;
-	color: #444;
+	color: inherit;
 }
 
 .shopper-cart .remove-button:hover,
@@ -86,6 +86,7 @@ TABLE: REMOVE BUTTONS
 	width: 100%;
 	min-width: 1.5em;
 	height: 1.5em;
+	stroke-width: 4px;
 }
 
 /*

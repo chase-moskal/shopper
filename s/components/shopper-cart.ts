@@ -1,6 +1,8 @@
 
-import {html, svg} from "lit"
+import {html} from "lit"
 import {property} from "lit/decorators.js"
+
+import xSvg from "../icons/feather/x.svg.js"
 
 import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, ShopperModel, CartItem} from "../interfaces.js"
@@ -15,6 +17,9 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 
 	onFirstAdd = () => {}
 	private _lastQuantity = 0
+
+	@property()
+	removeIcon = xSvg
 
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 
@@ -43,6 +48,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 					<div class="cart-checkout">
 						<button
 							class="checkout-button"
+							part="checkout-button"
 							title="Checkout Cart"
 							@click=${this._handleCheckoutButtonClick}
 							?disabled=${checkoutInProgress}
@@ -125,7 +131,7 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 						class="remove-button"
 						title="Remove item"
 						@click=${handleRemoveClick}>
-							${svg`<svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"/></svg>`}
+							${this.removeIcon}
 					</button>
 				</td>
 				<td class="quantity">

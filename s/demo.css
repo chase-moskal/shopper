@@ -24,23 +24,25 @@ body > header {
 	background: #222;
 }
 
-menu-system {
-	color: #333;
-	--menu-margin: 0.5em auto;
-}
-
-menu-system[initially-hidden] {
+xio-menu[initially-hidden] {
 	display: none;
 }
 
-menu-display {
+xio-menu {
+	color: #333;
+	--menu-margin: 0.5em auto;
 	--menu-panel-width: 100%;
 }
 
 @media (min-width: 900px) {
-	menu-display {
+	xio-menu {
 		--menu-panel-width: 80%;
 	}
+}
+
+xio-menu-item, shopper-button {
+	width: 3em;
+	height: 3em;
 }
 
 .demo-area {

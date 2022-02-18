@@ -32,15 +32,15 @@
 	<body>
 		<header>
 			<h1>shopper</h1>
-			<menu-system initially-hidden sticky>
-				<menu-display class="shopper-menu-display">
+			<xio-menu sticky initially-hidden>
+				<xio-menu-item class=shopper-menu-display>
 
 					<!-- shopper button and the cart -->
-					<shopper-button slot="button"></shopper-button>
-					<shopper-cart></shopper-cart>
+					<shopper-button></shopper-button>
+					<shopper-cart slot=panel></shopper-cart>
 
-				</menu-display>
-			</menu-system>
+				</xio-menu-item>
+			</xio-menu>
 		</header>
 
 		<main>
