@@ -1,6 +1,8 @@
 
+import {LitElement, html} from "lit"
+import {property} from "lit/decorators.js"
+
 import styles from "./quantity-input.css.js"
-import {LitElement, property, html} from "lit-element"
 import {QuantityChangeEvent} from "./events/quantity-change-event.js"
 
 export class QuantityInput extends LitElement {

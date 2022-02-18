@@ -1,5 +1,6 @@
 
-import {property, html, css, TemplateResult} from "lit-element"
+import {property} from "lit/decorators.js"
+import {html, css, TemplateResult} from "lit"
 
 import {LightDom} from "../framework/light-dom.js"
 import {isDefined} from "../toolbox/is-defined.js"

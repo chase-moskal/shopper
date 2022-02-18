@@ -1,5 +1,5 @@
 
-import {LitElement, html, CSSResultArray} from "lit-element"
+import {LitElement, html, CSSResultArray} from "lit"
 
 export function LightDom<T extends {
 	styles: CSSResultArray

@@ -1,5 +1,5 @@
 
-import {LitElement, html} from "lit-element"
+import {LitElement, html} from "lit"
 import {Currencies} from "crnc/x/interfaces.js"
 import {convertAndFormatCurrency} from "crnc/x/currency-tools/convert-and-format-currency.js"
 

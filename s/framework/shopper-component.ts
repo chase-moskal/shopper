@@ -1,5 +1,5 @@
 
-import {LitElement} from "lit-element"
+import {LitElement} from "lit"
 import {Unsubscribe} from "../toolbox/pubsub.js"
 import {ShopperModel, ShopperState} from "../interfaces.js"
 

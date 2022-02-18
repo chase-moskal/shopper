@@ -1,5 +1,6 @@
 
-import {html, css, svg, property} from "lit-element"
+import {html, css, svg} from "lit"
+import {property} from "lit/decorators.js"
 
 import {ShopperState, ShopperModel} from "../interfaces.js"
 import {ShopperComponent} from "../framework/shopper-component.js"
