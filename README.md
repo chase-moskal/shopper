@@ -93,6 +93,30 @@
     <shopper-product link="https://dev-bakery.myshopify.com/admin/products/10232162183"></shopper-product>
     ```
 
+1. **customize the display of products**
+
+    ```html
+    <shopper-product
+      href="/products/avocado-toast"
+      show-image
+      image-size="300x200"
+    ></shopper-product>
+    ```
+
+    - `href` — make the item clickable, taking the user to any url
+    - `show-image` — attach this attribute if you want the product's first image to be displayed
+    - `image-size` — specify the dimensions the image should be loaded at
+      - if omitted, the image will be full-resolution
+      - `image-size="200"` will constrain the image to `200x200`
+      - `image-size="300x200"` will constrain the image to `300x200`
+
+    ```html
+    <shopper-collection
+      show-images
+      image-sizes="300x200"
+    ></shopper-collection>
+    ```
+
 ## 📡 connect shopper to your real shopify store
 
 - **replace your `<shopper-config>`**  
