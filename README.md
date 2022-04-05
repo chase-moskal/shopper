@@ -3,7 +3,7 @@
 
 **put your shopify store on any website — and customize it!**
 
-&nbsp; &nbsp; [⚡ live demo](https://chasemoskal.com/shopper/)  
+&nbsp; &nbsp; [⚡ live demo](https://chase-moskal.github.io/shopper/)  
 &nbsp; &nbsp; 🛍️ full shopping cart experience with shopify checkout button  
 &nbsp; &nbsp; 🔧 easy html installation! works on any website  
 &nbsp; &nbsp; 🏷️ display all your store's products, or individual collections, or individual products  
