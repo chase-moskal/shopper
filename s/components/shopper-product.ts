@@ -7,6 +7,7 @@ import {isDefined} from "../toolbox/is-defined.js"
 import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
 import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
+import {parseImageSize, sizeShopifyImage} from "./shopify-utils/size-shopify-image.js"
 import {shopifyProductLinkToUid} from "../toolbox/shopify-ids/shopify-product-link-to-uid.js"
 
 export class ShopperProduct extends LightDom(LoadableComponent) {
@@ -15,6 +16,7 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	@property({type: String, reflect: true}) ["link"]: string
 	@property({type: String, reflect: true}) ["href"]: string
 	@property({type: String, reflect: true}) ["sale"]: string
+	@property({type: String, reflect: true}) ["image-size"]: string
 	@property({type: Boolean, reflect: true}) ["in-cart"]: boolean = false
 	@property({type: Boolean, reflect: true}) ["show-image"]: boolean = false
 	@property({type: Boolean, reflect: true}) ["out-of-stock"]: boolean = false
@@ -61,6 +63,7 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 		const inCart = this["in-cart"]
 		const showImage = this["show-image"]
 		const outOfStock = this["out-of-stock"]
+		const imageSize = this["image-size"]
 		const value = this.model.getters.getUnitValue(cartItem)
 		const {product} = cartItem
 		const linkify = (content: TemplateResult) => href
@@ -71,7 +74,10 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 				<div class=product-image>
 					${linkify(html`
 						<img
-							src=${product.image.src}
+							src=${sizeShopifyImage(
+								product.image.src,
+								parseImageSize(imageSize),
+							)}
 							alt=${product.image.alt}
 							/>
 					`)}

@@ -12,6 +12,7 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: String, reflect: true}) ["link"]: string
 	@property({type: Boolean, reflect: true}) ["all"]: boolean
+	@property({type: String, reflect: true}) ["image-sizes"]: string
 	@property({type: Boolean, reflect: true}) ["show-images"]: boolean
 
 	static get styles() {return [...super.styles, css``]}
@@ -47,6 +48,7 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 					<li>
 						<shopper-product
 							show-image=${this["show-images"]}
+							image-size=${this["image-sizes"]}
 							uid=${cartItem.product.id}
 						></shopper-product>
 					</li>
