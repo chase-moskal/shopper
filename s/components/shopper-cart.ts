@@ -16,6 +16,8 @@ export class ShopperCart extends LoadableComponent {
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
 	@property({type: Boolean}) ["require-terms-checked"]: boolean
 
+	@property({type: Boolean, reflect: true}) ["checkout-is-disabled"]: boolean
+
 	onFirstAdd = () => {}
 	private _lastQuantity = 0
 
@@ -27,6 +29,17 @@ export class ShopperCart extends LoadableComponent {
 	#resetTermsCheckedFalse() {
 		this.#termsChecked = false
 		this.requestUpdate()
+	}
+
+	get #checkoutIsDisabled() {
+		const {checkoutInProgress} = this.model.reader.state
+		const checkboxIndicatesDisabledButton =
+			this["require-terms-checked"] && !this.#termsChecked
+		return checkoutInProgress || checkboxIndicatesDisabledButton
+	}
+
+	updated() {
+		this["checkout-is-disabled"] = this.#checkoutIsDisabled
 	}
 
 	#handleTermsChange = () => {
@@ -54,9 +67,7 @@ export class ShopperCart extends LoadableComponent {
 	renderReady() {
 		const cartIsEmpty = this.model.getters.cartQuantity < 1
 		const {checkoutInProgress} = this.model.reader.state
-		const checkboxIndicatesDisabledButton =
-			this["require-terms-checked"] && !this.#termsChecked
-		const disabled = checkoutInProgress || checkboxIndicatesDisabledButton
+		const disabled = this.#checkoutIsDisabled
 		const showTermsBox = !checkoutInProgress && this["require-terms-checked"]
 		return html`
 			<section class="shopper-cart">
