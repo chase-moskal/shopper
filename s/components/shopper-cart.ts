@@ -4,14 +4,14 @@ import {property} from "lit/decorators.js"
 
 import xSvg from "../icons/feather/x.svg.js"
 
-import {LightDom} from "../framework/light-dom.js"
+// import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, ShopperModel, CartItem} from "../interfaces.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
 import {QuantityChangeEvent} from "../components/quantity-input/events/quantity-change-event.js"
 
 import {shopperCartStyles} from "./shopper-cart-styles.js"
 
-export class ShopperCart extends LightDom(LoadableComponent) {
+export class ShopperCart extends LoadableComponent {
 	static get styles() {return [...super.styles, shopperCartStyles]}
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
 
@@ -43,8 +43,9 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 		return html`
 			<section class="shopper-cart">
 				${this._renderCartTitle()}
-				${cartIsEmpty ? null : html`
+				${cartIsEmpty ?null :html`
 					${this._renderCartLineItems()}
+					<slot name="before-checkout"></slot>
 					<div class="cart-checkout">
 						<button
 							class="checkout-button"
@@ -54,9 +55,9 @@ export class ShopperCart extends LightDom(LoadableComponent) {
 							?disabled=${checkoutInProgress}
 							?hidden=${cartIsEmpty}>
 								Checkout!
-							</button>
-						</div>
+						</button>
 					</div>
+					<slot name="after-checkout"></slot>
 				`}
 			</section>
 		`
