@@ -14,12 +14,26 @@ import {shopperCartStyles} from "./shopper-cart-styles.js"
 export class ShopperCart extends LoadableComponent {
 	static get styles() {return [...super.styles, shopperCartStyles]}
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
+	@property({type: Boolean}) ["require-terms-checked"]: boolean
 
 	onFirstAdd = () => {}
 	private _lastQuantity = 0
 
 	@property()
 	removeIcon = xSvg
+
+	#termsChecked = false
+
+	#resetTermsCheckedFalse() {
+		this.#termsChecked = false
+		this.requestUpdate()
+	}
+
+	#handleTermsChange = () => {
+		const input = this.shadowRoot.querySelector<HTMLInputElement>(`[part="terms-checkbox"]`)
+		this.#termsChecked = input.checked
+		this.requestUpdate()
+	}
 
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 
@@ -40,6 +54,10 @@ export class ShopperCart extends LoadableComponent {
 	renderReady() {
 		const cartIsEmpty = this.model.getters.cartQuantity < 1
 		const {checkoutInProgress} = this.model.reader.state
+		const checkboxIndicatesDisabledButton =
+			this["require-terms-checked"] && !this.#termsChecked
+		const disabled = checkoutInProgress || checkboxIndicatesDisabledButton
+		const showTermsBox = !checkoutInProgress && this["require-terms-checked"]
 		return html`
 			<section class="shopper-cart">
 				${this._renderCartTitle()}
@@ -47,12 +65,23 @@ export class ShopperCart extends LoadableComponent {
 					${this._renderCartLineItems()}
 					<slot name="before-checkout"></slot>
 					<div class="cart-checkout">
+						${showTermsBox ?html`
+							<span part=terms-box>
+								<input
+									type="checkbox"
+									part=terms-checkbox
+									@change=${this.#handleTermsChange}/>
+								<slot name=terms-consent part=terms-consent>
+									I understand the terms.
+								</slot>
+							</span>
+						` :null}
 						<button
 							class="checkout-button"
 							part="checkout-button"
 							title="Checkout Cart"
 							@click=${this._handleCheckoutButtonClick}
-							?disabled=${checkoutInProgress}
+							?disabled=${disabled}
 							?hidden=${cartIsEmpty}>
 								Checkout!
 						</button>
@@ -63,9 +92,12 @@ export class ShopperCart extends LoadableComponent {
 		`
 	}
 
-	private _handleCheckoutButtonClick = () => this.model.actions.checkout({
-		checkoutInSameWindow: !!this["checkout-in-same-window"]
-	})
+	private _handleCheckoutButtonClick = () => {
+		this.#resetTermsCheckedFalse()
+		this.model.actions.checkout({
+			checkoutInSameWindow: !!this["checkout-in-same-window"]
+		})
+	}
 
 	private _renderCartTitle() {
 		const {cartQuantity: quantity} = this.model.getters
