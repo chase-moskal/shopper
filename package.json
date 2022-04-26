@@ -14,9 +14,9 @@
 	"scripts": {
 		"prepare": "run-s clean build importmap test",
 		"clean": "rimraf x && mkdirp x",
-		"build": "run-p importmap compile copy-styles",
+		"build": "run-p compile copy-styles",
 		"bundle": "rollup -c rollup.config.js",
-		"importmap": "importly --host=unpkg < package-lock.json > x/importmap.json",
+		"importmap": "importly < package-lock.json > x/importmap.json",
 		"compile": "tsc",
 		"copy-styles": "ncp s/demo.css x/demo.css",
 		"watch": "tsc -w",

@@ -1,24 +1,13 @@
 
 import {LitElement, html} from "lit"
-import {Currencies} from "crnc/x/interfaces.js"
-import {convertAndFormatCurrency} from "crnc/x/currency-tools/convert-and-format-currency.js"
+import {CurrencyConverter, CurrencyLibrary} from "crnc/x/interfaces.js"
 
-import {Reader} from "../toolbox/pubsub.js"
 import {priceDisplayStyles} from "./price-display-styles.js"
-import {SetCurrency, PriceModelState} from "../interfaces.js"
 import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
 
-export function preparePriceDisplay({
-		state,
-		reader,
-		currencies,
-		setCurrency,
-	}: {
-		state: PriceModelState
-		currencies: Currencies
-		reader: Reader<PriceModelState>
-		setCurrency: SetCurrency
-	}): typeof LitElement {
+export function preparePriceDisplay(
+		currencyConverter: CurrencyConverter
+	): typeof LitElement {
 
 	return class PriceDisplay extends LitElement {
 		static get properties() {
@@ -39,16 +28,18 @@ export function preparePriceDisplay({
 
 		static get styles() {return priceDisplayStyles}
 
-		private _unsubscribe: any
+		#unsubscribe: () => void
+
 		connectedCallback() {
 			super.connectedCallback()
-			this._unsubscribe = reader.subscribe(() => this.requestUpdate())
+			this.#unsubscribe = currencyConverter.snap.subscribe(() => this.requestUpdate())
 		}
 
 		disconnectedCallback() {
 			super.disconnectedCallback()
-			if (this._unsubscribe) this._unsubscribe()
-			this._unsubscribe = null
+			if (this.#unsubscribe)
+				this.#unsubscribe()
+			this.#unsubscribe = undefined
 		}
 
 		toggle = () => {
@@ -56,7 +47,7 @@ export function preparePriceDisplay({
 		}
 
 		private _prepareHandleMenuClick = (code: string) => () => {
-			setCurrency(code)
+			currencyConverter.setDisplayCurrency(code)
 			this.toggle()
 		}
 
@@ -67,41 +58,21 @@ export function preparePriceDisplay({
 				precision = 2,
 				comparedValue,
 			} = this
+
 			const {
-				exchangeRates,
-				inputCurrency,
-				outputCurrency,
-			} = state
+				baseCurrency,
+				userDisplayCurrency,
+			} = currencyConverter.snap.state
 
-			const price = convertAndFormatCurrency({
-				value,
-				precision,
-				exchangeRates,
-				inputCurrency,
-				outputCurrency,
-			})
-
+			const price = currencyConverter.display(value, precision)
 			const comparedPrice = comparedValue
-				? convertAndFormatCurrency({
-					value: comparedValue,
-					precision,
-					exchangeRates,
-					inputCurrency,
-					outputCurrency,
-				})
+				? currencyConverter.display(comparedValue, precision)
 				: null
 
-			const currencyIsConverted = inputCurrency !== outputCurrency
+			const currencyIsConverted = userDisplayCurrency !== baseCurrency
 			const conversionMark = currencyIsConverted ? "*" : ""
 
-			const finalCurrencies: Currencies = {}
-			for (const requestedCode of Object.keys(currencies)) {
-				const availableCurrencies = Object.keys(state.exchangeRates)
-				const requestedIsAvailable = availableCurrencies.indexOf(requestedCode) !== -1
-				if (requestedIsAvailable) {
-					finalCurrencies[requestedCode] = currencies[requestedCode]
-				}
-			}
+			const finalCurrencies = currencyConverter.getCurrencyDetails()
 
 			return html`
 				<div class="price-display">
@@ -118,7 +89,7 @@ export function preparePriceDisplay({
 									<li>
 										<button @click=${this._prepareHandleMenuClick(code)}>
 											<span class="menu-symbol">${symbol}</span
-											><span class="menu-star">${code === inputCurrency ? "" : "*"}</span>
+											><span class="menu-star">${code === baseCurrency ? "" : "*"}</span>
 											<span class="menu-name">${name}</span>
 										</button>
 									</li>
