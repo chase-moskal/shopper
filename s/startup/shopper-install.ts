@@ -1,4 +1,6 @@
 
+import {makeCurrencyConverter} from "crnc/x/currency-converter.js"
+
 import {parseConfig} from "./parse-config.js"
 import {assembleModel} from "./assemble-model.js"
 import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
@@ -6,15 +8,14 @@ import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
 import {ShopperCart} from "../components/shopper-cart.js"
 import {ShopperButton} from "../components/shopper-button.js"
 import {ShopperProduct} from "../components/shopper-product.js"
+import {preparePriceDisplay} from "../components/price-display.js"
 import {ShopperCollection} from "../components/shopper-collection.js"
 import {QuantityInput} from "../components/quantity-input/quantity-input.js"
 
 import {select} from "../toolbox/select.js"
+import {CartStorage, ShopperConfig} from "../interfaces.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"
-import {preparePriceDisplay} from "../components/price-display.js"
 import {createCartStorage} from "../model/create-cart-storage.js"
-import {makeCurrencyConverter} from "crnc/x/currency-converter.js"
-import {CartStorage, CurrencyStorage, ShopperConfig} from "../interfaces.js"
 import {dashify, registerComponents} from "../toolbox/register-components.js"
 import {wireModelToComponents} from "../framework/wire-model-to-components.js"
 
@@ -57,7 +58,7 @@ export async function shopperInstall({
 	})
 
 	async function installPriceSystem() {
-		const currencyConverter = await makeCurrencyConverter({
+		const currencyConverter = makeCurrencyConverter({
 			baseCurrency: config.baseCurrency,
 			currencies: config.currencies
 				.split(",")

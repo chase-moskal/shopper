@@ -1,6 +1,6 @@
 
 import {LitElement, html} from "lit"
-import {CurrencyConverter, CurrencyLibrary} from "crnc/x/interfaces.js"
+import {CurrencyConverter} from "crnc/x/interfaces.js"
 
 import {priceDisplayStyles} from "./price-display-styles.js"
 import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
@@ -47,7 +47,7 @@ export function preparePriceDisplay(
 		}
 
 		private _prepareHandleMenuClick = (code: string) => () => {
-			currencyConverter.setDisplayCurrency(code)
+			currencyConverter.setCurrencyPreference(code)
 			this.toggle()
 		}
 
@@ -61,18 +61,17 @@ export function preparePriceDisplay(
 
 			const {
 				baseCurrency,
-				userDisplayCurrency,
-			} = currencyConverter.snap.state
+				targetCurrency,
+				availableCurrencies,
+			} = currencyConverter
 
-			const price = currencyConverter.display(value, precision)
+			const price = currencyConverter.display(value, {precision})
 			const comparedPrice = comparedValue
-				? currencyConverter.display(comparedValue, precision)
+				? currencyConverter.display(comparedValue, {precision})
 				: null
 
-			const currencyIsConverted = userDisplayCurrency !== baseCurrency
+			const currencyIsConverted = targetCurrency !== baseCurrency
 			const conversionMark = currencyIsConverted ? "*" : ""
-
-			const finalCurrencies = currencyConverter.getCurrencyDetails()
 
 			return html`
 				<div class="price-display">
@@ -85,7 +84,7 @@ export function preparePriceDisplay(
 						${menuOpen ? html`
 							<div class="blanket" @click=${this.toggle}></div>
 							<ul class="menu">
-								${Object.values(finalCurrencies).map(({symbol, code, name}) => html`
+								${Object.values(availableCurrencies).map(({symbol, code, name}) => html`
 									<li>
 										<button @click=${this._prepareHandleMenuClick(code)}>
 											<span class="menu-symbol">${symbol}</span
