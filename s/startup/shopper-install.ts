@@ -1,6 +1,4 @@
 
-import {makeCurrencyConverter} from "crnc/x/currency-converter.js"
-
 import {parseConfig} from "./parse-config.js"
 import {assembleModel} from "./assemble-model.js"
 import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
@@ -8,10 +6,10 @@ import {wireCartToMenuDisplay} from "./wire-cart-to-menu-display.js"
 import {ShopperCart} from "../components/shopper-cart.js"
 import {ShopperButton} from "../components/shopper-button.js"
 import {ShopperProduct} from "../components/shopper-product.js"
-import {preparePriceDisplay} from "../components/price-display.js"
 import {ShopperCollection} from "../components/shopper-collection.js"
 import {QuantityInput} from "../components/quantity-input/quantity-input.js"
 
+import {setupCrnc} from "./setup-crnc.js"
 import {select} from "../toolbox/select.js"
 import {CartStorage, ShopperConfig} from "../interfaces.js"
 import {SimpleDataStore} from "../toolbox/simple-data-store.js"
@@ -46,6 +44,9 @@ export async function shopperInstall({
 	// listen for localstorage changes
 	window.addEventListener("storage", refreshCartStorage)
 
+	// prepare the crnc converter and components
+	const crncSetup = setupCrnc(config)
+
 	// wire the model to the components, and register those components
 	registerComponents({
 		QuantityInput,
@@ -55,18 +56,8 @@ export async function shopperInstall({
 			ShopperProduct,
 			ShopperCollection,
 		}),
+		...crncSetup.components,
 	})
-
-	async function installPriceSystem() {
-		const currencyConverter = makeCurrencyConverter({
-			baseCurrency: config.baseCurrency,
-			currencies: config.currencies
-				.split(",")
-				.map(code => code.trim()),
-		})
-		const PriceDisplay = preparePriceDisplay(currencyConverter)
-		registerComponents({PriceDisplay})
-	}
 
 	// do a bunch of concurrent stuff
 	await Promise.all([
@@ -79,7 +70,7 @@ export async function shopperInstall({
 				cartSelector: dashify(ShopperCart.name)
 			})),
 
-		// download exchange rates and set up currency conversions
-		installPriceSystem()
+		// wait for crnc exchange rates to download
+		crncSetup.currencyConverter.exchangeRatesDownload,
 	])
 }

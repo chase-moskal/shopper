@@ -152,7 +152,7 @@ export class ShopperCart extends LoadableComponent {
 					<tr>
 						<th colspan="3">Subtotal</th>
 						<td>
-							<price-display right value="${cartValue}"></price-display>
+							<crnc-price right value="${cartValue}"></crnc-price>
 						</td>
 					</tr>
 				</tbody>
@@ -189,7 +189,7 @@ export class ShopperCart extends LoadableComponent {
 				</td>
 				<td class="product-title">${item.product.title}</td>
 				<td class="line-price">
-					<price-display right value="${lineValue}" comparedValue=${lineComparedValue}></price-display>
+					<crnc-price right value="${lineValue}" comparison="${lineComparedValue}"></crnc-price>
 				</td>
 			</tr>
 		`
