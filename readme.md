@@ -27,7 +27,7 @@
     </script>
     <script type="importmap-shim" src="https://unpkg.com/shopper@0.2/x/importmap-cloud.json"></script>
     <script defer type=module-shim src="shopper/x/install-xiome-menu-system.js"></script>
-    <script defer type=module-shim src="shopper/x/shopper.js"></script>
+    <script defer type=module-shim src="shopper/x/install-shopper.js"></script>
 
     <script defer src="https://unpkg.com/es-module-shims@1.5/dist/es-module-shims.wasm.js"></script>
     ```

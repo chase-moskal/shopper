@@ -22,7 +22,7 @@ export interface ShopperInstallOptions {
 	cartStorage?: CartStorage
 }
 
-export async function shopperInstall({
+export async function setupShopper({
 
 		// parse shopper config
 		config = parseConfig(select("shopper-config")),
