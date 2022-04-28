@@ -22,7 +22,7 @@
 		"start": "http-server"
 	},
 	"dependencies": {
-		"crnc": "^0.0.4",
+		"crnc": "^0.0.5",
 		"lit": "^2.2.1",
 		"shopify-buy": "2.14",
 		"xiome": "^0.0.30"
