@@ -3,7 +3,9 @@
 
 # 🛒 shopper
 
-### [🕹️ live demo of shopper](https://shopper.chasemoskal.com/)  
+### [🚀 live demo of shopper](https://shopper.chasemoskal.com/)  
+
+[🕹️ also see the codepen demo](https://codepen.io/ChaseMoskal/pen/wvpVQLz)  
 
 💰 plug your shopify store onto any website!  
 🛍️ full shopping cart experience with shopify checkout button  
@@ -19,15 +21,18 @@
 1. **add `<script>` elements in your html `<head>`**
 
     ```html
-    <script type="importmap-shim">
+   <script type="importmap-shim">
       {"imports": {
         "shopper/": "https://unpkg.com/shopper@0.2/",
         "shopper": "https://unpkg.com/shopper@0.2/x/shopper.js"
       }}
     </script>
     <script type="importmap-shim" src="https://unpkg.com/shopper@0.2/x/importmap-cloud.json"></script>
-    <script defer type=module-shim src="shopper/x/install-xiome-menu-system.js"></script>
-    <script defer type=module-shim src="shopper/x/install-shopper.js"></script>
+
+    <script defer type=module-shim>
+      import "shopper/x/install-xiome-menu-system.js"
+      import "shopper/x/install-shopper.js"
+    </script>
 
     <script defer src="https://unpkg.com/es-module-shims@1.5/dist/es-module-shims.wasm.js"></script>
     ```
