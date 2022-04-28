@@ -14,7 +14,6 @@
 	"scripts": {
 		"build": "run-s clean && run-p compile copy-styles importmap && run-s test",
 		"clean": "rimraf x && mkdirp x",
-		"bundle": "rollup -c rollup.config.js",
 		"importmap": "importly < package-lock.json > x/importmap.json && importly --host=unpkg < package-lock.json > x/importmap-cloud.json",
 		"compile": "tsc",
 		"copy-styles": "ncp s/demo.css x/demo.css",
@@ -38,8 +37,6 @@
 		"npm-run-all": "^4.1.5",
 		"octicons": "^8.5.0",
 		"rimraf": "^3.0.2",
-		"rollup": "^2.70.2",
-		"rollup-plugin-node-resolve": "^5.2.0",
 		"typescript": "^4.6.3"
 	},
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
