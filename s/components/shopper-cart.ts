@@ -83,7 +83,7 @@ export class ShopperCart extends LoadableComponent {
 									part=terms-checkbox
 									@change=${this.#handleTermsChange}/>
 								<slot name=terms-consent part=terms-consent>
-									I understand the terms.
+									I understand the terms above.
 								</slot>
 							</span>
 						` :null}
