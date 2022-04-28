@@ -1,7 +1,7 @@
 {
 	"name": "shopper",
-	"version": "0.2.0-dev.13",
-	"description": "shopping cart ui for shopify stores",
+	"version": "0.2.0",
+	"description": "plug shopify into any website",
 	"license": "MIT",
 	"type": "module",
 	"module": "x/shopper.js",

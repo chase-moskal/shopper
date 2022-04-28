@@ -1,6 +1,27 @@
 
 # shopper changelog
 
+### v0.2.0
+
+- significant refactor
+- definitely breaking
+  - move `<price-display>` elements into [crnc](https://github.com/chase-moskal/crnc#readme) as `crnc-price`.
+  - new entry point is an index, not a direct install script, `shopper/x/install-shopper.js` will register components, so now you can import things from `import {} from "shopper"` which points to `shopper/x/shopper.js`.
+  - `<shopper-cart>` is now a shadow dom component. this was necessary to implement shadow slots.
+- maybe breaking?
+  - refactor the way crnc is integrated, now via its `currencyConverter`.
+  - shopper cart has new `require-terms-checked` attribute, which requires a terms checkbox to be ticked before checkout is possible. there are new slots related to this:
+      ```html
+      <shopper-cart require-terms-checked>
+        <div slot=before-checkout>these are the terms: i am the captain now</div>
+        <div slot=terms-consent>yes, i understand these terms above.</div>
+        <div slot=after-checkout>note: shipments to mars have a ten million dollar fee.</div>
+      </shopper-cart>
+      ```
+- probably not breaking
+  - license change: from isc license, to mit license.
+  - all new ci/cd routine via github actions.
+
 ### v0.2.0-dev.11
 
 - upgrade to xiome menu system, removing menutown
