@@ -34,6 +34,11 @@ jobs:
         rm -rf node_modules
         npm ci --production
 
+    - name: ✍️ writing cname and nojekyll
+      run: |
+        touch .nojekyll
+        echo "shopper.chasemoskal.com" > CNAME
+
     - name: 🚀 deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@v4.3.0
       with:
