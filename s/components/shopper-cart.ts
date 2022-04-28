@@ -14,12 +14,39 @@ import {shopperCartStyles} from "./shopper-cart-styles.js"
 export class ShopperCart extends LoadableComponent {
 	static get styles() {return [...super.styles, shopperCartStyles]}
 	@property({type: Boolean}) ["checkout-in-same-window"]: boolean
+	@property({type: Boolean}) ["require-terms-checked"]: boolean
+
+	@property({type: Boolean, reflect: true}) ["checkout-is-disabled"]: boolean
 
 	onFirstAdd = () => {}
 	private _lastQuantity = 0
 
 	@property()
 	removeIcon = xSvg
+
+	#termsChecked = false
+
+	#resetTermsCheckedFalse() {
+		this.#termsChecked = false
+		this.requestUpdate()
+	}
+
+	get #checkoutIsDisabled() {
+		const {checkoutInProgress} = this.model.reader.state
+		const checkboxIndicatesDisabledButton =
+			this["require-terms-checked"] && !this.#termsChecked
+		return checkoutInProgress || checkboxIndicatesDisabledButton
+	}
+
+	updated() {
+		this["checkout-is-disabled"] = this.#checkoutIsDisabled
+	}
+
+	#handleTermsChange = () => {
+		const input = this.shadowRoot.querySelector<HTMLInputElement>(`[part="terms-checkbox"]`)
+		this.#termsChecked = input.checked
+		this.requestUpdate()
+	}
 
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
 
@@ -40,6 +67,8 @@ export class ShopperCart extends LoadableComponent {
 	renderReady() {
 		const cartIsEmpty = this.model.getters.cartQuantity < 1
 		const {checkoutInProgress} = this.model.reader.state
+		const disabled = this.#checkoutIsDisabled
+		const showTermsBox = !checkoutInProgress && this["require-terms-checked"]
 		return html`
 			<section class="shopper-cart">
 				${this._renderCartTitle()}
@@ -47,12 +76,23 @@ export class ShopperCart extends LoadableComponent {
 					${this._renderCartLineItems()}
 					<slot name="before-checkout"></slot>
 					<div class="cart-checkout">
+						${showTermsBox ?html`
+							<span part=terms-box>
+								<input
+									type="checkbox"
+									part=terms-checkbox
+									@change=${this.#handleTermsChange}/>
+								<slot name=terms-consent part=terms-consent>
+									I understand the terms above.
+								</slot>
+							</span>
+						` :null}
 						<button
 							class="checkout-button"
 							part="checkout-button"
 							title="Checkout Cart"
 							@click=${this._handleCheckoutButtonClick}
-							?disabled=${checkoutInProgress}
+							?disabled=${disabled}
 							?hidden=${cartIsEmpty}>
 								Checkout!
 						</button>
@@ -63,9 +103,12 @@ export class ShopperCart extends LoadableComponent {
 		`
 	}
 
-	private _handleCheckoutButtonClick = () => this.model.actions.checkout({
-		checkoutInSameWindow: !!this["checkout-in-same-window"]
-	})
+	private _handleCheckoutButtonClick = () => {
+		this.#resetTermsCheckedFalse()
+		this.model.actions.checkout({
+			checkoutInSameWindow: !!this["checkout-in-same-window"]
+		})
+	}
 
 	private _renderCartTitle() {
 		const {cartQuantity: quantity} = this.model.getters
@@ -109,7 +152,7 @@ export class ShopperCart extends LoadableComponent {
 					<tr>
 						<th colspan="3">Subtotal</th>
 						<td>
-							<price-display right value="${cartValue}"></price-display>
+							<crnc-price right value="${cartValue}"></crnc-price>
 						</td>
 					</tr>
 				</tbody>
@@ -146,7 +189,7 @@ export class ShopperCart extends LoadableComponent {
 				</td>
 				<td class="product-title">${item.product.title}</td>
 				<td class="line-price">
-					<price-display right value="${lineValue}" comparedValue=${lineComparedValue}></price-display>
+					<crnc-price right value="${lineValue}" comparison="${lineComparedValue}"></crnc-price>
 				</td>
 			</tr>
 		`

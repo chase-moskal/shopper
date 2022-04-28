@@ -91,10 +91,10 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 					? html`<p class=out-of-stock>Out of stock</p>`
 					: null}
 				<div class=box>
-					<price-display
+					<crnc-price
 						value="${value}"
-						comparedValue=${product.comparedValue}
-					></price-display>
+						comparison="${product.comparedValue}"
+					></crnc-price>
 					<button
 						class=add-to-cart-button
 						title=${inCart ? undefined : "Add to Cart"}
