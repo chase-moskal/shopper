@@ -1,0 +1,42 @@
+
+name: release to gh-pages
+on:
+  push:
+    branches:
+    - release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 🛎️ checkout
+      uses: actions/checkout@v3
+
+    - name: 🔧 set up node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '17'
+
+    - name: 📦 install dependencies
+      run: npm ci
+
+    - name: 🔨 build
+      run: npm run build -s
+
+    - name: 🚚 tracking ignored stuff
+      run: |
+        sed -i.bak -e '/^\/node_modules$/d' .gitignore
+        sed -i.bak -e '/^\/x$/d' .gitignore
+
+    - name: 🗃️ reconstitute node_modules for production
+      run: |
+        rm -rf node_modules
+        npm ci --production
+
+    - name: 🚀 deploy to gh-pages
+      uses: JamesIves/github-pages-deploy-action@v4.3.0
+      with:
+        branch: gh-pages
+        folder: .
+        single-commit: true

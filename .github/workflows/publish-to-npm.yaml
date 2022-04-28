@@ -1,0 +1,32 @@
+
+name: publish npm package
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'chase-moskal'
+    steps:
+
+    - name: 🔔 checkout
+      uses: actions/checkout@v3
+
+    - name: 🔧 setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '17'
+
+    - name: 📦 install dependencies
+      run: npm ci
+
+    - name: 🧪 build and test
+      run: npm run build -s
+
+    - name: 🚀 npm publish
+      uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+        access: public
