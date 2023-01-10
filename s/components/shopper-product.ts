@@ -8,7 +8,7 @@ import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
 import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
 import {parseImageSize, sizeShopifyImage} from "./shopify-utils/size-shopify-image.js"
-import {shopifyProductLinkToUid} from "../toolbox/shopify-ids/shopify-product-link-to-uid.js"
+import {shopifyProductLinkToGid} from "../toolbox/shopify-ids/shopify-product-link-to-gid.js"
 
 export class ShopperProduct extends LightDom(LoadableComponent) {
 	@property({type: Object}) cartItem: CartItem
@@ -28,7 +28,7 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 		return uid
 			? uid
 			: link
-				? shopifyProductLinkToUid(link)
+				? shopifyProductLinkToGid(link)
 				: undefined
 	}
 

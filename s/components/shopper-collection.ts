@@ -5,7 +5,7 @@ import {property} from "lit/decorators.js"
 import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, CartItem} from "../interfaces.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
-import {shopifyCollectionLinkToUid} from "../toolbox/shopify-ids/shopify-collection-link-to-uid.js"
+import {shopifyCollectionLinkToGid} from "../toolbox/shopify-ids/shopify-collection-link-to-gid.js"
 
 export class ShopperCollection extends LightDom(LoadableComponent) {
 	@property({type: Array}) items: CartItem[] = null
@@ -22,7 +22,7 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 		return uid
 			? uid
 			: link
-				? shopifyCollectionLinkToUid(link)
+				? shopifyCollectionLinkToGid(link)
 				: undefined
 	}
 
