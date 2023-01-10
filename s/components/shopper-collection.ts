@@ -4,13 +4,16 @@ import {property} from "lit/decorators.js"
 
 import {LightDom} from "../framework/light-dom.js"
 import {ShopperState, CartItem} from "../interfaces.js"
+import {chooseShopifyId} from "../toolbox/shopify-ids/choose-shopify-id.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
-import {shopifyCollectionLinkToGid} from "../toolbox/shopify-ids/shopify-collection-link-to-gid.js"
 
 export class ShopperCollection extends LightDom(LoadableComponent) {
 	@property({type: Array}) items: CartItem[] = null
+
+	@property({type: String, reflect: true}) ["gid"]: string
 	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: String, reflect: true}) ["link"]: string
+
 	@property({type: Boolean, reflect: true}) ["all"]: boolean
 	@property({type: String, reflect: true}) ["image-sizes"]: string
 	@property({type: Boolean, reflect: true}) ["show-images"]: boolean
@@ -18,12 +21,8 @@ export class ShopperCollection extends LightDom(LoadableComponent) {
 	static get styles() {return [...super.styles, css``]}
 
 	get shopifyId() {
-		const {uid, link} = this
-		return uid
-			? uid
-			: link
-				? shopifyCollectionLinkToGid(link)
-				: undefined
+		const {gid, uid, link} = this
+		return chooseShopifyId({gid, uid, link})
 	}
 
 	shopperUpdate(state: ShopperState) {

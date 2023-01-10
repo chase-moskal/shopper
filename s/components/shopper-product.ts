@@ -6,14 +6,17 @@ import {LightDom} from "../framework/light-dom.js"
 import {isDefined} from "../toolbox/is-defined.js"
 import {ShopperState, CartItem, ShopperModel} from "../interfaces.js"
 import {calculatePercentOff} from "../toolbox/calculate-percent-off.js"
+import {chooseShopifyId} from "../toolbox/shopify-ids/choose-shopify-id.js"
 import {LoadableState, LoadableComponent} from "../framework/loadable-component.js"
 import {parseImageSize, sizeShopifyImage} from "./shopify-utils/size-shopify-image.js"
-import {shopifyProductLinkToGid} from "../toolbox/shopify-ids/shopify-product-link-to-gid.js"
 
 export class ShopperProduct extends LightDom(LoadableComponent) {
 	@property({type: Object}) cartItem: CartItem
+
+	@property({type: String, reflect: true}) ["gid"]: string
 	@property({type: String, reflect: true}) ["uid"]: string
 	@property({type: String, reflect: true}) ["link"]: string
+
 	@property({type: String, reflect: true}) ["href"]: string
 	@property({type: String, reflect: true}) ["sale"]: string
 	@property({type: String, reflect: true}) ["image-size"]: string
@@ -24,12 +27,8 @@ export class ShopperProduct extends LightDom(LoadableComponent) {
 	static get styles() {return [...super.styles, css``]}
 
 	get shopifyId() {
-		const {uid, link} = this
-		return uid
-			? uid
-			: link
-				? shopifyProductLinkToGid(link)
-				: undefined
+		const {gid, uid, link} = this
+		return chooseShopifyId({gid, uid, link})
 	}
 
 	shopperUpdate(state: ShopperState, {getters}: ShopperModel) {
