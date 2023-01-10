@@ -18,8 +18,9 @@
 		"compile": "tsc",
 		"copy-styles": "ncp s/demo.css x/demo.css",
 		"watch": "tsc -w",
-		"test": "exit 0",
-		"start": "http-server"
+		"server": "http-server",
+		"start": "run-p server watch",
+		"test": "exit 0"
 	},
 	"dependencies": {
 		"crnc": "^0.0.7",
