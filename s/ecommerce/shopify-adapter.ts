@@ -75,12 +75,17 @@ export class ShopifyAdapter {
 		collectionId?: string,
 	): Product {
 		const [firstVariant] = shopifyProduct.variants
+
+		function parsePrice({amount}: {amount: string, currencyCode: string}) {
+			return Number(amount)
+		}
+
 		return {
 			id: shopifyProduct.id,
 			available: shopifyProduct.availableForSale,
-			value: parseFloat(firstVariant.price),
+			value: parsePrice(firstVariant.price),
 			comparedValue: firstVariant.compareAtPrice
-				? parseFloat(firstVariant.compareAtPrice)
+				? parsePrice(firstVariant.compareAtPrice)
 				: null,
 			title: shopifyProduct.title,
 			description: shopifyProduct.descriptionHtml,
@@ -94,24 +99,4 @@ export class ShopifyAdapter {
 				: null,
 		}
 	}
-
-	// async getProductsInCollection(collectionId: string): Promise<Product[]> {
-	// 	try {
-	// 		const collection = await this._shopifyClient
-	// 			.collection.fetchWithProducts(collectionId)
-
-	// 		const products = collection.products.map(
-	// 			(shopifyProduct: any) => this._shopifyProductToShopperProduct(
-	// 				shopifyProduct,
-	// 				collectionId
-	// 			)
-	// 		)
-
-	// 		return products
-	// 	}
-	// 	catch (error) {
-	// 		error.message = "shopify error" + error.message
-	// 		throw error
-	// 	}
-	// }
 }
