@@ -1,5 +1,5 @@
 
-import {shopifyUidToGid} from "./shopify-uid-to-gid.js"
+import {shopifyUnknownToGid} from "./shopify-unknown-to-gid.js"
 import {shopifyProductLinkToGid} from "./shopify-product-link-to-gid.js"
 
 export function chooseShopifyId({gid, uid, link}: {
@@ -12,7 +12,7 @@ export function chooseShopifyId({gid, uid, link}: {
 		? gid
 
 	: uid
-		? shopifyUidToGid(uid)
+		? shopifyUnknownToGid(uid)
 
 	: link
 		? shopifyProductLinkToGid(link)
