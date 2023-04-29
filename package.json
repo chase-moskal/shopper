@@ -1,6 +1,6 @@
 {
 	"name": "shopper",
-	"version": "0.2.8",
+	"version": "0.2.9",
 	"description": "plug shopify into any website",
 	"license": "MIT",
 	"type": "module",
