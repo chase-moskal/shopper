@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>shopper</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton:400,800"/>
+		<link rel="stylesheet" href="/s/demo.css"/>
+
+		<script type="importmap-shim" src="/x/importmap.json"></script>
+		<script defer type=module-shim src="/x/install-xiome-menu-system.js"></script>
+		<script defer type=module-shim src="/x/install-shopper.js"></script>
+		<script defer src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"></script>
+
+		<!-- shopper config -->
+		<shopper-config
+			base-currency="cad"
+			currencies="cad,usd,gbp,eur,aud"
+			default-quantity-max="25"
+			shopify-domain="dev-bakery.myshopify.com"
+			shopify-storefront-access-token="5f636be6b04aeb2a7b96fe9306386f25"
+		></shopper-config>
+
+	</head>
+	<body>
+		<header>
+			<h1>shopper</h1>
+			<xio-menu sticky initially-hidden>
+				<xio-menu-item class=shopper-menu-display>
+
+					<!-- shopper button and the cart -->
+					<shopper-button></shopper-button>
+					<shopper-cart slot=panel></shopper-cart>
+
+				</xio-menu-item>
+			</xio-menu>
+		</header>
+
+		<main>
+			<p>shopify cart ui for custom frontends</p>
+			<p>
+				<a href="https://github.com/chase-moskal/shopper">
+					shopper on github
+				</a>
+			</p>
+			<div class="demo-area">
+
+				<!-- price display -->
+				<h2>price display:</h2>
+				<crnc-price value="1594847400.05"></crnc-price>
+
+				<!-- shopper collection-->
+				<h2>collection:</h2>
+				<shopper-collection all show-images image-sizes="200"></shopper-collection>
+
+				<!-- shopper product -->
+				<h2>single product:</h2>
+				<shopper-product show-image image-size="300" link="10232162183"></shopper-product>
+
+			</div>
+			<p style="margin-top: 100em;">cheers</p>
+		</main>
+	</body>
+</html>

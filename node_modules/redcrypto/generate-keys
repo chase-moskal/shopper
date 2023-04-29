@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# generate private key
+openssl genrsa -out private.pem 4096
+
+# generate public key from private key
+openssl rsa -in private.pem -pubout > public.pem

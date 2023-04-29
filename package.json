@@ -1,0 +1,60 @@
+{
+	"name": "shopper",
+	"version": "0.2.9",
+	"description": "plug shopify into any website",
+	"license": "MIT",
+	"type": "module",
+	"module": "x/shopper.js",
+	"main": "x/shopper.js",
+	"types": "x/shopper.d.ts",
+	"files": [
+		"s",
+		"x"
+	],
+	"scripts": {
+		"build": "run-s clean && run-p compile copy-styles importmap && run-s test",
+		"clean": "rimraf x && mkdirp x",
+		"importmap": "importly < package-lock.json > x/importmap.json && importly --host=unpkg < package-lock.json > x/importmap-cloud.json",
+		"compile": "tsc",
+		"copy-styles": "ncp s/demo.css x/demo.css",
+		"watch": "tsc -w",
+		"server": "http-server",
+		"start": "run-p server watch",
+		"test": "exit 0"
+	},
+	"dependencies": {
+		"crnc": "^0.0.7",
+		"lit": "^2.7.3",
+		"shopify-buy": "^2.19.0",
+		"xiome": "^0.0.45"
+	},
+	"devDependencies": {
+		"es-module-shims": "^1.7.2",
+		"feather-icons": "^4.29.0",
+		"http-server": "^14.1.1",
+		"importly": "^0.2.0",
+		"mkdirp": "^3.0.1",
+		"ncp": "^2.0.0",
+		"npm-run-all": "^4.1.5",
+		"octicons": "^8.5.0",
+		"rimraf": "^5.0.0",
+		"typescript": "^5.0.4"
+	},
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"homepage": "https://github.com/chase-moskal/shopper#readme",
+	"bugs": {
+		"url": "https://github.com/chase-moskal/shopper/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/chase-moskal/shopper.git"
+	},
+	"keywords": [
+		"cart",
+		"shopper",
+		"shopping",
+		"shopping-cart",
+		"ecommerce",
+		"shopify"
+	]
+}

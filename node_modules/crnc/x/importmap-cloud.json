@@ -1,0 +1,20 @@
+{
+	"imports": {
+		"@chasemoskal/snapstate/": "https://unpkg.com/@chasemoskal/snapstate@0.0.9/",
+		"@chasemoskal/snapstate": "https://unpkg.com/@chasemoskal/snapstate@0.0.9/x/snapstate.js",
+		"@lit-labs/ssr-dom-shim/": "https://unpkg.com/@lit-labs/ssr-dom-shim@1.0.0/",
+		"@lit-labs/ssr-dom-shim": "https://unpkg.com/@lit-labs/ssr-dom-shim@1.0.0/index.js",
+		"@lit/reactive-element/": "https://unpkg.com/@lit/reactive-element@1.6.0/",
+		"@lit/reactive-element": "https://unpkg.com/@lit/reactive-element@1.6.0/reactive-element.js",
+		"@types/trusted-types/": "https://unpkg.com/@types/trusted-types@2.0.2/",
+		"es-module-shims/": "https://unpkg.com/es-module-shims@1.6.3/",
+		"es-module-shims": "https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js",
+		"lit/": "https://unpkg.com/lit@2.6.0/",
+		"lit": "https://unpkg.com/lit@2.6.0/index.js",
+		"lit-element/": "https://unpkg.com/lit-element@3.2.0/",
+		"lit-element": "https://unpkg.com/lit-element@3.2.0/index.js",
+		"lit-html/": "https://unpkg.com/lit-html@2.6.0/",
+		"lit-html": "https://unpkg.com/lit-html@2.6.0/lit-html.js"
+	},
+	"scopes": {}
+}

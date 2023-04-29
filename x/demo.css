@@ -1,0 +1,90 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+	background: #111;
+	color: rgba(255,255,255, 0.6);
+}
+
+main, body > header {
+	width: 95%;
+	max-width: 800px;
+	margin: auto;
+	padding: 1em;
+}
+
+body > header {
+	position: relative;
+	padding: 1em;
+	background: #222;
+}
+
+xio-menu[initially-hidden] {
+	display: none;
+}
+
+xio-menu {
+	color: #333;
+	--menu-margin: 0.5em auto;
+	--menu-panel-width: 100%;
+}
+
+@media (min-width: 900px) {
+	xio-menu {
+		--menu-panel-width: 80%;
+	}
+}
+
+xio-menu-item, shopper-button {
+	width: 3em;
+	height: 3em;
+}
+
+.demo-area {
+	margin: 2em auto;
+}
+
+.demo-area h2 {
+	opacity: 0.5;
+	margin-top: 2em;
+	margin-bottom: 0.6em;
+}
+
+.demo-area shopper-collection li {
+	margin-top: 1em;
+	list-style-position: inside;
+}
+
+.demo-area shopper-collection img,
+.demo-area shopper-product img {
+	width: 100%;
+	max-width: 240px;
+}
+
+shopper-collection ol {
+	list-style: none;
+}
+
+shopper-collection button {
+	padding: 0.5em 1em;
+}
+
+shopper-product img {
+	max-width: 600px;
+}
+
+price-display[menu-open] {
+	z-index: 101;
+	position: relative;
+}
+
+price-display {
+	--price-display-percent-off-color: green;
+	--price-display-percent-off-background: #00ff0026;
+	--price-display-percent-off-border: 1px solid #214a216b;
+}
